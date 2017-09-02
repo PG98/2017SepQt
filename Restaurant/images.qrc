@@ -6,5 +6,9 @@
         <file>images/user2.png</file>
         <file>images/user3.png</file>
         <file>images/admin.jpg</file>
+        <file>images/password.png</file>
+        <file>images/phone.png</file>
+        <file>images/default.png</file>
+        <file>images/backgnd.png</file>
     </qresource>
 </RCC>
