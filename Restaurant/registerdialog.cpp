@@ -64,7 +64,7 @@ void RegisterDialog::OKBtn_clicked(){
             if(query.next()){
                 QString phone = query.value("phone").toString();
                 qDebug()<<QString("phone number:%1").arg(phone);
-                if(ui->PhoneLineEdit->text()==phone){   //用户已经存在
+                if(ui->PhoneLineEdit->text()==phone){   //手机号已存在
                     qDebug()<<"用户已存在";
                     phoneFlag = false;
                     break;
@@ -97,13 +97,13 @@ void RegisterDialog::OKBtn_clicked(){
         qDebug()<<query.lastError();
     }
     else{
-        qDebug()<<"inserted!";
+        qDebug()<<"inserted!";      //成功添加数据
     }
     this->close();
 }
 //数据库能否正常打开
 void RegisterDialog::receivedb(QSqlDatabase db){
-    qDebug()<<"receive database";
+    //qDebug()<<"receive database";
     database=db;
     if(!database.isOpen()){
         if(!database.open()){
@@ -116,7 +116,6 @@ void RegisterDialog::receivedb(QSqlDatabase db){
         }
     }
 }
-
 
 void RegisterDialog::CancelBtn_clicked(){
     this->close();

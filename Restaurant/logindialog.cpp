@@ -8,15 +8,26 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui(new Ui::LoginDialog)
 {
     ui->setupUi(this);
-    this->setWindowTitle(tr("登陆系统"));
+    this->setWindowTitle(tr("登陆"));
     this->setFixedSize(this->width(),this->height());//固定窗口大小
 
-    this->setStyleSheet("background-color:lavender;");//窗口背景颜色
-    //this->setStyleSheet("background-image:url(:/images/backgnd.png);");//背景图片
+    this->setStyleSheet("background-color:wheat;");//窗口背景颜色
+    //this->setStyleSheet("border-image:url(:/images/backgnd.png);");//背景图片
+    QImage im;
+    im.load(":/images/room2.png");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(im.scaled(this->width(),this->height())));
+    this->setPalette(palette);
+    //this->setAutoFillBackground(true);
+    //最好不要在顶层窗口使用StyleSheet否则会被所有子部件继承
     ui->pwdLineEdit->setEchoMode(QLineEdit::Password);//密码隐藏显示
+    ui->pwdLabel->setStyleSheet("background:transparent;");
+    ui->userLabel->setStyleSheet("background:transparent;");
+    ui->userPic->setStyleSheet("background:opaque;");
+    //ui->pwdLineEdit->setStyleSheet("background:transparent;");
     //设置默认头像
     QImage img;
-    QString path0 = ":/images/default.png";
+    QString path0 = ":/images/abc.jpg";
     img.load(path0);
     QPixmap def=QPixmap::fromImage(img.scaled(ui->userPic->width(),ui->userPic->height()));
     ui->userPic->setPixmap(def);
@@ -37,10 +48,10 @@ LoginDialog::LoginDialog(QWidget *parent) :
     connect(ui->loginBtn, SIGNAL(clicked(bool)), this, SLOT(login_clicked()));
     connect(ui->nameCmBox, SIGNAL(editTextChanged(QString)), this, SLOT(getUserInfo(QString)));//把手机号编辑框中的字符传给函数，判断账户是否存在
 
+    //打开数据库文件
     tableFlag = false;
     database = QSqlDatabase::addDatabase("QSQLITE");
     database.setDatabaseName("database.db");
-
     if(!database.open()){
         qDebug()<<database.lastError();
         qFatal("failed to connect");
@@ -48,44 +59,37 @@ LoginDialog::LoginDialog(QWidget *parent) :
     else{
         qDebug()<<"open success";
         QSqlQuery query;
-
+        //以下验证table是否存在
         query.prepare(select_table);
-        if(!query.exec())
-                {
+        if(!query.exec()){
                     qDebug()<<query.lastError();
                 }
                 else
                 {
                     QString tableName;
-                    while(query.next())
-                    {
+                    while(query.next()){
                         tableName = query.value(0).toString();
                         qDebug()<<tableName;
-                        if(tableName.compare("user"))
-                        {
+                        if(tableName.compare("user")){
                             tableFlag=false;
                             qDebug()<<"table does not exist";
                         }
-                        else
-                        {
+                        else{
                             tableFlag=true;
                             qDebug()<<"table exists";
                         }
                     }
                 }
-        if(tableFlag==false)
+        if(tableFlag==false)        //初次打开时table不存在
              {
                  query.prepare(create_sql);
-                 if(!query.exec())
-                 {
+                 if(!query.exec()){
                      qDebug()<<query.lastError();
                  }
-                 else
-                 {
+                 else{
                      qDebug()<<"table created!";
                  }
              }
-
     }
 }
 
@@ -104,7 +108,7 @@ void LoginDialog::register_clicked(){
     this->show();
 }
 
-void LoginDialog::login_clicked(){      //mark此处应该对一些错误输入有提示功能
+void LoginDialog::login_clicked(){      //此处应该对一些错误输入有提示功能
     if(matchFlag == false){      //matchFlag在getUserInfo函数中
         qDebug()<<"name invalid";   //用户不存在
         QMessageBox::warning(this, tr("警告"), tr("用户不存在"));
@@ -125,17 +129,18 @@ void LoginDialog::login_clicked(){      //mark此处应该对一些错误输入�
             ui->pwdLineEdit->setFocus();
         }
         else{
+            if(ui->nameCmBox->currentText() ==""){
+                QMessageBox::warning(this,tr("警告"), tr("用户名为空！"));
+            }
             //用户名和密码均正确
-            if(ui->nameCmBox->currentText() == "admin"){
-                AdminWindow admin(this);
-                this->hide();
-                //admin.show();
-                //admin.exec();
-                MainWindow w;
-                w.show();
-                //this->close();
+            else if(ui->nameCmBox->currentText() == "admin"&&ui->pwdLineEdit->text()=="admin"){
+                adminDlg= new AdminDialog;
+                adminDlg->show();
+                //adminDlg->exec();无所谓
+                this->close();
             }
             else{
+                qDebug()<<"matchflag ="<<matchFlag;
                 orderChart order(this);
                 this->hide();
                 order.show();
@@ -152,7 +157,7 @@ void LoginDialog::getUserInfo(QString phone){
     //查询手机号码数据
     QString tempstring = "select * from user where phone = '"+phone+"'";
     qDebug()<<tempstring;
-    if(!query.exec(tempstring)){
+    if(!query.exec(tempstring)){    //查找数据库中对应的号码
         qDebug()<<query.lastError();
         matchFlag = false;
     }
@@ -199,9 +204,3 @@ void LoginDialog::getUserInfo(QString phone){
     }
 //  */
 }
-
-
-
-
-
-

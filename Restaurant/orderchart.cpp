@@ -7,7 +7,7 @@ orderChart::orderChart(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->setWindowTitle(tr("顾客点菜"));
+    this->setWindowTitle(tr("选桌"));
 }
 
 orderChart::~orderChart()

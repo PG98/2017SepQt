@@ -17,25 +17,25 @@ SOURCES += main.cpp\
     registerdialog.cpp \
     logindialog.cpp \
     orderchart.cpp \
-    adminwindow.cpp \
     menumanage.cpp \
-    usermanage.cpp
+    usermanage.cpp \
+    admindialog.cpp
 
 HEADERS  += mainwindow.h \
     registerdialog.h \
     logindialog.h \
     orderchart.h \
-    adminwindow.h \
     menumanage.h \
-    usermanage.h
+    usermanage.h \
+    admindialog.h
 
 FORMS    += mainwindow.ui \
     registerdialog.ui \
     logindialog.ui \
     orderchart.ui \
-    adminwindow.ui \
     menumanage.ui \
-    usermanage.ui
+    usermanage.ui \
+    admindialog.ui
 
 RESOURCES += \
     images.qrc

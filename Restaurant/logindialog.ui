@@ -14,6 +14,9 @@
    <string>Dialog</string>
   </property>
   <widget class="QLabel" name="userPic">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -22,8 +25,14 @@
      <height>141</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
    </property>
    <property name="text">
     <string/>
@@ -40,7 +49,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Wawati SC</family>
+     <family>Libian SC</family>
      <pointsize>18</pointsize>
     </font>
    </property>
@@ -68,9 +77,12 @@
    </property>
    <property name="font">
     <font>
-     <family>Wawati SC</family>
+     <family>Libian SC</family>
      <pointsize>18</pointsize>
     </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::TabFocus</enum>
    </property>
    <property name="text">
     <string>登陆</string>
@@ -94,6 +106,24 @@
    <property name="currentText">
     <string/>
    </property>
+   <property name="frame">
+    <bool>true</bool>
+   </property>
+   <item>
+    <property name="text">
+     <string>admin</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>cook</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>manager</string>
+    </property>
+   </item>
   </widget>
   <widget class="QLineEdit" name="pwdLineEdit">
    <property name="geometry">
@@ -131,6 +161,15 @@
     <string>1</string>
    </property>
   </widget>
+  <action name="action">
+   <property name="icon">
+    <iconset>
+     <normaloff>images/user2.jpg</normaloff>images/user2.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>管理员界面</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

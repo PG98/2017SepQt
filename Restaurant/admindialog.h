@@ -1,9 +1,8 @@
-#ifndef AdminDialog_H
-#define AdminDialog_H
+#ifndef ADMINDIALOG_H
+#define ADMINDIALOG_H
 
 #include <QDialog>
 #include "menumanage.h"
-#include "usermanage.h"
 
 namespace Ui {
 class AdminDialog;
@@ -18,12 +17,11 @@ public:
     ~AdminDialog();
 
 private slots:
-    void on_MenuBtn_clicked();
-
-    void on_UserBtn_clicked();
+    void on_menuBtn_clicked();
 
 private:
     Ui::AdminDialog *ui;
+    MenuManage* menuDlg;
 };
 
-#endif // AdminDialog_H
+#endif // ADMINDIALOG_H

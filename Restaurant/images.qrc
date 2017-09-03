@@ -10,5 +10,8 @@
         <file>images/phone.png</file>
         <file>images/default.png</file>
         <file>images/backgnd.png</file>
+        <file>images/room.png</file>
+        <file>images/room2.png</file>
+        <file>images/abc.jpg</file>
     </qresource>
 </RCC>
