@@ -11,7 +11,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     this->setWindowTitle(tr("登陆"));
     this->setFixedSize(this->width(),this->height());//固定窗口大小
 
-    this->setStyleSheet("background-color:wheat;");//窗口背景颜色
+    this->setStyleSheet("background-color:lavender;");//窗口背景颜色
     //this->setStyleSheet("border-image:url(:/images/backgnd.png);");//背景图片
     QImage im;
     im.load(":/images/room2.png");
@@ -91,6 +91,24 @@ LoginDialog::LoginDialog(QWidget *parent) :
                  }
              }
     }
+//从数据库取出数据
+
+    QSqlQuery query;
+    int id;
+    query.prepare("select * from user");
+    if(!query.exec())
+    {
+        qDebug()<<query.lastError();
+    }
+    while(query.next()){
+        id = query.value(0).toInt();
+        QString name = query.value(1).toString();
+        QString tel = query.value(2).toString();
+        qDebug()<<QString("id:%1    pwd:%2   phone:%3").arg(id).arg(name).arg(tel);
+    }
+    qDebug()<<"test";
+    query.clear();
+//*/
 }
 
 LoginDialog::~LoginDialog()

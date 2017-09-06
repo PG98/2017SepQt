@@ -61,7 +61,7 @@ void RegisterDialog::OKBtn_clicked(){
     }
     else{
         while(1){
-            if(query.next()){
+            if(query.next()){       //遍历
                 QString phone = query.value("phone").toString();
                 qDebug()<<QString("phone number:%1").arg(phone);
                 if(ui->PhoneLineEdit->text()==phone){   //手机号已存在
