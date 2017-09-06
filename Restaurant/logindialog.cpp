@@ -3,6 +3,8 @@
 #include <QMessageBox>
 #include "mainwindow.h"
 
+#include "data.h"
+
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoginDialog)
@@ -64,13 +66,12 @@ LoginDialog::LoginDialog(QWidget *parent) :
         if(!query.exec()){
                     qDebug()<<query.lastError();
                 }
-                else
-                {
+                else{
                     QString tableName;
                     while(query.next()){
                         tableName = query.value(0).toString();
                         qDebug()<<tableName;
-                        if(tableName.compare("user")){
+                        if(tableName.compare("user")){  //string比对相同返回0
                             tableFlag=false;
                             qDebug()<<"table does not exist";
                         }
@@ -92,6 +93,9 @@ LoginDialog::LoginDialog(QWidget *parent) :
              }
     }
 //从数据库取出数据
+    Data dt;
+    Data::dataInit();
+    qDebug()<<"fuck this!:"<<Data::a<<"\n\n";
 
     QSqlQuery query;
     int id;

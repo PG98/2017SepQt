@@ -27,7 +27,9 @@ HEADERS  += mainwindow.h \
     orderchart.h \
     menumanage.h \
     usermanage.h \
-    admindialog.h
+    admindialog.h \
+    data.h \
+    dish.h
 
 FORMS    += mainwindow.ui \
     registerdialog.ui \
