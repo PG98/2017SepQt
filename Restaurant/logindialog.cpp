@@ -3,8 +3,6 @@
 #include <QMessageBox>
 #include "mainwindow.h"
 
-#include "data.h"
-
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoginDialog)
@@ -61,7 +59,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     else{
         qDebug()<<"open success";
         QSqlQuery query;
-        //以下验证table是否存在
+//以下验证table是否存在
         query.prepare(select_table);
         if(!query.exec()){
                     qDebug()<<query.lastError();
@@ -83,7 +81,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
                 }
         if(tableFlag==false)        //初次打开时table不存在
              {
-                 query.prepare(create_sql);
+                 query.prepare(create_user);
                  if(!query.exec()){
                      qDebug()<<query.lastError();
                  }
@@ -92,10 +90,15 @@ LoginDialog::LoginDialog(QWidget *parent) :
                  }
              }
     }
+//=============================================对账户数据库的连接结束
+    //Data dt;
+    //Data::dataInit();
+
 //从数据库取出数据
+    /*
     Data dt;
     Data::dataInit();
-    qDebug()<<"fuck this!:"<<Data::a<<"\n\n";
+    qDebug()<<"Data::a=="<<Data::a<<"\n\n";
 
     QSqlQuery query;
     int id;
@@ -112,7 +115,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     }
     qDebug()<<"test";
     query.clear();
-//*/
+*/
 }
 
 LoginDialog::~LoginDialog()

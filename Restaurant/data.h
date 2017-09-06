@@ -8,8 +8,8 @@ public:
     static int a;
     static void dataInit();
 };
-int Data::a=0;
 
+int Data::a=0;
 void Data::dataInit(){
     QSqlQuery query;
     query.prepare("select * from user");

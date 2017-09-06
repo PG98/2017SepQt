@@ -17,9 +17,9 @@ RegisterDialog::~RegisterDialog()
     delete ui;
 }
 
-QString select_max_sql = "select max(id) from user";
-QString insert_sql = "insert into user values (?, ?, ?, ?, ?)";
-QString select_sql = "select phone from user";
+QString select_max_user = "select max(id) from user";
+QString insert_user = "insert into user values (?, ?, ?, ?, ?)";
+QString select_phone = "select phone from user";
 
 void RegisterDialog::OKBtn_clicked(){
     bool phoneFlag = false;
@@ -44,7 +44,7 @@ void RegisterDialog::OKBtn_clicked(){
     QSqlQuery query;
     //找出最大id编号
     max_id = 0;
-    query.prepare(select_max_sql);
+    query.prepare(select_max_user);
     if(!query.exec()){
         qDebug()<<query.lastError();
     }
@@ -56,7 +56,7 @@ void RegisterDialog::OKBtn_clicked(){
     }
 
     //查询部分数据,确认是新用户
-    if(!query.exec(select_sql)){
+    if(!query.exec(select_phone)){
         qDebug()<<query.lastError();
     }
     else{
@@ -86,13 +86,13 @@ void RegisterDialog::OKBtn_clicked(){
     if(pwdFlag == true) newpwd = ui->pwdLineEdit1->text();
     else return;
     //添加数据
-    query.prepare(insert_sql);
+    query.prepare(insert_user);
     query.addBindValue(newid);
     query.addBindValue(newpwd);
     query.addBindValue(newphone);//
     query.addBindValue(newmail);
     query.addBindValue(0);
-
+    //
     if(!query.exec()){
         qDebug()<<query.lastError();
     }
