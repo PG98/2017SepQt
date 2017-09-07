@@ -2,6 +2,7 @@
 #include "ui_logindialog.h"
 #include <QMessageBox>
 #include "mainwindow.h"
+#include "data.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -49,6 +50,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     connect(ui->nameCmBox, SIGNAL(editTextChanged(QString)), this, SLOT(getUserInfo(QString)));//把手机号编辑框中的字符传给函数，判断账户是否存在
 
     //打开数据库文件
+
     tableFlag = false;
     database = QSqlDatabase::addDatabase("QSQLITE");
     database.setDatabaseName("database.db");
@@ -58,8 +60,8 @@ LoginDialog::LoginDialog(QWidget *parent) :
     }
     else{
         qDebug()<<"open success";
-        QSqlQuery query;
 //以下验证table是否存在
+        QSqlQuery query;
         query.prepare(select_table);
         if(!query.exec()){
                     qDebug()<<query.lastError();
@@ -91,8 +93,11 @@ LoginDialog::LoginDialog(QWidget *parent) :
              }
     }
 //=============================================对账户数据库的连接结束
-    //Data dt;
-    //Data::dataInit();
+
+
+    Data dt;
+    Data::dataInit();
+    qDebug()<<"Data::a=="<<Data::a<<"\n\n";
 
 //从数据库取出数据
     /*

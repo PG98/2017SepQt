@@ -7,7 +7,6 @@
 #include "registerdialog.h"
 #include "orderchart.h"
 #include "admindialog.h"
-#include "data.h"
 
 namespace Ui {
 class LoginDialog;

@@ -1,7 +1,7 @@
 #ifndef DATA_H
 #define DATA_H
 #include <QSqlQuery>
-#include "dish.h"
+//#include "dish.h"
 
 class Data{
 public:
