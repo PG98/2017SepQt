@@ -50,7 +50,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     connect(ui->nameCmBox, SIGNAL(editTextChanged(QString)), this, SLOT(getUserInfo(QString)));//把手机号编辑框中的字符传给函数，判断账户是否存在
 
     //打开数据库文件
-
+    /*
     tableFlag = false;
     database = QSqlDatabase::addDatabase("QSQLITE");
     database.setDatabaseName("database.db");
@@ -60,8 +60,9 @@ LoginDialog::LoginDialog(QWidget *parent) :
     }
     else{
         qDebug()<<"open success";
+        */
 //以下验证table是否存在
-        QSqlQuery query;
+/*      QSqlQuery query;
         query.prepare(select_table);
         if(!query.exec()){
                     qDebug()<<query.lastError();
@@ -91,19 +92,17 @@ LoginDialog::LoginDialog(QWidget *parent) :
                      qDebug()<<"table created!";
                  }
              }
-    }
+    }*/
 //=============================================对账户数据库的连接结束
 
-
-    Data dt;
     Data::dataInit();
-    qDebug()<<"Data::a=="<<Data::a<<"\n\n";
-
+    qDebug()<<"test's id:  "<<Data::a;
+    qDebug()<<"beef's price:  "<<Data::dishname;
 //从数据库取出数据
     /*
     Data dt;
     Data::dataInit();
-    qDebug()<<"Data::a=="<<Data::a<<"\n\n";
+
 
     QSqlQuery query;
     int id;
@@ -139,7 +138,13 @@ void LoginDialog::register_clicked(){
 }
 
 void LoginDialog::login_clicked(){      //此处应该对一些错误输入有提示功能
-    if(matchFlag == false){      //matchFlag在getUserInfo函数中
+    if(ui->nameCmBox->currentText() == "admin"&&ui->pwdLineEdit->text()=="admin"){
+        adminDlg= new AdminDialog;
+        adminDlg->show();
+        //adminDlg->exec();无所谓
+        this->close();
+    }
+    else if(matchFlag == false){      //matchFlag在getUserInfo函数中
         qDebug()<<"name invalid";   //用户不存在
         QMessageBox::warning(this, tr("警告"), tr("用户不存在"));
         ui->nameCmBox->clear();
@@ -163,12 +168,6 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
                 QMessageBox::warning(this,tr("警告"), tr("用户名为空！"));
             }
             //用户名和密码均正确
-            else if(ui->nameCmBox->currentText() == "admin"&&ui->pwdLineEdit->text()=="admin"){
-                adminDlg= new AdminDialog;
-                adminDlg->show();
-                //adminDlg->exec();无所谓
-                this->close();
-            }
             else{
                 qDebug()<<"matchflag ="<<matchFlag;
                 orderChart order(this);
