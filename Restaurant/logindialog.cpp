@@ -24,11 +24,11 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui->pwdLineEdit->setEchoMode(QLineEdit::Password);//密码隐藏显示
     ui->pwdLabel->setStyleSheet("background:transparent;");
     ui->userLabel->setStyleSheet("background:transparent;");
-    ui->userPic->setStyleSheet("background:opaque;");
+    ui->userPic->setStyleSheet("background:transparent;");
     //ui->pwdLineEdit->setStyleSheet("background:transparent;");
     //设置默认头像
     QImage img;
-    QString path0 = ":/images/abc.jpg";
+    QString path0 = ":/images/default.png";
     img.load(path0);
     QPixmap def=QPixmap::fromImage(img.scaled(ui->userPic->width(),ui->userPic->height()));
     ui->userPic->setPixmap(def);

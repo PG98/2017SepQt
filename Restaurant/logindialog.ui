@@ -41,7 +41,7 @@
   <widget class="QPushButton" name="regBtn">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>130</x>
      <y>250</y>
      <width>101</width>
      <height>41</height>
@@ -69,7 +69,7 @@
   <widget class="QPushButton" name="loginBtn">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>350</x>
      <y>250</y>
      <width>91</width>
      <height>41</height>
@@ -104,7 +104,7 @@
     <bool>true</bool>
    </property>
    <property name="currentText">
-    <string/>
+    <string>admin</string>
    </property>
    <property name="frame">
     <bool>true</bool>

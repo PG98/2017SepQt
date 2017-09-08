@@ -12,6 +12,5 @@
         <file>images/backgnd.png</file>
         <file>images/room.png</file>
         <file>images/room2.png</file>
-        <file>images/abc.jpg</file>
     </qresource>
 </RCC>
