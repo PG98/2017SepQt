@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     orderchart.cpp \
     menumanage.cpp \
     usermanage.cpp \
-    admindialog.cpp
+    admindialog.cpp \
+    data.cpp
 
 HEADERS  += mainwindow.h \
     registerdialog.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     usermanage.h \
     admindialog.h \
     data.h \
-    connection.h
+    connection.h \
+    dish.h
 
 FORMS    += mainwindow.ui \
     registerdialog.ui \
