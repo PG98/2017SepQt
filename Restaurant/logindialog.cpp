@@ -43,8 +43,23 @@ LoginDialog::LoginDialog(QWidget *parent) :
     QPixmap pic2=QPixmap::fromImage(img.scaled(ui->userLabel->width(),ui->userLabel->height()));
     ui->userLabel->setPixmap(pic2);
     //设置登陆按钮样式
-    ui->loginBtn->setStyleSheet("QPushButton{background-color:cornflowerblue; color:white;border-radius: 10px;  border: 2px groove gray;border-style: outset;}");
-    ui->regBtn->setStyleSheet("QPushButton{background-color:mediumseagreen; color:white;border-radius: 10px;  border: 2px groove gray;border-style: outset;}");
+    //ui->loginBtn->setStyleSheet("QPushButton{background-color:cornflowerblue; color:white;border-radius: 10px;  border: 2px groove gray;border-style: outset;}");
+    ui->loginBtn->setStyleSheet("QPushButton{background-color:cornflowerblue;\
+                                color: white;   border-radius: 10px;  border: 2px groove gray;\
+                                border-style: outset;}"
+                               "QPushButton:hover{background-color:white; color: black;}"
+                              "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                               border-style: inset; }"
+                               );
+    //ui->regBtn->setStyleSheet("QPushButton{background-color:mediumseagreen; color:white;border-radius: 10px;  border: 2px groove gray;border-style: outset;}");
+    ui->regBtn->setStyleSheet("QPushButton{background-color:mediumseagreen;\
+                              color: white;   border-radius: 10px;  border: 2px groove gray;\
+                              border-style: outset;}"
+                             "QPushButton:hover{background-color:white; color: black;}"
+                            "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                             border-style: inset; }"
+                             );
+
 
     connect(ui->regBtn, SIGNAL(clicked(bool)), this, SLOT(register_clicked()));
     connect(ui->loginBtn, SIGNAL(clicked(bool)), this, SLOT(login_clicked()));

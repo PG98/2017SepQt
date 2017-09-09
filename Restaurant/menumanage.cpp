@@ -2,6 +2,7 @@
 #include "ui_menumanage.h"
 #include "variate.h"
 #include <QDebug>
+#include "data.h"
 
 MenuManage::MenuManage(QWidget *parent) :
     QDialog(parent),
@@ -20,6 +21,7 @@ MenuManage::MenuManage(QWidget *parent) :
     //ui->tableWidget->setItem(0,0,new QTableWidgetItem(Data::a));
     qDebug()<<"str from variate.h:  "<<str;
     qDebug()<<"dish from variate:   "<<dish.id;
+    qDebug()<<"a from data.h"<<Data::a;
 
 }
 

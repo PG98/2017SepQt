@@ -2,6 +2,7 @@
 #define DATA_H
 #include<QSqlQuery>
 #include "dish.h"
+#include <QVariant>
 class Data{
 public:
     Data(){}
@@ -10,9 +11,9 @@ public:
     static void dataInit();
 };
 
-//Dish Data::dish[50]={};
-int Data::a=0;
-
+//Dish* Data::dish[50];
+//int Data::a=0;
+/*
 void Data::dataInit(){
     QSqlQuery query;
     query.prepare("select * from user");
@@ -37,7 +38,6 @@ void Data::dataInit(){
         dish[i].notes = query.value(4).toString();
         i++;
     }*/
-}
-
+//}
 
 #endif // DATA_H
