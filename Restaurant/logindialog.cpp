@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include "mainwindow.h"
 #include "data.h"
+#include "variate.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -97,12 +98,9 @@ LoginDialog::LoginDialog(QWidget *parent) :
 
     Data::dataInit();
     qDebug()<<"test's id:  "<<Data::a;
-    qDebug()<<"beef's price:  "<<Data::dishname;
+    Data::a=100;
 //从数据库取出数据
     /*
-    Data dt;
-    Data::dataInit();
-
 
     QSqlQuery query;
     int id;
@@ -120,6 +118,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     qDebug()<<"test";
     query.clear();
 */
+    qDebug()<<"num from variate.h:"<<num;
 }
 
 LoginDialog::~LoginDialog()

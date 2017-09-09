@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     menumanage.cpp \
     usermanage.cpp \
     admindialog.cpp \
-    data.cpp
+    data.cpp \
+    variate.cpp \
+    dish.cpp
 
 HEADERS  += mainwindow.h \
     registerdialog.h \
@@ -31,7 +33,8 @@ HEADERS  += mainwindow.h \
     admindialog.h \
     data.h \
     connection.h \
-    dish.h
+    dish.h \
+    variate.h
 
 FORMS    += mainwindow.ui \
     registerdialog.ui \

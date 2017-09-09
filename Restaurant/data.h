@@ -6,14 +6,13 @@ class Data{
 public:
     Data(){}
     static int a;
-    static int dishname;
-    static Dish dish[50];
+    //static Dish dish[50];
     static void dataInit();
 };
 
-Dish Data::dish[50]={};
+//Dish Data::dish[50]={};
 int Data::a=0;
-int Data::dishname=0;
+
 void Data::dataInit(){
     QSqlQuery query;
     query.prepare("select * from user");
@@ -24,6 +23,7 @@ void Data::dataInit(){
             break;
         }
     }
+    /*
     query.prepare("select * from dish");
     query.exec();
     int i=0;
@@ -36,7 +36,8 @@ void Data::dataInit(){
         dish[i].undone = query.value(4).toInt();
         dish[i].notes = query.value(4).toString();
         i++;
-    }
+    }*/
 }
+
 
 #endif // DATA_H

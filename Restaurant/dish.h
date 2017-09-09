@@ -1,5 +1,6 @@
 #ifndef DISH_H
 #define DISH_H
+#include <QString>
 
 enum DishType {Main=1,Cold, Seafood, Meat, Vege, Soup, Dessert, Drink};
 class Dish{
@@ -14,13 +15,15 @@ public:
     int price;
     QString notes;
 };
+/*
 Dish::Dish(){
-  id=0;
+  id=8;
   name="";
   type=Main;
   demand=0;
   undone=false;
 }
+*/
 
 
 #endif // DISH_H

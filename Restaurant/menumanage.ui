@@ -24,7 +24,7 @@
    </property>
    <property name="font">
     <font>
-     <family>GB18030 Bitmap</family>
+     <family>Times</family>
      <pointsize>24</pointsize>
     </font>
    </property>

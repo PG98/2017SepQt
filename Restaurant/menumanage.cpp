@@ -1,6 +1,7 @@
 #include "menumanage.h"
 #include "ui_menumanage.h"
-#include "data.h"
+#include "variate.h"
+#include <QDebug>
 
 MenuManage::MenuManage(QWidget *parent) :
     QDialog(parent),
@@ -15,6 +16,11 @@ MenuManage::MenuManage(QWidget *parent) :
     ui->tableWidget->verticalHeader()->setVisible(false);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+    //ui->tableWidget->setItem(0,0,new QTableWidgetItem(Data::a));
+    qDebug()<<"str from variate.h:  "<<str;
+    qDebug()<<"dish from variate:   "<<dish.id;
+
 }
 
 MenuManage::~MenuManage()
