@@ -3,7 +3,6 @@
 #include <QMessageBox>
 #include "mainwindow.h"
 #include "data.h"
-#include "variate.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -133,7 +132,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     qDebug()<<"test";
     query.clear();
 */
-    qDebug()<<"num from variate.h:"<<num;
+
 }
 
 LoginDialog::~LoginDialog()
