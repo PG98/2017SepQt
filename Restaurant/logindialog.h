@@ -5,7 +5,7 @@
 #include <QtWidgets>
 #include <QPainter>
 #include "registerdialog.h"
-#include "orderchart.h"
+#include "order.h"
 #include "admindialog.h"
 
 namespace Ui {

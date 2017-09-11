@@ -1,7 +1,7 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
 #include <QMessageBox>
-#include "mainwindow.h"
+#include <QKeyEvent>        //回车登陆
 #include "data.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
@@ -59,10 +59,11 @@ LoginDialog::LoginDialog(QWidget *parent) :
                                              border-style: inset; }"
                              );
 
-
+    QWidget::setTabOrder(ui->pwdLineEdit, ui->loginBtn);
     connect(ui->regBtn, SIGNAL(clicked(bool)), this, SLOT(register_clicked()));
     connect(ui->loginBtn, SIGNAL(clicked(bool)), this, SLOT(login_clicked()));
     connect(ui->nameCmBox, SIGNAL(editTextChanged(QString)), this, SLOT(getUserInfo(QString)));//把手机号编辑框中的字符传给函数，判断账户是否存在
+    connect(ui->pwdLineEdit, SIGNAL(returnPressed()), ui->loginBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //回车绑定登陆按钮
 
     //打开数据库文件
     /*
@@ -113,26 +114,6 @@ LoginDialog::LoginDialog(QWidget *parent) :
     Data::dataInit();
     qDebug()<<"test's id:  "<<Data::a;
     Data::a=100;
-//从数据库取出数据
-    /*
-
-    QSqlQuery query;
-    int id;
-    query.prepare("select * from user");
-    if(!query.exec())
-    {
-        qDebug()<<query.lastError();
-    }
-    while(query.next()){
-        id = query.value(0).toInt();
-        QString name = query.value(1).toString();
-        QString tel = query.value(2).toString();
-        qDebug()<<QString("id:%1    pwd:%2   phone:%3").arg(id).arg(name).arg(tel);
-    }
-    qDebug()<<"test";
-    query.clear();
-*/
-
 }
 
 LoginDialog::~LoginDialog()
@@ -151,11 +132,18 @@ void LoginDialog::register_clicked(){
 }
 
 void LoginDialog::login_clicked(){      //此处应该对一些错误输入有提示功能
-    if(ui->nameCmBox->currentText() == "admin"&&ui->pwdLineEdit->text()=="admin"){
-        adminDlg= new AdminDialog;
-        adminDlg->show();
-        //adminDlg->exec();无所谓
-        this->close();
+    if(ui->nameCmBox->currentText() == "admin"){
+        QImage img;
+        QString path = ":/images/admin.jpg";
+        img.load(path);
+        QPixmap pic=QPixmap::fromImage(img.scaled(ui->userPic->width(),ui->userPic->height()));
+        ui->userPic->setPixmap(pic);
+        if(ui->pwdLineEdit->text()=="admin"){
+            adminDlg= new AdminDialog;
+            adminDlg->show();
+            //adminDlg->exec();无所谓
+            this->close();
+        }
     }
     else if(matchFlag == false){      //matchFlag在getUserInfo函数中
         qDebug()<<"name invalid";   //用户不存在
@@ -183,10 +171,8 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
             //用户名和密码均正确
             else{
                 qDebug()<<"matchflag ="<<matchFlag;
-                orderChart order(this);
-                this->hide();
-                order.show();
-                order.exec();
+                Order* orderwindow = new Order;
+                orderwindow->show();
                 this->close();
             }
         }
@@ -199,7 +185,16 @@ void LoginDialog::getUserInfo(QString phone){
     //查询手机号码数据
     QString tempstring = "select * from user where phone = '"+phone+"'";
     qDebug()<<tempstring;
-    if(!query.exec(tempstring)){    //查找数据库中对应的号码
+    if(phone=="admin"){
+        qDebug()<<"administrator";
+        QImage img;
+        QString path = ":/images/admin.jpg";
+        img.load(path);
+        QPixmap pic=QPixmap::fromImage(img.scaled(ui->userPic->width(),ui->userPic->height()));
+        ui->userPic->setPixmap(pic);
+        matchFlag=true;
+    }
+    else if(!query.exec(tempstring)){    //查找数据库中对应的号码
         qDebug()<<query.lastError();
         matchFlag = false;
     }

@@ -1,13 +1,13 @@
 #ifndef MENUMANAGE_H
 #define MENUMANAGE_H
 
-#include <QDialog>
+#include <QMainWindow>
 
 namespace Ui {
 class MenuManage;
 }
 
-class MenuManage : public QDialog
+class MenuManage : public QMainWindow
 {
     Q_OBJECT
 

@@ -2,8 +2,8 @@
  <author/>
  <comment/>
  <exportmacro/>
- <class>MenuManage</class>
- <widget name="MenuManage" class="QMainWindow">
+ <class>Order</class>
+ <widget name="Order" class="QMainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -13,34 +13,33 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     registerdialog.cpp \
     logindialog.cpp \
-    orderchart.cpp \
-    menumanage.cpp \
     usermanage.cpp \
     admindialog.cpp \
     data.cpp \
-    dish.cpp
+    dish.cpp \
+    order.cpp \
+    menumanage.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     registerdialog.h \
     logindialog.h \
-    orderchart.h \
-    menumanage.h \
     usermanage.h \
     admindialog.h \
     data.h \
     connection.h \
-    dish.h
+    dish.h \
+    order.h \
+    menumanage.h
 
-FORMS    += mainwindow.ui \
+FORMS    += \
     registerdialog.ui \
     logindialog.ui \
-    orderchart.ui \
-    menumanage.ui \
     usermanage.ui \
-    admindialog.ui
+    admindialog.ui \
+    order.ui \
+    menumanage.ui
 
 RESOURCES += \
     images.qrc

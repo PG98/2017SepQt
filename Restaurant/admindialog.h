@@ -21,7 +21,6 @@ private slots:
 
 private:
     Ui::AdminDialog *ui;
-    MenuManage* menuDlg;
 };
 
 #endif // ADMINDIALOG_H
