@@ -144,6 +144,15 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
             //adminDlg->exec();无所谓
             this->close();
         }
+        else{
+            if(ui->pwdLineEdit->text() == "")
+                QMessageBox::warning(this, tr("警告"), tr("请输入密码"));
+            else{
+                QMessageBox::warning(this, tr("警告"), tr("密码错误！"));
+                ui->pwdLineEdit->clear();
+            }
+            ui->pwdLineEdit->setFocus();
+        }
     }
     else if(matchFlag == false){      //matchFlag在getUserInfo函数中
         qDebug()<<"name invalid";   //用户不存在

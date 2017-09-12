@@ -135,8 +135,19 @@
      <height>25</height>
     </rect>
    </property>
+   <widget class="QMenu" name="Insert">
+    <property name="title">
+     <string>编辑</string>
+    </property>
+   </widget>
+   <addaction name="Insert"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionInsert">
+   <property name="text">
+    <string>Insert</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

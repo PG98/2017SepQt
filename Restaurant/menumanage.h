@@ -16,13 +16,19 @@ public:
     explicit MenuManage(QWidget *parent = 0);
     ~MenuManage();
 
+public slots:
+    void changeType(int type);
+
+
 private:
     Ui::MenuManage *ui;
+    QStringList header = QStringList()<<"编号"<<"种类"<<"名字"<<"单价"<<"备注";
 
     void setTypeGroupBox();
     void setMenuGroupBox();
     void setDetailGroupBox();
-    QHBoxLayout* setButtons();
+    QHBoxLayout* setButtons();    
+
 };
 
 #endif // MENUMANAGE_H

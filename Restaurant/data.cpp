@@ -21,11 +21,12 @@ void Data::dataInit(){
         dish[i].id = query.value(0).toInt();
         dish[i].type = DishType(query.value(1).toInt());
         dish[i].name = query.value(2).toString();
-        dish[i].price = query.value(3).toInt();
-        dish[i].demand = query.value(4).toInt();
+        dish[i].demand = query.value(3).toInt();
         dish[i].undone = query.value(4).toInt();
-        dish[i].notes = query.value(4).toString();
+        dish[i].price = query.value(5).toInt();
+        dish[i].notes = query.value(6).toString();
         i++;
     }
+    Dish::count = i;
 }
 

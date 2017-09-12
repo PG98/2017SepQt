@@ -14,6 +14,9 @@ public:
     bool undone;
     int price;
     QString notes;
+    //以上和数据库列名对应
+    QString getType();
+    static int count;
 };
 /*
 Dish::Dish(){
