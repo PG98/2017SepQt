@@ -1,7 +1,7 @@
 #include "data.h"
 
 int Data::a=0;
-Dish Data::dish[50];
+Dish Data::dish[100];
 
 void Data::dataInit(){
     QSqlQuery query;

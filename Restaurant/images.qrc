@@ -77,5 +77,9 @@
         <file>buttons/volume-4.png</file>
         <file>buttons/volume.png</file>
         <file>buttons/wifi.png</file>
+        <file>buttons/delete.png</file>
+        <file>buttons/edit.png</file>
+        <file>buttons/undo.png</file>
+        <file>buttons/add.png</file>
     </qresource>
 </RCC>

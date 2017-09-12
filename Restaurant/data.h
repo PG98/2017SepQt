@@ -7,7 +7,7 @@ class Data{
 public:
     Data(){}
     static int a;
-    static Dish dish[50];
+    static Dish dish[100];
     static void dataInit();
 };
 

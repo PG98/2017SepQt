@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include "adddish.h"
 
 namespace Ui {
 class MenuManage;
@@ -17,17 +18,22 @@ public:
     ~MenuManage();
 
 public slots:
-    void changeType(int type);
 
+private slots:
+    void on_action_N_triggered();
+    void changeType(int type);
+    void on_OkBtn_clicked();
 
 private:
     Ui::MenuManage *ui;
     QStringList header = QStringList()<<"编号"<<"种类"<<"名字"<<"单价"<<"备注";
-
+    //布局
     void setTypeGroupBox();
     void setMenuGroupBox();
     void setDetailGroupBox();
-    QHBoxLayout* setButtons();    
+    QHBoxLayout* setButtons();
+
+    void showDishes();//显示所有菜品，按照类别排列
 
 };
 

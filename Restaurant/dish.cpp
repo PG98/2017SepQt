@@ -21,3 +21,11 @@ QString Dish::getType(){
     if(type == Drink) return "饮料";
     return "wrong";
 }
+
+void Dish::setDish(int ID,QString Name,int Type,int Price,QString Notes){
+    id=ID;
+    name=Name;
+    type = DishType(Type);
+    price = Price;
+    notes = Notes;
+}

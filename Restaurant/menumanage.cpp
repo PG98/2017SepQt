@@ -9,6 +9,7 @@ MenuManage::MenuManage(QWidget *parent) :
     ui(new Ui::MenuManage)
 {
     ui->setupUi(this);
+    this->setWindowTitle(tr("菜单管理"));
     qDebug()<<"dish count:"<<Dish::count<<endl;
 
     setTypeGroupBox();
@@ -43,9 +44,8 @@ void MenuManage::setTypeGroupBox(){
     ui->dishtype->setTitle("菜品种类");
     //combobox index  connect()
     ui->typeview->resize(100,20);
-    QIcon icon1(":/buttons/eject.png");
     ui->typeview->addItem("<所有>");
-    ui->typeview->addItem(icon1, "主食");
+    ui->typeview->addItem("主食");
     ui->typeview->addItem("凉菜");
     ui->typeview->addItem("海鲜");
     ui->typeview->addItem("荤菜");
@@ -67,6 +67,9 @@ void MenuManage::setMenuGroupBox(){
 
     ui->tableWidget->setColumnCount(5);
     ui->tableWidget->setRowCount(Dish::count);
+    //按照类别顺序显示表格
+    showDishes();
+    /*//按下标输出
     for(int i=0;i<ui->tableWidget->rowCount();i++){
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[i].id)));
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(Data::dish[i].getType()));
@@ -74,7 +77,7 @@ void MenuManage::setMenuGroupBox(){
         ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString("%1").arg(Data::dish[i].price)));
         ui->tableWidget->setItem(i, 4, new QTableWidgetItem(Data::dish[i].notes));
         //ui->tableWidget->horizontalHeaderItem(i)->setBackgroundColor(QColor(100, 149, 237));//会崩溃
-    }
+    }*/
     //connect  表格项目点击，激活等
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(ui->tableWidget, 0, 0);
@@ -110,39 +113,73 @@ QHBoxLayout* MenuManage::setButtons(){
 }
 //以上各GroupBox初始化
 void MenuManage::changeType(int type){
-    //传入当前下拉菜单项的下标，对应的dish类是type-1
-    qDebug()<<"clear table";
-    ui->tableWidget->clear();
-    int k=0;
-    for(int i=0;i<Dish::count;i++){
-        qDebug()<<QString("%1").arg((int)Data::dish[i].type);
-        if((int)Data::dish[i].type==type){
-            ui->tableWidget->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[i].id)));
-            ui->tableWidget->setItem(k, 1, new QTableWidgetItem(Data::dish[i].getType()));
-            ui->tableWidget->setItem(k, 2, new QTableWidgetItem(Data::dish[i].name));
-            ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QString("%1").arg(Data::dish[i].price)));
-            ui->tableWidget->setItem(k, 4, new QTableWidgetItem(Data::dish[i].notes));
-            k++;
+    qDebug()<<"type: "<<type+1;
+    //传入当前下拉菜单项的下标，对应的dish类是type(因为enum的首项定义为1)
+    if(type==0){
+        qDebug()<<"show all";    //按照类别顺序显示表格
+        showDishes();
+    }
+    else{
+        qDebug()<<"clear table";
+        ui->tableWidget->clear();
+        int k=0;
+        for(int i=0;i<Dish::count;i++){
+            //qDebug()<<QString("%1").arg((int)Data::dish[i].type);
+            if((int)Data::dish[i].type==type){
+                ui->tableWidget->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[i].id)));
+                ui->tableWidget->setItem(k, 1, new QTableWidgetItem(Data::dish[i].getType()));
+                ui->tableWidget->setItem(k, 2, new QTableWidgetItem(Data::dish[i].name));
+                ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QString("%1").arg(Data::dish[i].price)));
+                ui->tableWidget->setItem(k, 4, new QTableWidgetItem(Data::dish[i].notes));
+                k++;
+            }
+        }
+    }
+    ui->tableWidget->setHorizontalHeaderLabels(header);
+}
+
+void MenuManage::on_action_N_triggered()
+{
+    addDish* addDialog = new addDish;
+    addDialog->show();
+    addDialog->exec();
+}
+
+void MenuManage::on_OkBtn_clicked()
+{
+    QMessageBox box;             //自定义一个警告对话框
+    box.setWindowTitle("提醒");
+    box.setIcon(QMessageBox::Warning);
+    box.setText("是否保存？");
+    QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
+    box.addButton("否(&N)", QMessageBox::NoRole);
+    QPushButton *cancelBut = box.addButton("取消", QMessageBox::RejectRole);
+
+    box.exec();
+    if(box.clickedButton() == yesBtn)   //clickedButton函数返回被点击的按钮（指针）
+        return;
+    else if (box.clickedButton() == cancelBut)
+        return;
+}
+
+void MenuManage::showDishes(){
+    int j,index=0, temp[8][20];
+    for(int i=0;i<8;i++)
+        for(int j=0;j<20;j++)
+            temp[i][j]=0;
+    for(int i=0;i<ui->tableWidget->rowCount();i++){
+        int t = (int)Data::dish[i].type-1;
+        for(j=0;temp[t][j]!=0;j++);
+        temp[t][j]=i+1;//dish[0]的下标为0
+    }
+    for(int i=0;i<8;i++){
+        for(j=0;temp[i][j]!=0;j++){
+            ui->tableWidget->setItem(index, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[temp[i][j]-1].id)));
+            ui->tableWidget->setItem(index, 1, new QTableWidgetItem(Data::dish[temp[i][j]-1].getType()));
+            ui->tableWidget->setItem(index, 2, new QTableWidgetItem(Data::dish[temp[i][j]-1].name));
+            ui->tableWidget->setItem(index, 3, new QTableWidgetItem(QString("%1").arg(Data::dish[temp[i][j]-1].price)));
+            ui->tableWidget->setItem(index, 4, new QTableWidgetItem(Data::dish[temp[i][j]-1].notes));
+            index++;
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

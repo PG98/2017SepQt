@@ -3,8 +3,7 @@
 
 RegisterDialog::RegisterDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::RegisterDialog)
-{
+    ui(new Ui::RegisterDialog){
     ui->setupUi(this);
 
     connect(ui->OKBtn, SIGNAL(clicked(bool)), this, SLOT(OKBtn_clicked()));
@@ -12,8 +11,7 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
 
 }
 
-RegisterDialog::~RegisterDialog()
-{
+RegisterDialog::~RegisterDialog(){
     delete ui;
 }
 
