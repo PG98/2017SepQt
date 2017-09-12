@@ -116,7 +116,7 @@ void MenuManage::changeType(int type){
     int k=0;
     for(int i=0;i<Dish::count;i++){
         qDebug()<<QString("%1").arg((int)Data::dish[i].type);
-        if((int)Data::dish[i].type==type-1){
+        if((int)Data::dish[i].type==type){
             ui->tableWidget->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[i].id)));
             ui->tableWidget->setItem(k, 1, new QTableWidgetItem(Data::dish[i].getType()));
             ui->tableWidget->setItem(k, 2, new QTableWidgetItem(Data::dish[i].name));
