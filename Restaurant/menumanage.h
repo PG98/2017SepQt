@@ -2,6 +2,7 @@
 #define MENUMANAGE_H
 
 #include <QMainWindow>
+#include <QtWidgets>
 
 namespace Ui {
 class MenuManage;
@@ -17,6 +18,11 @@ public:
 
 private:
     Ui::MenuManage *ui;
+
+    void setTypeGroupBox();
+    void setMenuGroupBox();
+    void setDetailGroupBox();
+    QHBoxLayout* setButtons();
 };
 
 #endif // MENUMANAGE_H
