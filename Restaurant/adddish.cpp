@@ -8,6 +8,7 @@ addDish::addDish(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle(tr("添加菜品"));
+    connect(ui->OkBtn, SIGNAL(clicked(bool)), this, SLOT(send()));
 
     ui->typeBox->addItem("主食");
     ui->typeBox->addItem("凉菜");
@@ -41,4 +42,9 @@ void addDish::on_OkBtn_clicked(){
     Dish::count++;
     qDebug()<<"new dish added ";
     this->close();
+}
+
+void addDish::send(){
+    qDebug()<<"send refresh signal";
+    emit refresh();
 }

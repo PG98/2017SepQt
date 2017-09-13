@@ -144,13 +144,14 @@
     <addaction name="action_Z"/>
     <addaction name="action_refresh"/>
     <addaction name="action_S"/>
+    <addaction name="action_edit"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
      <string>帮助</string>
     </property>
     <addaction name="action_A"/>
-    <addaction name="action"/>
+    <addaction name="action_H"/>
    </widget>
    <addaction name="Insert"/>
    <addaction name="menu_2"/>
@@ -176,6 +177,7 @@
    <addaction name="action_N"/>
    <addaction name="action_S"/>
    <addaction name="action_D"/>
+   <addaction name="action_edit"/>
    <addaction name="action_Z"/>
   </widget>
   <action name="action_N">
@@ -216,9 +218,9 @@
     <string>关于(&amp;A)</string>
    </property>
   </action>
-  <action name="action">
+  <action name="action_H">
    <property name="text">
-    <string>使用说明</string>
+    <string>使用说明(&amp;H)</string>
    </property>
   </action>
   <action name="action_refresh">
@@ -240,6 +242,15 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_edit">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/buttons/edit.png</normaloff>:/buttons/edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>修改</string>
    </property>
   </action>
  </widget>

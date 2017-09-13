@@ -16,9 +16,15 @@ public:
     explicit addDish(QWidget *parent = 0);
     ~addDish();
 
+signals:
+    void refresh();
+
+public slots:
+    void send();
+
 private slots:
     void on_CancelBtn_clicked();
-    void on_OkBtn_clicked();
+    virtual void on_OkBtn_clicked();
 
 private:
     Ui::addDish *ui;

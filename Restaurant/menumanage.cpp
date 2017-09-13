@@ -18,6 +18,8 @@ MenuManage::MenuManage(QWidget *parent) :
 
     QHBoxLayout* bottomLayout = setButtons();
     //connect W按钮..槽..
+    connect(&addDialog, SIGNAL(refresh()), this, SLOT(on_action_refresh_triggered()));//从子窗口传递信号，添加完成后自动刷新显示
+
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(ui->dishtype, 0, 0);
@@ -27,7 +29,7 @@ MenuManage::MenuManage(QWidget *parent) :
     layout->setColumnStretch(1, 1);
     layout->setColumnMinimumWidth(0, 500);
     layout->setRowMinimumHeight(0,100);
-
+/*
     QFont font = ui->tableWidget->horizontalHeader()->font();
     font.setBold(true);
     ui->tableWidget->horizontalHeader()->setFont(font);
@@ -41,7 +43,7 @@ MenuManage::MenuManage(QWidget *parent) :
     connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
     connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
     connect(ui->tableWidget,SIGNAL(cellDoubleClicked(int,int)), this, SLOT(itemEdit(int,int)));//双击编辑
-
+*/
     QWidget* widget = new QWidget;
     widget->setLayout(layout);
     setCentralWidget(widget);
@@ -124,9 +126,10 @@ QHBoxLayout* MenuManage::setButtons(){
     return layout;
 }
 //以上各GroupBox初始化
+//显示某种菜品 id升序
 void MenuManage::changeType(int type){
-    qDebug()<<"type: "<<type+1;
-    //传入当前下拉菜单项的下标，对应的dish类是type(因为enum的首项定义为1)
+    //qDebug()<<"type: "<<type+1;
+    //传入当前下拉菜单项的下标，对应的dish类是type(enum的首项定义为1)
     if(type==0){
         qDebug()<<"show all";    //按照类别顺序显示表格
         showDishes();
@@ -146,15 +149,23 @@ void MenuManage::changeType(int type){
                 k++;
             }
         }
+        for(int i=0;i<k;i++){
+            ui->tableWidget->item(i,0)->setFlags(Qt::NoItemFlags);
+            ui->tableWidget->item(i,1)->setFlags(Qt::NoItemFlags);
+        }
+        //ui->tableWidget->setMouseTracking(true);
+        //connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
+        //connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
+        //connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
+        //connect(ui->tableWidget,SIGNAL(cellDoubleClicked(int,int)), this, SLOT(itemEdit(int,int)));//双击编辑
     }
-    ui->tableWidget->setHorizontalHeaderLabels(header);
 }
 
 void MenuManage::on_action_N_triggered()
 {
-    addDish* addDialog = new addDish;
-    addDialog->show();
-    addDialog->exec();
+    //addDialog = new addDish;
+    addDialog.show();
+    addDialog.exec();
 }
 
 void MenuManage::on_OkBtn_clicked()
@@ -178,31 +189,43 @@ void MenuManage::showDishes(){
     int j,index=0, temp[8][20];
     for(int i=0;i<8;i++)
         for(int j=0;j<20;j++)
-            temp[i][j]=0;
-    for(int i=0;i<ui->tableWidget->rowCount();i++){
+            temp[i][j]=-1;
+    for(int i=0;i<Dish::count;i++){
         int t = (int)Data::dish[i].type-1;
-        for(j=0;temp[t][j]!=0;j++);
-        temp[t][j]=i+1;//dish[0]的下标为0
+        for(j=0;temp[t][j]!=-1;j++);
+        temp[t][j]=i;
     }
     for(int i=0;i<8;i++){
-        for(j=0;temp[i][j]!=0;j++){
-            if(Data::dish[temp[i][j]-1].demand>=-1){
-                ui->tableWidget->setItem(index, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[temp[i][j]-1].id)));
-                ui->tableWidget->setItem(index, 1, new QTableWidgetItem(Data::dish[temp[i][j]-1].getType()));
-                ui->tableWidget->setItem(index, 2, new QTableWidgetItem(Data::dish[temp[i][j]-1].name));
-                ui->tableWidget->setItem(index, 3, new QTableWidgetItem(QString("%1").arg(Data::dish[temp[i][j]-1].price)));
-                ui->tableWidget->setItem(index, 4, new QTableWidgetItem(Data::dish[temp[i][j]-1].notes));
+        for(j=0;temp[i][j]!=-1;j++){
+            if(Data::dish[temp[i][j]].demand>=-1){
+                ui->tableWidget->setItem(index, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[temp[i][j]].id)));
+                ui->tableWidget->setItem(index, 1, new QTableWidgetItem(Data::dish[temp[i][j]].getType()));
+                ui->tableWidget->setItem(index, 2, new QTableWidgetItem(Data::dish[temp[i][j]].name));
+                ui->tableWidget->setItem(index, 3, new QTableWidgetItem(QString("%1").arg(Data::dish[temp[i][j]].price)));
+                ui->tableWidget->setItem(index, 4, new QTableWidgetItem(Data::dish[temp[i][j]].notes));
                 index++;
             }
         }
     }
+    QFont font = ui->tableWidget->horizontalHeader()->font();
+    font.setBold(true);
+    ui->tableWidget->horizontalHeader()->setFont(font);
+    ui->tableWidget->setEditTriggers(QAbstractItemView::DoubleClicked);//双击编辑
+    for(int i=0;i<ui->tableWidget->rowCount();i++){
+        ui->tableWidget->item(i,0)->setFlags(Qt::NoItemFlags);
+        ui->tableWidget->item(i,1)->setFlags(Qt::NoItemFlags);
+    }
+    ui->tableWidget->setMouseTracking(true);
     connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
     connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
+    connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
+    connect(ui->tableWidget,SIGNAL(cellDoubleClicked(int,int)), this, SLOT(itemEdit(int,int)));//双击编辑
 }
 
 void MenuManage::mySortByColumn(int column)
 {
     static bool f = true;
+    qDebug()<<"sort: ";
     ui->tableWidget->sortByColumn(column, f ? Qt::AscendingOrder : Qt::DescendingOrder);
     f = !f;
 }
@@ -260,7 +283,7 @@ void MenuManage::deleteDish(){
         }
     }       //找到id后把该菜品的需求视为-2，即删除
 }
-
+//
 void MenuManage::on_action_refresh_triggered()
 {
     qDebug()<<"refresh..";
@@ -268,7 +291,7 @@ void MenuManage::on_action_refresh_triggered()
     connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
     connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
 }
-
+//此函数作废
 void MenuManage::itemEdit(int row,int column){
     QString id = ui->tableWidget->item(row, 0)->text();
     int ID = id.toInt(),i;
@@ -278,12 +301,19 @@ void MenuManage::itemEdit(int row,int column){
             break;
         }
     }
-    QString name = ui->tableWidget->item(row,2)->text();
+    QString Name = ui->tableWidget->item(row,2)->text();
     int price = ui->tableWidget->item(row,3)->text().toInt();
     QString note = ui->tableWidget->item(row,4)->text();
-    Data::dish[i].name = name;
-    qDebug()<<name;
+    Data::dish[i].name = ui->tableWidget->item(row,2)->text();
+    qDebug()<<"dish name: "<<Name;
     Data::dish[i].price = price;
     Data::dish[i].notes = note;
     qDebug()<<"Edit id: "<<ID;
+    return;
+}
+//
+
+void MenuManage::on_action_edit_triggered()
+{
+
 }

@@ -27,11 +27,14 @@ private slots:
     void MouseTrackItem(int row, int column);
     void rowSelect();
     void itemEdit(int row,int column);
+    //void itemEdit(QTableWidgetItem* item);
     void on_action_D_triggered();
     void on_action_refresh_triggered();
+    void on_action_edit_triggered();
 
 private:
     Ui::MenuManage *ui;
+    addDish addDialog;
     QStringList header = QStringList()<<"编号"<<"种类"<<"名字"<<"单价"<<"备注";
     //布局
     void setTypeGroupBox();
