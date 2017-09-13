@@ -26,9 +26,9 @@ private slots:
     void mySortByColumn(int column);    //表头单击排序
     void MouseTrackItem(int row, int column);
     void rowSelect();
-
-
+    void itemEdit(int row,int column);
     void on_action_D_triggered();
+    void on_action_refresh_triggered();
 
 private:
     Ui::MenuManage *ui;

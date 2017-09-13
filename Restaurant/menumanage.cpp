@@ -31,11 +31,16 @@ MenuManage::MenuManage(QWidget *parent) :
     QFont font = ui->tableWidget->horizontalHeader()->font();
     font.setBold(true);
     ui->tableWidget->horizontalHeader()->setFont(font);
-    ui->tableWidget->setEditTriggers(QAbstractItemView::DoubleClicked);//禁止编辑
+    ui->tableWidget->setEditTriggers(QAbstractItemView::DoubleClicked);//双击编辑
+    for(int i=0;i<ui->tableWidget->rowCount();i++){
+        ui->tableWidget->item(i,0)->setFlags(Qt::NoItemFlags);
+        ui->tableWidget->item(i,1)->setFlags(Qt::NoItemFlags);
+    }
     ui->tableWidget->setMouseTracking(true);
-    connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));
-    connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));
-    connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));
+    connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
+    connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
+    connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
+    connect(ui->tableWidget,SIGNAL(cellDoubleClicked(int,int)), this, SLOT(itemEdit(int,int)));//双击编辑
 
     QWidget* widget = new QWidget;
     widget->setLayout(layout);
@@ -191,6 +196,8 @@ void MenuManage::showDishes(){
             }
         }
     }
+    connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
+    connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
 }
 
 void MenuManage::mySortByColumn(int column)
@@ -208,9 +215,19 @@ void MenuManage::MouseTrackItem(int row, int column){
 }
 
 void MenuManage::rowSelect(){
-    ui->tableWidget->setStyleSheet("selection-background-color:burlywood;"); //选中项的颜色
-    qDebug()<<ui->tableWidget->currentRow();
-    ui->tableWidget->setMouseTracking(false);
+    static bool track = true;
+    qDebug()<<track;
+    if(track){
+        ui->tableWidget->setStyleSheet("selection-background-color:burlywood;"); //选中项的颜色
+        qDebug()<<ui->tableWidget->currentRow();
+        ui->tableWidget->setMouseTracking(false);
+    }
+    else{
+        ui->tableWidget->setMouseTracking(true);
+        connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
+        connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
+    }
+    track = !track;
 }
 
 void MenuManage::on_action_D_triggered(){
@@ -226,7 +243,8 @@ void MenuManage::on_action_D_triggered(){
         showDishes();
         return;
     }
-    else return ;
+    else if(delBox.clickedButton()==noBtn)
+        return;
 }
 
 void MenuManage::deleteDish(){
@@ -238,11 +256,34 @@ void MenuManage::deleteDish(){
         if(Data::dish[i].id == ID){
             Data::dish[i].demand = -2;
             Dish::count--;
+            break;
         }
     }       //找到id后把该菜品的需求视为-2，即删除
 }
 
+void MenuManage::on_action_refresh_triggered()
+{
+    qDebug()<<"refresh..";
+    changeType(0);
+    connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
+    connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
+}
 
-
-
-
+void MenuManage::itemEdit(int row,int column){
+    QString id = ui->tableWidget->item(row, 0)->text();
+    int ID = id.toInt(),i;
+    for(i=0;i<Dish::count;i++){
+        if(Data::dish[i].id == ID){
+            Data::dish[i].demand = -1;
+            break;
+        }
+    }
+    QString name = ui->tableWidget->item(row,2)->text();
+    int price = ui->tableWidget->item(row,3)->text().toInt();
+    QString note = ui->tableWidget->item(row,4)->text();
+    Data::dish[i].name = name;
+    qDebug()<<name;
+    Data::dish[i].price = price;
+    Data::dish[i].notes = note;
+    qDebug()<<"Edit id: "<<ID;
+}

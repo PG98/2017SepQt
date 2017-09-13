@@ -141,8 +141,9 @@
     </property>
     <addaction name="action_N"/>
     <addaction name="action_D"/>
-    <addaction name="action_M"/>
     <addaction name="action_Z"/>
+    <addaction name="action_refresh"/>
+    <addaction name="action_S"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -171,8 +172,9 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_refresh"/>
    <addaction name="action_N"/>
-   <addaction name="action_M"/>
+   <addaction name="action_S"/>
    <addaction name="action_D"/>
    <addaction name="action_Z"/>
   </widget>
@@ -183,6 +185,9 @@
    </property>
    <property name="text">
     <string>新建菜品(&amp;N)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="action_D">
@@ -195,15 +200,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
-   </property>
-  </action>
-  <action name="action_M">
-   <property name="icon">
-    <iconset resource="images.qrc">
-     <normaloff>:/buttons/edit.png</normaloff>:/buttons/edit.png</iconset>
-   </property>
-   <property name="text">
-    <string>修改当前(&amp;M)</string>
    </property>
   </action>
   <action name="action_Z">
@@ -223,6 +219,27 @@
   <action name="action">
    <property name="text">
     <string>使用说明</string>
+   </property>
+  </action>
+  <action name="action_refresh">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/buttons/refresh-1.png</normaloff>:/buttons/refresh-1.png</iconset>
+   </property>
+   <property name="text">
+    <string>刷新</string>
+   </property>
+  </action>
+  <action name="action_S">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/buttons/save.png</normaloff>:/buttons/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>保存(&amp;S)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>
