@@ -23,6 +23,12 @@ private slots:
     void on_action_N_triggered();
     void changeType(int type);
     void on_OkBtn_clicked();
+    void mySortByColumn(int column);    //表头单击排序
+    void MouseTrackItem(int row, int column);
+    void rowSelect();
+
+
+    void on_action_D_triggered();
 
 private:
     Ui::MenuManage *ui;
@@ -34,7 +40,7 @@ private:
     QHBoxLayout* setButtons();
 
     void showDishes();//显示所有菜品，按照类别排列
-
+    void deleteDish();
 };
 
 #endif // MENUMANAGE_H
