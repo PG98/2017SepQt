@@ -39,6 +39,7 @@ void addDish::on_OkBtn_clicked(){
     }
     newID = type*100 + k;
     Data::dish[count].setDish(newID, ui->nameEdit->text(), type, ui->priceEdit->text().toInt(), ui->noteEdit->text());
+    Data::dish[count].demand = -2;
     Dish::count++;
     qDebug()<<"new dish added ";
     this->close();

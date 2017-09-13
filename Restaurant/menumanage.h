@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtWidgets>
 #include "adddish.h"
+#include "dishedit.h"
 
 namespace Ui {
 class MenuManage;
@@ -26,15 +27,17 @@ private slots:
     void mySortByColumn(int column);    //表头单击排序
     void MouseTrackItem(int row, int column);
     void rowSelect();
-    void itemEdit(int row,int column);
-    //void itemEdit(QTableWidgetItem* item);
     void on_action_D_triggered();
     void on_action_refresh_triggered();
     void on_action_edit_triggered();
 
+    void on_action_S_triggered();
+
+
 private:
     Ui::MenuManage *ui;
     addDish addDialog;
+    dishEdit editDialog;
     QStringList header = QStringList()<<"编号"<<"种类"<<"名字"<<"单价"<<"备注";
     //布局
     void setTypeGroupBox();

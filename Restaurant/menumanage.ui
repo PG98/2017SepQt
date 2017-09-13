@@ -33,6 +33,14 @@
       <height>81</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Weibei SC</family>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="title">
      <string>dishtype</string>
     </property>
@@ -56,8 +64,16 @@
       <height>341</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Weibei SC</family>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="title">
-     <string>detail</string>
+     <string>字体测试</string>
     </property>
     <widget class="QLabel" name="imageLabel">
      <property name="geometry">
@@ -94,6 +110,14 @@
       <width>311</width>
       <height>321</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Weibei SC</family>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="title">
      <string>menu</string>
@@ -182,7 +206,7 @@
   </widget>
   <action name="action_N">
    <property name="icon">
-    <iconset resource="images.qrc">
+    <iconset>
      <normaloff>:/buttons/add.png</normaloff>:/buttons/add.png</iconset>
    </property>
    <property name="text">
@@ -194,7 +218,7 @@
   </action>
   <action name="action_D">
    <property name="icon">
-    <iconset resource="images.qrc">
+    <iconset>
      <normaloff>:/buttons/delete.png</normaloff>:/buttons/delete.png</iconset>
    </property>
    <property name="text">
@@ -206,7 +230,7 @@
   </action>
   <action name="action_Z">
    <property name="icon">
-    <iconset resource="images.qrc">
+    <iconset>
      <normaloff>:/buttons/undo.png</normaloff>:/buttons/undo.png</iconset>
    </property>
    <property name="text">
@@ -225,7 +249,7 @@
   </action>
   <action name="action_refresh">
    <property name="icon">
-    <iconset resource="images.qrc">
+    <iconset>
      <normaloff>:/buttons/refresh-1.png</normaloff>:/buttons/refresh-1.png</iconset>
    </property>
    <property name="text">
@@ -234,7 +258,7 @@
   </action>
   <action name="action_S">
    <property name="icon">
-    <iconset resource="images.qrc">
+    <iconset>
      <normaloff>:/buttons/save.png</normaloff>:/buttons/save.png</iconset>
    </property>
    <property name="text">
@@ -246,7 +270,7 @@
   </action>
   <action name="action_edit">
    <property name="icon">
-    <iconset resource="images.qrc">
+    <iconset>
      <normaloff>:/buttons/edit.png</normaloff>:/buttons/edit.png</iconset>
    </property>
    <property name="text">
@@ -254,8 +278,6 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="images.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

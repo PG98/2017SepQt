@@ -24,7 +24,7 @@ public slots:
 
 private slots:
     void on_CancelBtn_clicked();
-    virtual void on_OkBtn_clicked();
+    void on_OkBtn_clicked();
 
 private:
     Ui::addDish *ui;

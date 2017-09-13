@@ -3,6 +3,7 @@
 #include <QDebug>
 #include "data.h"
 #include <QHeaderView>
+#include <QSqlError>
 
 MenuManage::MenuManage(QWidget *parent) :
     QMainWindow(parent),
@@ -19,7 +20,11 @@ MenuManage::MenuManage(QWidget *parent) :
     QHBoxLayout* bottomLayout = setButtons();
     //connect W按钮..槽..
     connect(&addDialog, SIGNAL(refresh()), this, SLOT(on_action_refresh_triggered()));//从子窗口传递信号，添加完成后自动刷新显示
-
+    connect(&editDialog, SIGNAL(refresh()), this, SLOT(on_action_refresh_triggered()));
+    ui->tableWidget->setMouseTracking(true);
+    connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
+    connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
+    connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(ui->dishtype, 0, 0);
@@ -29,21 +34,7 @@ MenuManage::MenuManage(QWidget *parent) :
     layout->setColumnStretch(1, 1);
     layout->setColumnMinimumWidth(0, 500);
     layout->setRowMinimumHeight(0,100);
-/*
-    QFont font = ui->tableWidget->horizontalHeader()->font();
-    font.setBold(true);
-    ui->tableWidget->horizontalHeader()->setFont(font);
-    ui->tableWidget->setEditTriggers(QAbstractItemView::DoubleClicked);//双击编辑
-    for(int i=0;i<ui->tableWidget->rowCount();i++){
-        ui->tableWidget->item(i,0)->setFlags(Qt::NoItemFlags);
-        ui->tableWidget->item(i,1)->setFlags(Qt::NoItemFlags);
-    }
-    ui->tableWidget->setMouseTracking(true);
-    connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
-    connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
-    connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
-    connect(ui->tableWidget,SIGNAL(cellDoubleClicked(int,int)), this, SLOT(itemEdit(int,int)));//双击编辑
-*/
+
     QWidget* widget = new QWidget;
     widget->setLayout(layout);
     setCentralWidget(widget);
@@ -83,15 +74,6 @@ void MenuManage::setMenuGroupBox(){
     ui->tableWidget->setRowCount(Dish::count);
     //按照类别顺序显示表格
     showDishes();
-    /*//按下标输出
-    for(int i=0;i<ui->tableWidget->rowCount();i++){
-        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[i].id)));
-        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(Data::dish[i].getType()));
-        ui->tableWidget->setItem(i, 2, new QTableWidgetItem(Data::dish[i].name));
-        ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString("%1").arg(Data::dish[i].price)));
-        ui->tableWidget->setItem(i, 4, new QTableWidgetItem(Data::dish[i].notes));
-        //ui->tableWidget->horizontalHeaderItem(i)->setBackgroundColor(QColor(100, 149, 237));//会崩溃
-    }*/
     //connect  表格项目点击，激活等
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(ui->tableWidget, 0, 0);
@@ -138,9 +120,10 @@ void MenuManage::changeType(int type){
         qDebug()<<"clear table";
         ui->tableWidget->clearContents();
         int k=0;
+        qDebug()<<"dish Type: "<<type;
         for(int i=0;i<Dish::count;i++){
             //qDebug()<<QString("%1").arg((int)Data::dish[i].type);
-            if((int)Data::dish[i].type==type && Data::dish[i].demand>=-1){
+            if((int)Data::dish[i].type==type && Data::dish[i].demand>=-2){
                 ui->tableWidget->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[i].id)));
                 ui->tableWidget->setItem(k, 1, new QTableWidgetItem(Data::dish[i].getType()));
                 ui->tableWidget->setItem(k, 2, new QTableWidgetItem(Data::dish[i].name));
@@ -149,40 +132,7 @@ void MenuManage::changeType(int type){
                 k++;
             }
         }
-        for(int i=0;i<k;i++){
-            ui->tableWidget->item(i,0)->setFlags(Qt::NoItemFlags);
-            ui->tableWidget->item(i,1)->setFlags(Qt::NoItemFlags);
-        }
-        //ui->tableWidget->setMouseTracking(true);
-        //connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
-        //connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
-        //connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
-        //connect(ui->tableWidget,SIGNAL(cellDoubleClicked(int,int)), this, SLOT(itemEdit(int,int)));//双击编辑
     }
-}
-
-void MenuManage::on_action_N_triggered()
-{
-    //addDialog = new addDish;
-    addDialog.show();
-    addDialog.exec();
-}
-
-void MenuManage::on_OkBtn_clicked()
-{
-    QMessageBox box;          //警告对话框
-    box.setWindowTitle("提醒");
-    box.setIcon(QMessageBox::Warning);
-    box.setText("是否保存？");
-    QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
-    box.addButton("否(&N)", QMessageBox::NoRole);
-    QPushButton *cancelBut = box.addButton("取消", QMessageBox::RejectRole);
-
-    box.exec();
-    if(box.clickedButton() == yesBtn)
-        return;
-    else if (box.clickedButton() == cancelBut)
-        return;
 }
 
 void MenuManage::showDishes(){
@@ -210,16 +160,36 @@ void MenuManage::showDishes(){
     QFont font = ui->tableWidget->horizontalHeader()->font();
     font.setBold(true);
     ui->tableWidget->horizontalHeader()->setFont(font);
-    ui->tableWidget->setEditTriggers(QAbstractItemView::DoubleClicked);//双击编辑
-    for(int i=0;i<ui->tableWidget->rowCount();i++){
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//双击编辑
+    /*//可用来禁止编辑
+    for(int i=0;i<k;i++){
         ui->tableWidget->item(i,0)->setFlags(Qt::NoItemFlags);
         ui->tableWidget->item(i,1)->setFlags(Qt::NoItemFlags);
-    }
-    ui->tableWidget->setMouseTracking(true);
-    connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
-    connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
-    connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
-    connect(ui->tableWidget,SIGNAL(cellDoubleClicked(int,int)), this, SLOT(itemEdit(int,int)));//双击编辑
+    }*/
+}
+
+void MenuManage::on_action_N_triggered()
+{
+    //addDialog = new addDish;
+    addDialog.show();
+    addDialog.exec();
+}
+
+void MenuManage::on_OkBtn_clicked()
+{
+    QMessageBox box;          //警告对话框
+    box.setWindowTitle("提醒");
+    box.setIcon(QMessageBox::Warning);
+    box.setText("是否保存？");
+    QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
+    box.addButton("否(&N)", QMessageBox::NoRole);
+    QPushButton *cancelBut = box.addButton("取消", QMessageBox::RejectRole);
+
+    box.exec();
+    if(box.clickedButton() == yesBtn)
+        return;
+    else if (box.clickedButton() == cancelBut)
+        return;
 }
 
 void MenuManage::mySortByColumn(int column)
@@ -237,7 +207,7 @@ void MenuManage::MouseTrackItem(int row, int column){
     ui->tableWidget->setCurrentCell(row, QItemSelectionModel::Select); //设置该行为选中项。
 }
 
-void MenuManage::rowSelect(){
+void MenuManage::rowSelect(){   //鼠标移动、点击效果
     static bool track = true;
     qDebug()<<track;
     if(track){
@@ -277,7 +247,7 @@ void MenuManage::deleteDish(){
     qDebug()<<"delete ID: "<<ID;
     for(int i=0;i<Dish::count;i++){
         if(Data::dish[i].id == ID){
-            Data::dish[i].demand = -2;
+            Data::dish[i].demand = -3;
             Dish::count--;
             break;
         }
@@ -292,6 +262,7 @@ void MenuManage::on_action_refresh_triggered()
     connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
 }
 //此函数作废
+/*
 void MenuManage::itemEdit(int row,int column){
     QString id = ui->tableWidget->item(row, 0)->text();
     int ID = id.toInt(),i;
@@ -310,10 +281,56 @@ void MenuManage::itemEdit(int row,int column){
     Data::dish[i].notes = note;
     qDebug()<<"Edit id: "<<ID;
     return;
-}
-//
+}*/
 
 void MenuManage::on_action_edit_triggered()
 {
+    int row = ui->tableWidget->currentRow();
+    int id = ui->tableWidget->item(row, 0)->text().toInt();
+    editDialog.id = id;
+    editDialog.name = ui->tableWidget->item(row, 2)->text();
+    editDialog.notes = ui->tableWidget->item(row, 4)->text();
+    editDialog.price = ui->tableWidget->item(row, 3)->text().toInt();
+    editDialog.dishtype = ui->tableWidget->item(row, 1)->text();
+    editDialog.set();
+    editDialog.show();
+    editDialog.exec();
+}
+
+void MenuManage::on_action_S_triggered()
+{
+    int count = Dish::count;
+    int flag = 0, id;
+    //保存时，被删除的项目demand为-3，新建项目为-2，更改项目为-1
+    //每次保存只处理以上更改
+    QSqlQuery query;
+    QString tempstring;
+    for(int i=0;i<count;i++){
+        id = Data::dish[i].id;
+        flag = Data::dish[i].demand;
+        if(flag == -1){
+            qDebug()<<"modified";
+            tempstring = "update student set name = :name where id = :id";
+            sql_query.prepare(update_sql);
+            sql_query.bindValue(":name", "Qt");
+            sql_query.bindValue(":id", 1);
+            if(!sql_query.exec())
+            {
+                qDebug() << query.lastError();
+            }else{
+                qDebug() << "updated!";
+            }
+        }
+        else if(flag == -2){
+            qDebug()<<"inserted";
+
+
+        }
+        else if(flag == -3){
+            qDebug()<<"deleted";
+            tempstring = QString("delete from dish where id = %1").arg(id);
+            query.exec(tempstring);
+        }
+    }
 
 }
