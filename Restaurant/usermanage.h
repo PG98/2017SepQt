@@ -1,13 +1,13 @@
 #ifndef USERMANAGE_H
 #define USERMANAGE_H
 
-#include <QDialog>
+#include <QMainWindow>
 
 namespace Ui {
 class UserManage;
 }
 
-class UserManage : public QDialog
+class UserManage : public QMainWindow
 {
     Q_OBJECT
 
