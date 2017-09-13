@@ -248,10 +248,10 @@ void MenuManage::deleteDish(){
     for(int i=0;i<Dish::count;i++){
         if(Data::dish[i].id == ID){
             Data::dish[i].demand = -3;
-            Dish::count--;
+            //Dish::count--;
             break;
         }
-    }       //找到id后把该菜品的需求视为-2，即删除
+    }       //找到id后把该菜品的需求视为-3s，即删除
 }
 //
 void MenuManage::on_action_refresh_triggered()
@@ -299,6 +299,23 @@ void MenuManage::on_action_edit_triggered()
 
 void MenuManage::on_action_S_triggered()
 {
+    QMessageBox saveBox;
+    saveBox.setWindowTitle(tr("保存修改"));
+    saveBox.setIcon(QMessageBox::Warning);
+    saveBox.setText(tr("是否保存当前修改？"));
+    QPushButton *yesBtn = saveBox.addButton(tr("是(&Y)"), QMessageBox::YesRole);
+    QPushButton *noBtn = saveBox.addButton(tr("取消"), QMessageBox::NoRole);
+    saveBox.exec();
+    if(saveBox.clickedButton()==yesBtn){
+        saveCurrent();
+        showDishes();
+        return;
+    }
+    else if(saveBox.clickedButton()==noBtn)
+        return;
+}
+
+void MenuManage::saveCurrent(){
     int count = Dish::count;
     int flag = 0, id;
     //保存时，被删除的项目demand为-3，新建项目为-2，更改项目为-1
@@ -310,11 +327,12 @@ void MenuManage::on_action_S_triggered()
         flag = Data::dish[i].demand;
         if(flag == -1){
             qDebug()<<"modified";
-            tempstring = "update student set name = :name where id = :id";
-            sql_query.prepare(update_sql);
-            sql_query.bindValue(":name", "Qt");
-            sql_query.bindValue(":id", 1);
-            if(!sql_query.exec())
+            tempstring = QString("update dish set dishName = :name, price = :price, notes = :notes, demand = 0 where id = %1").arg(id);
+            query.prepare(tempstring);
+            query.bindValue(":name", Data::dish[i].name);
+            query.bindValue(":id", Data::dish[i].price);
+            query.bindValue(":notes", Data::dish[i].notes);
+            if(!query.exec())
             {
                 qDebug() << query.lastError();
             }else{
@@ -323,8 +341,21 @@ void MenuManage::on_action_S_triggered()
         }
         else if(flag == -2){
             qDebug()<<"inserted";
-
-
+            tempstring = "insert into dish values (?, ?, ?, 0, 0, ?, ?)";
+            query.prepare(tempstring);
+            query.addBindValue(id);
+            query.addBindValue((int)Data::dish[i].type);
+            query.addBindValue(Data::dish[i].name);
+            query.addBindValue(Data::dish[i].price);
+            query.addBindValue(Data::dish[i].notes);
+            if(!query.exec())
+            {
+                qDebug() << query.lastError();
+            }
+            else
+            {
+                qDebug() << "inserted "<<Data::dish[i].name<<"!";
+            }
         }
         else if(flag == -3){
             qDebug()<<"deleted";
@@ -332,5 +363,9 @@ void MenuManage::on_action_S_triggered()
             query.exec(tempstring);
         }
     }
+}
+
+void MenuManage::on_backBtn_clicked()
+{
 
 }

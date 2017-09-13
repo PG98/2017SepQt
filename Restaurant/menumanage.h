@@ -34,6 +34,8 @@ private slots:
     void on_action_S_triggered();
 
 
+    void on_backBtn_clicked();
+
 private:
     Ui::MenuManage *ui;
     addDish addDialog;
@@ -47,6 +49,7 @@ private:
 
     void showDishes();//显示所有菜品，按照类别排列
     void deleteDish();
+    void saveCurrent();
 };
 
 #endif // MENUMANAGE_H
