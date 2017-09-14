@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include "adduser.h"
 
 
 namespace Ui {
@@ -28,8 +29,11 @@ private slots:
 
     void on_OkBtn_clicked();
 
+    void on_action_N_triggered();
+
 private:
     Ui::UserManage *ui;
+    addUser adduser;
     void setBox1();
     void setBox2();
     QHBoxLayout* setButtons();

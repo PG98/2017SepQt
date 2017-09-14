@@ -16,6 +16,7 @@ UserManage::UserManage(QWidget *parent) :
     setBox1();
     setBox2();
 
+    connect(&adduser, SIGNAL(refresh()), this, SLOT(on_action_refresh_triggered()));
     ui->tableWidget->setMouseTracking(true);
     connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
     connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
@@ -81,6 +82,7 @@ QHBoxLayout* UserManage::setButtons(){
 void UserManage::showUsers(){
     int count = User::count;
     qDebug()<<"user.count = "<<count;
+    qDebug()<<Data::user[count-1].isMember;
     int i=0;
     for(int k=0;k<count;k++){
         if(Data::user[k].isMember>-3){
@@ -208,6 +210,8 @@ void UserManage::saveCurrent(){
     }
 }
 
-
-
-
+void UserManage::on_action_N_triggered()
+{
+    adduser.show();
+    adduser.exec();
+}

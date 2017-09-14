@@ -6,6 +6,7 @@ class User{
 public:
     User();
     User(int ID, QString Pwd, QString Phone, QString Name, int IsMember):id(ID), pwd(Pwd), phone(Phone), name(Name), isMember(IsMember){}
+    void setUser(int ID, QString Pwd, QString Phone, QString Name, int IsMember);
     int id;
     QString pwd;
     QString phone;
