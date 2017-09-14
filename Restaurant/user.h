@@ -5,13 +5,13 @@
 class User{
 public:
     User();
-    User(int ID, QString Pwd, QString Phone, QString Email, int IsMember):id(ID), pwd(Pwd), phone(Phone), email(Email), isMember(IsMember){}
+    User(int ID, QString Pwd, QString Phone, QString Name, int IsMember):id(ID), pwd(Pwd), phone(Phone), name(Name), isMember(IsMember){}
     int id;
     QString pwd;
     QString phone;
-    QString email;
+    QString name;
     int isMember;
-
+    static int getCount(){return count;}
     static int count;
 };
 

@@ -12,7 +12,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     this->setWindowTitle(tr("登陆"));
     this->setFixedSize(this->width(),this->height());//固定窗口大小
 
-    this->setStyleSheet("background-color:lavender;");//窗口背景颜色
+    //this->setStyleSheet("background-color:lavender;");//窗口背景颜色
     //this->setStyleSheet("border-image:url(:/images/backgnd.png);");//背景图片
     QImage im;
     im.load(":/images/room2.png");
@@ -186,7 +186,7 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
     }
 }
 
-//id, pwd, phone, email, isMember
+//id, pwd, phone, name, isMember
 void LoginDialog::getUserInfo(QString phone){
     QSqlQuery query;
     //查询手机号码数据
@@ -211,9 +211,9 @@ void LoginDialog::getUserInfo(QString phone){
             userid = query.value(0).toInt();
             userpwd = query.value(1).toString();
             userphone = query.value(2).toString();
-            userEmail = query.value(3).toString();
+            username = query.value(3).toString();
             member = query.value(4).toInt();
-            qDebug()<<QString("id=%1    pwd=%2    phone=%3   email=%4    isMember=%5").arg(userid).arg(userpwd).arg(userphone).arg(userEmail).arg(member);
+            qDebug()<<QString("id=%1    pwd=%2    phone=%3   name=%4    isMember=%5").arg(userid).arg(userpwd).arg(userphone).arg(username).arg(member);
         }
         if(userphone == phone)
             matchFlag=true;

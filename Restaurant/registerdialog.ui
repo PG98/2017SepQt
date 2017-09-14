@@ -62,7 +62,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>E-mail:</string>
+    <string>姓名：</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="PhoneLineEdit">

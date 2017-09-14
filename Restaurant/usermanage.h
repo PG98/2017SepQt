@@ -21,16 +21,21 @@ private slots:
     void mySortByColumn(int column);
     void MouseTrackItem(int row, int column);
     void rowSelect();
+    void on_action_refresh_triggered();
+    void on_action_star_triggered();
+
+    void on_action_D_triggered();
+
+    void on_OkBtn_clicked();
 
 private:
     Ui::UserManage *ui;
     void setBox1();
     void setBox2();
     QHBoxLayout* setButtons();
-    QStringList header = QStringList()<<"编号"<<"手机"<<"email"<<"会员状态";
+    QStringList header = QStringList()<<"编号"<<"手机"<<"姓名"<<"会员状态";
 
     void showUsers();
-    void deleteUser();
     void saveCurrent();
 };
 

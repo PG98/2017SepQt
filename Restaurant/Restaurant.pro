@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     menumanage.cpp \
     adddish.cpp \
     dishedit.cpp \
-    user.cpp
+    user.cpp \
+    adduser.cpp
 
 HEADERS  += \
     registerdialog.h \
@@ -37,7 +38,8 @@ HEADERS  += \
     menumanage.h \
     adddish.h \
     dishedit.h \
-    user.h
+    user.h \
+    adduser.h
 
 FORMS    += \
     registerdialog.ui \
@@ -47,7 +49,8 @@ FORMS    += \
     order.ui \
     menumanage.ui \
     adddish.ui \
-    dishedit.ui
+    dishedit.ui \
+    adduser.ui
 
 RESOURCES += \
     images.qrc

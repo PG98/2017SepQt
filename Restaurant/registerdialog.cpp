@@ -26,7 +26,7 @@ void RegisterDialog::OKBtn_clicked(){
     int newid = max_id + 1;
     QString newpwd = NULL;
     QString newphone = NULL;
-    QString newmail = ui->EmailLineEdit->text();
+    QString newname = ui->EmailLineEdit->text();
 
     if(ui->pwdLineEdit1->text()==""||ui->pwdLineEdit2->text()==""){
         QMessageBox::warning(this, tr("警告"), tr("请输入密码"));
@@ -91,7 +91,7 @@ void RegisterDialog::OKBtn_clicked(){
     query.addBindValue(newid);
     query.addBindValue(newpwd);
     query.addBindValue(newphone);//
-    query.addBindValue(newmail);
+    query.addBindValue(newname);
     query.addBindValue(0);
     //
     if(!query.exec()){

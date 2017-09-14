@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>518</width>
     <height>600</height>
    </rect>
   </property>
@@ -82,8 +82,8 @@
    <widget class="QPushButton" name="OkBtn">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>530</y>
+      <x>370</x>
+      <y>520</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -112,15 +112,15 @@
    </attribute>
    <addaction name="action_N"/>
    <addaction name="action_D"/>
-   <addaction name="action_2"/>
-   <addaction name="action"/>
+   <addaction name="action_refresh"/>
+   <addaction name="action_star"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>518</width>
      <height>25</height>
     </rect>
    </property>
@@ -130,8 +130,8 @@
     </property>
     <addaction name="action_N"/>
     <addaction name="action_D"/>
-    <addaction name="action"/>
-    <addaction name="action_2"/>
+    <addaction name="action_star"/>
+    <addaction name="action_refresh"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -152,17 +152,20 @@
    <property name="text">
     <string>删除(&amp;D)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Backspace</string>
+   </property>
   </action>
-  <action name="action">
+  <action name="action_star">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/buttons/star.png</normaloff>:/buttons/star.png</iconset>
+     <normaloff>:/buttons/star1.png</normaloff>:/buttons/star1.png</iconset>
    </property>
    <property name="text">
     <string>会员变更</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="action_refresh">
    <property name="icon">
     <iconset resource="images.qrc">
      <normaloff>:/buttons/refresh.png</normaloff>:/buttons/refresh.png</iconset>

@@ -28,6 +28,9 @@
    <property name="text">
     <string>菜单管理</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="userBtn">
    <property name="geometry">
@@ -40,6 +43,9 @@
    </property>
    <property name="text">
     <string>用户管理</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </widget>
  </widget>

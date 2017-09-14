@@ -324,7 +324,7 @@ void MenuManage::saveCurrent(){
             }
         }
         else if(flag == -2){
-            qDebug()<<"inserted";
+            qDebug()<<"insert";
             tempstring = "insert into dish values (?, ?, ?, 0, 0, ?, ?)";
             query.prepare(tempstring);
             query.addBindValue(id);
@@ -381,12 +381,23 @@ void MenuManage::on_backBtn_clicked(){
     box.setIcon(QMessageBox::Warning);
     box.setText("是否保存？");
     QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
-    box.addButton("否(&N)", QMessageBox::NoRole);
+    QPushButton *noBtn = box.addButton(tr("不保存"), QMessageBox::NoRole);
     QPushButton *cancelBut = box.addButton("取消", QMessageBox::RejectRole);
 
     box.exec();
-    if(box.clickedButton() == yesBtn)
+    if(box.clickedButton() == yesBtn){
+        saveCurrent();
+        AdminDialog* admin = new AdminDialog;
+        admin->show();
+        this->close();
         return;
+    }
+    else if(box.clickedButton()==noBtn){
+        AdminDialog* admin = new AdminDialog;
+        admin->show();
+        this->close();
+        return;
+    }
     else if (box.clickedButton() == cancelBut)
         return;
 }

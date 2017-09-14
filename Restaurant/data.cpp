@@ -10,11 +10,10 @@ void Data::dataInit(){
     query.prepare("select * from user");
     query.exec();
     while(query.next()){
-        qDebug()<<query.value(2).toString();
         user[i].id = query.value(0).toInt();
         user[i].pwd = query.value(1).toString();
         user[i].phone = query.value(2).toString();
-        user[i].email = query.value(3).toString();
+        user[i].name = query.value(3).toString();
         user[i].isMember = query.value(4).toInt();
         i++;
     }
