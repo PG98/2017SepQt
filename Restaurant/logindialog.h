@@ -38,13 +38,13 @@ private:
     QString userpwd;
     QString userphone;
     QString userEmail;
-    int userHistory;
+    int member;
     bool matchFlag = false;
     //数据库操作命令
     //如果.db文件已存在，select;否则create。
     QString select_table = "select tbl_name name from sqlite_master where type = 'table'";
     //对顾客账户的数据库操作命令
-    QString create_user = "create table user (id int primary key, pwd varchar(30), phone varchar(30), email varchar(30), history int)";
+    QString create_user = "create table user (id int primary key, pwd varchar(30), phone varchar(30), email varchar(30), isMember int)";
     QString select_max_user = "select max(id) from user";        //在register中用到
     QString insert_user = "insert into user values (?, ?, ?, ?, ?)";
     QString select_phone = "select phone from user";

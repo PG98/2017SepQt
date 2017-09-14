@@ -47,7 +47,38 @@ static bool createConnection(){
                 }
         if(tableFlag==false)        //初次打开时table不存在
              {
-                query.exec("create table user (id int primary key, pwd varchar(30), phone varchar(30), email varchar(30), history int)");
+                query.exec("create table user (id int primary key, pwd varchar(30), phone varchar(30), email varchar(30), isMember int)");
+                query.exec("insert into user values( 0, '123456', 10001', user0@gmail.com', 0)");
+                query.exec("insert into user values( 1, '123456', 10002', user1@gmail.com', 0)");
+                query.exec("insert into user values( 2, '123456', 10003', user2@gmail.com', 0)");
+                query.exec("insert into user values( 3, '123456', 10004', user3@gmail.com', 0)");
+                query.exec("insert into user values( 4, '123456', 10005', user4@gmail.com', 0)");
+                query.exec("insert into user values( 5, '123456', 10006', user5@gmail.com', 0)");
+                query.exec("insert into user values( 6, '123456', 10007', user6@gmail.com', 0)");
+                query.exec("insert into user values( 7, '123456', 10008', user7@gmail.com', 0)");
+                query.exec("insert into user values( 8, '123456', 10009', user8@gmail.com', 0)");
+                query.exec("insert into user values( 9, '123456', 10010', user9@gmail.com', 0)");
+                query.exec("insert into user values( 10, '123456', 10011', user10@gmail.com', 0)");
+                query.exec("insert into user values( 11, '123456', 10012', user11@gmail.com', 0)");
+                query.exec("insert into user values( 12, '123456', 10013', user12@gmail.com', 0)");
+                query.exec("insert into user values( 13, '123456', 10014', user13@gmail.com', 0)");
+                query.exec("insert into user values( 14, '123456', 10015', user14@gmail.com', 0)");
+                query.exec("insert into user values( 15, '123456', 10016', user15@gmail.com', 0)");
+                query.exec("insert into user values( 16, '123456', 10017', user16@gmail.com', 0)");
+                query.exec("insert into user values( 17, '123456', 10018', user17@gmail.com', 0)");
+                query.exec("insert into user values( 18, '123456', 10019', user18@gmail.com', 0)");
+                query.exec("insert into user values( 19, '123456', 10020', user19@gmail.com', 0)");
+                query.exec("insert into user values( 20, '123456', 10021', user20@gmail.com', 0)");
+                query.exec("insert into user values( 21, '123456', 10022', user21@gmail.com', 0)");
+                query.exec("insert into user values( 22, '123456', 10023', user22@gmail.com', 0)");
+                query.exec("insert into user values( 23, '123456', 10024', user23@gmail.com', 0)");
+                query.exec("insert into user values( 24, '123456', 10025', user24@gmail.com', 0)");
+                query.exec("insert into user values( 25, '123456', 10026', user25@gmail.com', 0)");
+                query.exec("insert into user values( 26, '123456', 10027', user26@gmail.com', 0)");
+                query.exec("insert into user values( 27, '123456', 10028', user27@gmail.com', 0)");
+                query.exec("insert into user values( 28, '123456', 10029', user28@gmail.com', 0)");
+                query.exec("insert into user values( 29, '123456', 10030', user29@gmail.com', 0)");
+                //======================================
                 query.exec("create table dish (id int primary key, type int, dishName varchar(40), demand int,undone int, price int, notes varchar(40))");
                 query.exec("insert into dish values(201, 2, '酱萝卜', 0, 0, 10, 'null')");
                 query.exec("insert into dish values(202, 2, '话梅芸豆', 0, 0, 12, 'null')");

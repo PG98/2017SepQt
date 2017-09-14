@@ -5,7 +5,8 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RegisterDialog){
     ui->setupUi(this);
-
+    ui->pwdLineEdit1->setEchoMode(QLineEdit::Password);
+    ui->pwdLineEdit2->setEchoMode(QLineEdit::Password);
     connect(ui->OKBtn, SIGNAL(clicked(bool)), this, SLOT(OKBtn_clicked()));
     connect(ui->CancelBtn, SIGNAL(clicked(bool)), this, SLOT(CancelBtn_clicked()));
 
@@ -28,9 +29,11 @@ void RegisterDialog::OKBtn_clicked(){
     QString newmail = ui->EmailLineEdit->text();
 
     if(ui->pwdLineEdit1->text()==""||ui->pwdLineEdit2->text()==""){
+        QMessageBox::warning(this, tr("警告"), tr("请输入密码"));
         pwdFlag = false;
     }
     else if(ui->pwdLineEdit1->text() == ui->pwdLineEdit2->text()){
+        QMessageBox::warning(this, tr("警告"), tr("两次输入密码不同"));
         pwdFlag = true;
     }
     else{       //如果密码输入过程中程序出现其他错误

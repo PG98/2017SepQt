@@ -4,6 +4,7 @@
 #include "data.h"
 #include <QHeaderView>
 #include <QSqlError>
+#include "admindialog.h"
 
 MenuManage::MenuManage(QWidget *parent) :
     QMainWindow(parent),
@@ -173,23 +174,6 @@ void MenuManage::on_action_N_triggered()
     //addDialog = new addDish;
     addDialog.show();
     addDialog.exec();
-}
-
-void MenuManage::on_OkBtn_clicked()
-{
-    QMessageBox box;          //警告对话框
-    box.setWindowTitle("提醒");
-    box.setIcon(QMessageBox::Warning);
-    box.setText("是否保存？");
-    QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
-    box.addButton("否(&N)", QMessageBox::NoRole);
-    QPushButton *cancelBut = box.addButton("取消", QMessageBox::RejectRole);
-
-    box.exec();
-    if(box.clickedButton() == yesBtn)
-        return;
-    else if (box.clickedButton() == cancelBut)
-        return;
 }
 
 void MenuManage::mySortByColumn(int column)
@@ -365,7 +349,50 @@ void MenuManage::saveCurrent(){
     }
 }
 
-void MenuManage::on_backBtn_clicked()
+void MenuManage::on_OkBtn_clicked()
 {
-
+    QMessageBox box;
+    box.setWindowTitle("完成编辑");
+    box.setText("是否退出？");
+    QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
+    QPushButton *backBtn = box.addButton(tr("返回上一级(&Y)"), QMessageBox::NoRole);
+    QPushButton *cancelBtn = box.addButton(tr("取消"), QMessageBox::RejectRole);
+    box.exec();
+    if(box.clickedButton()==yesBtn){
+        saveCurrent();
+        this->close();
+        return;
+    }
+    else if(box.clickedButton()==backBtn){
+       saveCurrent();
+       AdminDialog* admin = new AdminDialog;
+       admin->show();
+       this->close();
+       return;
+    }
+   else if(box.clickedButton()==cancelBtn){
+       return;
+    }
 }
+
+void MenuManage::on_backBtn_clicked(){
+    QMessageBox box;          //警告对话框
+    box.setWindowTitle("提醒");
+    box.setIcon(QMessageBox::Warning);
+    box.setText("是否保存？");
+    QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
+    box.addButton("否(&N)", QMessageBox::NoRole);
+    QPushButton *cancelBut = box.addButton("取消", QMessageBox::RejectRole);
+
+    box.exec();
+    if(box.clickedButton() == yesBtn)
+        return;
+    else if (box.clickedButton() == cancelBut)
+        return;
+}
+
+
+
+
+
+

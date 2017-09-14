@@ -19,15 +19,5 @@ public:
     QString getType();
     static int count;
 };
-/*
-Dish::Dish(){
-  id=8;
-  name="";
-  type=Main;
-  demand=0;
-  undone=false;
-}
-*/
-
 
 #endif // DISH_H

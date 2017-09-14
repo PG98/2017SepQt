@@ -2,7 +2,7 @@
 int Dish::count = 0;
 
 Dish::Dish(){
-  id=6;
+  id=1;
   name="";
   type=Main;
   demand=0;

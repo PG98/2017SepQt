@@ -112,8 +112,6 @@ LoginDialog::LoginDialog(QWidget *parent) :
 //=============================================对账户数据库的连接结束
 
     Data::dataInit();
-    qDebug()<<"test's id:  "<<Data::a;
-    Data::a=100;
 }
 
 LoginDialog::~LoginDialog()
@@ -188,7 +186,7 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
     }
 }
 
-//id, pwd, phone, email, history
+//id, pwd, phone, email, isMember
 void LoginDialog::getUserInfo(QString phone){
     QSqlQuery query;
     //查询手机号码数据
@@ -208,14 +206,14 @@ void LoginDialog::getUserInfo(QString phone){
         matchFlag = false;
     }
     else{
-        while(query.next())//仅用于debug
+        while(query.next())//仅用于qDebug
         {
             userid = query.value(0).toInt();
             userpwd = query.value(1).toString();
             userphone = query.value(2).toString();
             userEmail = query.value(3).toString();
-            userHistory = query.value(4).toInt();
-            qDebug()<<QString("id=%1    pwd=%2    phone=%3   email=%4    history=%5").arg(userid).arg(userpwd).arg(userphone).arg(userEmail).arg(userHistory);
+            member = query.value(4).toInt();
+            qDebug()<<QString("id=%1    pwd=%2    phone=%3   email=%4    isMember=%5").arg(userid).arg(userpwd).arg(userphone).arg(userEmail).arg(member);
         }
         if(userphone == phone)
             matchFlag=true;

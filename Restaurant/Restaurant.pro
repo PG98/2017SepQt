@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     order.cpp \
     menumanage.cpp \
     adddish.cpp \
-    dishedit.cpp
+    dishedit.cpp \
+    user.cpp
 
 HEADERS  += \
     registerdialog.h \
@@ -35,7 +36,8 @@ HEADERS  += \
     order.h \
     menumanage.h \
     adddish.h \
-    dishedit.h
+    dishedit.h \
+    user.h
 
 FORMS    += \
     registerdialog.ui \
