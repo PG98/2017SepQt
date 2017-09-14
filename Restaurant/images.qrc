@@ -82,5 +82,6 @@
         <file>buttons/undo.png</file>
         <file>buttons/add.png</file>
         <file>buttons/save.png</file>
+        <file>buttons/star.png</file>
     </qresource>
 </RCC>

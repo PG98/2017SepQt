@@ -35,3 +35,10 @@ void AdminDialog::on_menuBtn_clicked()
     menuWindow->show();
     this->close();
 }
+
+void AdminDialog::on_userBtn_clicked()
+{
+    UserManage* userWindow = new UserManage;
+    userWindow->show();
+    this->close();
+}

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "menumanage.h"
+#include "usermanage.h"
 
 namespace Ui {
 class AdminDialog;
@@ -18,6 +19,8 @@ public:
 
 private slots:
     void on_menuBtn_clicked();
+
+    void on_userBtn_clicked();
 
 private:
     Ui::AdminDialog *ui;
