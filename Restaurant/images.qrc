@@ -51,7 +51,6 @@
         <file>buttons/number.png</file>
         <file>buttons/pause.png</file>
         <file>buttons/play.png</file>
-        <file>buttons/plus.png</file>
         <file>buttons/power-button.png</file>
         <file>buttons/previous-1.png</file>
         <file>buttons/previous.png</file>
@@ -85,5 +84,7 @@
         <file>buttons/star.png</file>
         <file>buttons/star1.png</file>
         <file>buttons/graystar.png</file>
+        <file>buttons/search.png</file>
+        <file>buttons/create.png</file>
     </qresource>
 </RCC>

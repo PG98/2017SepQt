@@ -7,6 +7,7 @@ addUser::addUser(QWidget *parent) :
     ui(new Ui::addUser)
 {
     ui->setupUi(this);
+    ui->checkBox->setStyleSheet("QCheckBox::indicator {width: 13px; height: 13px;}");
     this->setWindowTitle(tr("添加用户"));
     connect(ui->okBtn, SIGNAL(clicked(bool)), this, SLOT(send()));
     ui->pwdEdit->setText("123456");
@@ -28,10 +29,8 @@ void addUser::on_cancelBtn_clicked()
 
 void addUser::on_okBtn_clicked()
 {
-    int count = User::getCount(), k=0, newID;
-    int i;
-    for(int i=0;i<count;i++);
-    newID = Data::user[i].id + 1;
+    int count = User::getCount(), newID;
+    newID = Data::user[count-1].id + 1;
     int flag = ui->checkBox->isChecked();
     if(flag)
         flag = 4;

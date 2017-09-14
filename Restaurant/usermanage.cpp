@@ -39,8 +39,25 @@ UserManage::~UserManage()
 }
 
 void UserManage::setBox1(){
-    ui->box1->setTitle(tr("用户检索"));
+    ui->box1->setTitle(tr("检索"));
     //LineEdit 设置
+    ui->searchEdit->setFocusPolicy(Qt::ClickFocus);
+    QPushButton* searchBtn = new QPushButton;
+    searchBtn->setCursor(Qt::PointingHandCursor);
+    searchBtn->setFixedSize(22,22);
+    searchBtn->setToolTip(QStringLiteral("搜索"));
+    searchBtn->setStyleSheet("QPushButton{border-image:url(:/buttons/search.png); background:transparent;}");
+    QMargins margins = ui->searchEdit->textMargins();
+    ui->searchEdit->setTextMargins(margins.left(), margins.top(), searchBtn->width(), margins.bottom());
+    ui->searchEdit->setPlaceholderText(QStringLiteral("请输入搜索内容"));
+    QHBoxLayout* searchLayout = new QHBoxLayout;
+    searchLayout->addStretch();
+    searchLayout->addWidget(searchBtn);
+    searchLayout->setSpacing(0);
+    searchLayout->setContentsMargins(0, 0, 0, 0);
+    ui->searchEdit->setLayout(searchLayout);
+    connect(searchBtn, SIGNAL(clicked(bool)), this, SLOT(search()));
+    connect(ui->searchEdit, SIGNAL(returnPressed()), this, SLOT(search()));
 
     QGridLayout* layout = new QGridLayout;
     layout->addWidget(ui->searchEdit, 0, 0);
@@ -82,10 +99,10 @@ QHBoxLayout* UserManage::setButtons(){
 void UserManage::showUsers(){
     int count = User::count;
     qDebug()<<"user.count = "<<count;
-    qDebug()<<Data::user[count-1].isMember;
+    ui->tableWidget->setRowCount(count);
     int i=0;
     for(int k=0;k<count;k++){
-        if(Data::user[k].isMember>-3){
+        if(Data::user[k].isMember>-2){
             ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(Data::user[k].id)));
             ui->tableWidget->setItem(i, 1, new QTableWidgetItem(Data::user[k].phone));
             ui->tableWidget->setItem(i, 2, new QTableWidgetItem(Data::user[k].name));
@@ -141,7 +158,7 @@ void UserManage::on_action_star_triggered()
     qDebug()<<"star id: "<<id;
     for(int i=0;i<User::getCount();i++){
         if(Data::user[i].id == id){
-            if(Data::user[i].isMember <= 0){
+            if(Data::user[i].isMember <= 0 || Data::user[i].isMember == 3){ //3是新建用户中的‘普通’
                 Data::user[i].isMember = 2; //新增会员设为2  以便添加到数据库
                 break;
             }else{
@@ -178,7 +195,28 @@ void UserManage::on_action_D_triggered(){
 
 void UserManage::on_OkBtn_clicked()
 {
-
+    QMessageBox box;
+    box.setWindowTitle("完成编辑");
+    box.setText("是否退出？");
+    QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
+    QPushButton *backBtn = box.addButton(tr("返回上一级(&Y)"), QMessageBox::NoRole);
+    QPushButton *cancelBtn = box.addButton(tr("取消"), QMessageBox::RejectRole);
+    box.exec();
+    if(box.clickedButton()==yesBtn){
+        saveCurrent();
+            this->close();
+            return;
+    }
+    else if(box.clickedButton()==backBtn){
+           saveCurrent();
+           AdminDialog* admin = new AdminDialog;
+           admin->show();
+           this->close();
+           return;
+    }
+    else if(box.clickedButton()==cancelBtn){
+           return;
+    }
 }
 
 void UserManage::saveCurrent(){
@@ -204,8 +242,18 @@ void UserManage::saveCurrent(){
             tempstring = QString("update user set isMember =1 where id = %1").arg(id);
             query.exec(tempstring);
         }
-        else if(flag == 3){     //新建
-            qDebug()<<"";
+        else if(flag == 3 || flag == 4){     //新建
+            flag -= 3;
+            qDebug()<<"insert new user";
+            tempstring = QString("insert into user values(%1, ?, ?, ?, %2)").arg(id).arg(flag);
+            query.prepare(tempstring);
+            query.addBindValue(Data::user[i].pwd);
+            query.addBindValue(Data::user[i].phone);
+            query.addBindValue(Data::user[i].name);
+            if(!query.exec()){
+                qDebug()<<"insert failed!";
+                qDebug()<<query.lastError();
+            }
         }
     }
 }
@@ -214,4 +262,26 @@ void UserManage::on_action_N_triggered()
 {
     adduser.show();
     adduser.exec();
+}
+
+void UserManage::search(){
+    ui->tableWidget->clearContents();
+    QString str = ui->searchEdit->text();
+    int k = 0;
+    for(int i=0;i<User::getCount();i++){
+        if(Data::user[i].name == str||Data::user[i].phone == str||QString("%1").arg(Data::user[i].id) == str){
+            ui->tableWidget->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(Data::user[i].id)));
+            ui->tableWidget->setItem(k, 1, new QTableWidgetItem(Data::user[i].phone));
+            ui->tableWidget->setItem(k, 2, new QTableWidgetItem(Data::user[i].name));
+            if(Data::user[i].isMember <= 0)
+                ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QIcon(":/buttons/graystar.png"), "普通"));
+            else
+                ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QIcon(":/buttons/star.png"), "会员"));
+            k++;
+        }
+    }
+    if(k==0){
+        QMessageBox::information(this, QString("搜索结果"), QString("没有您想要的内容"));
+        showUsers();
+    }
 }

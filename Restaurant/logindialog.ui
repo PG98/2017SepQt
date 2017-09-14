@@ -111,7 +111,7 @@
     <bool>true</bool>
    </property>
    <property name="currentText">
-    <string>admin</string>
+    <string/>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -141,6 +141,9 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="placeholderText">
+    <string>请输入密码</string>
+   </property>
   </widget>
   <widget class="QLabel" name="pwdLabel">
    <property name="geometry">
@@ -168,15 +171,6 @@
     <string>1</string>
    </property>
   </widget>
-  <action name="action">
-   <property name="icon">
-    <iconset>
-     <normaloff>images/user2.jpg</normaloff>images/user2.jpg</iconset>
-   </property>
-   <property name="text">
-    <string>管理员界面</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

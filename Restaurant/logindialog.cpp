@@ -21,6 +21,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     this->setPalette(palette);
     //this->setAutoFillBackground(true);
     //最好不要在顶层窗口使用StyleSheet否则会被所有子部件继承
+    ui->nameCmBox->setCurrentText("");
     ui->pwdLineEdit->setEchoMode(QLineEdit::Password);//密码隐藏显示
     ui->pwdLabel->setStyleSheet("background:transparent;");
     ui->userLabel->setStyleSheet("background:transparent;");

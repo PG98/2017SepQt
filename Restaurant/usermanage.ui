@@ -29,8 +29,14 @@
       <height>111</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Adobe Heiti Std</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
     <property name="title">
-     <string>GroupBox</string>
+     <string>测试</string>
     </property>
     <widget class="QLineEdit" name="searchEdit">
      <property name="geometry">
@@ -51,6 +57,12 @@
       <width>381</width>
       <height>341</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Adobe Kaiti Std</family>
+      <pointsize>18</pointsize>
+     </font>
     </property>
     <property name="title">
      <string>GroupBox</string>
@@ -104,6 +116,12 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>45</width>
+     <height>45</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>LeftToolBarArea</enum>
    </attribute>
@@ -132,13 +150,14 @@
     <addaction name="action_D"/>
     <addaction name="action_star"/>
     <addaction name="action_refresh"/>
+    <addaction name="action_S"/>
    </widget>
    <addaction name="menu"/>
   </widget>
   <action name="action_N">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/buttons/plus.png</normaloff>:/buttons/plus.png</iconset>
+     <normaloff>:/buttons/create.png</normaloff>:/buttons/create.png</iconset>
    </property>
    <property name="text">
     <string>添加(&amp;N)</string>
@@ -172,6 +191,11 @@
    </property>
    <property name="text">
     <string>刷新</string>
+   </property>
+  </action>
+  <action name="action_S">
+   <property name="text">
+    <string>保存(&amp;S)</string>
    </property>
   </action>
  </widget>

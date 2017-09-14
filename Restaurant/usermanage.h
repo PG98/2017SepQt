@@ -24,12 +24,10 @@ private slots:
     void rowSelect();
     void on_action_refresh_triggered();
     void on_action_star_triggered();
-
     void on_action_D_triggered();
-
     void on_OkBtn_clicked();
-
     void on_action_N_triggered();
+    void search();
 
 private:
     Ui::UserManage *ui;
