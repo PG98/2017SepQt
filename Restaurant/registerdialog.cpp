@@ -9,7 +9,6 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
     ui->pwdLineEdit2->setEchoMode(QLineEdit::Password);
     connect(ui->OKBtn, SIGNAL(clicked(bool)), this, SLOT(OKBtn_clicked()));
     connect(ui->CancelBtn, SIGNAL(clicked(bool)), this, SLOT(CancelBtn_clicked()));
-
 }
 
 RegisterDialog::~RegisterDialog(){
@@ -22,24 +21,23 @@ QString select_phone = "select phone from user";
 
 void RegisterDialog::OKBtn_clicked(){
     bool phoneFlag = false;
-    bool pwdFlag = false;
-    int newid = max_id + 1;
+    //bool pwdFlag = false;
+    int newid;
     QString newpwd = NULL;
     QString newphone = NULL;
     QString newname = ui->EmailLineEdit->text();
 
     if(ui->pwdLineEdit1->text()==""||ui->pwdLineEdit2->text()==""){
         QMessageBox::warning(this, tr("警告"), tr("请输入密码"));
-        pwdFlag = false;
+        ui->pwdLineEdit1->clear();
+        ui->pwdLineEdit2->clear();
+        ui->pwdLineEdit1->setFocus();
     }
-    else if(ui->pwdLineEdit1->text() == ui->pwdLineEdit2->text()){
+    else if(ui->pwdLineEdit1->text() != ui->pwdLineEdit2->text()){
         QMessageBox::warning(this, tr("警告"), tr("两次输入密码不同"));
-        pwdFlag = true;
-    }
-    else{       //如果密码输入过程中程序出现其他错误
-        qDebug()<<"Password Error!";
-        pwdFlag = false;
-        return;
+        ui->pwdLineEdit1->clear();
+        ui->pwdLineEdit2->clear();
+        ui->pwdLineEdit1->setFocus();
     }
     //以下为数据库操作
     QSqlQuery query;
@@ -52,21 +50,22 @@ void RegisterDialog::OKBtn_clicked(){
     else{
         while(query.next()){
             max_id = query.value(0).toInt();
-            //qDebug()<<QString("max id: %1").arg(max_id);   输出最大编号（即用户总数）
+            qDebug()<<QString("max id: %1").arg(max_id);   //最大编号（即用户总数）
         }
     }
-
+    newid = max_id +1;
     //查询部分数据,确认是新用户
     if(!query.exec(select_phone)){
         qDebug()<<query.lastError();
     }
     else{
         while(1){
-            if(query.next()){       //遍历
+            if(query.next()){       //遍历phone
                 QString phone = query.value("phone").toString();
-                qDebug()<<QString("phone number:%1").arg(phone);
-                if(ui->PhoneLineEdit->text()==phone){   //手机号已存在
+                if(ui->PhoneLineEdit->text()==phone){   //手机号已存在,退出注册界面
                     qDebug()<<"用户已存在";
+                    QMessageBox::warning(this, tr("警告"), tr("用户已存在"));
+                    ui->PhoneLineEdit->clear();
                     phoneFlag = false;
                     break;
                 }
@@ -74,7 +73,7 @@ void RegisterDialog::OKBtn_clicked(){
                     phoneFlag = true;
                 }
             }
-            else{
+            else{   //phone列为空（不可能存在的情况
                 phoneFlag = true;
                 break;
             }
@@ -82,10 +81,13 @@ void RegisterDialog::OKBtn_clicked(){
     }
 
     newid = max_id+1;
-    if(phoneFlag == true) newphone= ui->PhoneLineEdit->text();
+    qDebug()<<"new id: ";
+    if(phoneFlag == true)
+        newphone= ui->PhoneLineEdit->text();
     else return;
-    if(pwdFlag == true) newpwd = ui->pwdLineEdit1->text();
-    else return;
+    //if(pwdFlag == true)
+        newpwd = ui->pwdLineEdit1->text();
+    qDebug()<<newname;
     //添加数据
     query.prepare(insert_user);
     query.addBindValue(newid);
@@ -99,6 +101,7 @@ void RegisterDialog::OKBtn_clicked(){
     }
     else{
         qDebug()<<"inserted!";      //成功添加数据
+        QMessageBox::information(this, tr("注册成功"), QString(newname+", 您已成功注册！"));
     }
     this->close();
 }
