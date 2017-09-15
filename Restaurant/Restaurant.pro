@@ -25,7 +25,11 @@ SOURCES += main.cpp\
     dishedit.cpp \
     user.cpp \
     adduser.cpp \
-    selecttable.cpp
+    selecttable.cpp \
+    stafflogin.cpp \
+    chef.cpp \
+    waiter.cpp \
+    waiterwindow.cpp
 
 HEADERS  += \
     registerdialog.h \
@@ -42,7 +46,11 @@ HEADERS  += \
     user.h \
     adduser.h \
     selecttable.h \
-    keybutton.h
+    keybutton.h \
+    stafflogin.h \
+    chef.h \
+    waiter.h \
+    waiterwindow.h
 
 FORMS    += \
     registerdialog.ui \
@@ -54,7 +62,9 @@ FORMS    += \
     adddish.ui \
     dishedit.ui \
     adduser.ui \
-    selecttable.ui
+    selecttable.ui \
+    stafflogin.ui \
+    waiterwindow.ui
 
 RESOURCES += \
     images.qrc

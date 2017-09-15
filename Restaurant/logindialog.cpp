@@ -1,5 +1,6 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
+#include "stafflogin.h"
 #include <QMessageBox>
 #include <QKeyEvent>        //回车登陆
 #include "data.h"
@@ -250,4 +251,12 @@ void LoginDialog::getUserInfo(QString phone){
         ui->userPic->setPixmap(def);
     }
 //  */
+}
+
+void LoginDialog::on_staffBtn_clicked()
+{
+    staffLogin* staff = new staffLogin;
+    staff->show();
+    staff->exec();
+    //this->close();
 }

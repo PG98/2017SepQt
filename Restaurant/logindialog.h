@@ -28,6 +28,8 @@ private slots:
     void register_clicked();
     void getUserInfo(QString phone);
 
+    void on_staffBtn_clicked();
+
 private:
     AdminDialog *adminDlg;
     Ui::LoginDialog *ui;

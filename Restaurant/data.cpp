@@ -36,6 +36,7 @@ void Data::dataInit(){
         hash1.insert(d->id, d);
         i++;
     }
+    //员工账号
     Dish::count = i;
 }
 

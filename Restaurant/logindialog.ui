@@ -164,6 +164,19 @@
     <string>1</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="staffBtn">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>员工登陆</string>
+   </property>
+  </widget>
   <action name="action">
    <property name="icon">
     <iconset>
