@@ -2,15 +2,10 @@
     <qresource prefix="/">
         <file>images/MAdmin.png</file>
         <file>images/MFinger.jpg</file>
-        <file>images/user1.png</file>
-        <file>images/user2.png</file>
-        <file>images/user3.png</file>
         <file>images/admin.jpg</file>
         <file>images/password.png</file>
         <file>images/phone.png</file>
         <file>images/default.png</file>
-        <file>images/backgnd.png</file>
-        <file>images/room.png</file>
         <file>images/room2.png</file>
         <file>buttons/cloud-computing-2.png</file>
         <file>buttons/cloud-computing-3.png</file>
@@ -86,5 +81,10 @@
         <file>buttons/graystar.png</file>
         <file>buttons/search.png</file>
         <file>buttons/create.png</file>
+        <file>images/user.png</file>
+        <file>images/background.png</file>
+        <file>images/worker.png</file>
+        <file>images/join_2.png</file>
+        <file>images/join.png</file>
     </qresource>
 </RCC>

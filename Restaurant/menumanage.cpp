@@ -24,6 +24,7 @@ MenuManage::MenuManage(QWidget *parent) :
     connect(&editDialog, SIGNAL(refresh()), this, SLOT(on_action_refresh_triggered()));
     ui->tableWidget->setMouseTracking(true);
     connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
+    ui->tableWidget->horizontalHeader()->setSortIndicatorShown(true);
     connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
     connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
 

@@ -29,6 +29,10 @@ private slots:
     void on_action_N_triggered();
     void search();
 
+    void on_backBtn_clicked();
+
+    void on_action_S_triggered();
+
 private:
     Ui::UserManage *ui;
     addUser adduser;

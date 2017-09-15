@@ -15,7 +15,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     //this->setStyleSheet("background-color:lavender;");//窗口背景颜色
     //this->setStyleSheet("border-image:url(:/images/backgnd.png);");//背景图片
     QImage im;
-    im.load(":/images/room2.png");
+    im.load(":/images/background.png");
     QPalette palette;
     palette.setBrush(this->backgroundRole(),QBrush(im.scaled(this->width(),this->height())));
     this->setPalette(palette);
@@ -29,7 +29,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     //ui->pwdLineEdit->setStyleSheet("background:transparent;");
     //设置默认头像
     QImage img;
-    QString path0 = ":/images/default.png";
+    QString path0 = ":/images/user.png";
     img.load(path0);
     QPixmap def=QPixmap::fromImage(img.scaled(ui->userPic->width(),ui->userPic->height()));
     ui->userPic->setPixmap(def);
@@ -163,7 +163,7 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
     else{       //手机号在数据库中存在时
         if(userpwd!=ui->pwdLineEdit->text()){
             //密码错误
-            qDebug()<<"password  does not match";
+            qDebug()<<"password does not match";
             if(ui->pwdLineEdit->text() == "")
                 QMessageBox::warning(this, tr("警告"), tr("请输入密码"));
             else{
@@ -179,8 +179,10 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
             //用户名和密码均正确
             else{
                 qDebug()<<"matchflag ="<<matchFlag;
-                Order* orderwindow = new Order;
-                orderwindow->show();
+                //Order* orderwindow = new Order;
+                //orderwindow->show();
+                selectTable* select_table = new selectTable;
+                select_table->show();
                 this->close();
             }
         }

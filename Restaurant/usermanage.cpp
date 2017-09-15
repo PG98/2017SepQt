@@ -103,6 +103,9 @@ void UserManage::showUsers(){
     int i=0;
     for(int k=0;k<count;k++){
         if(Data::user[k].isMember>-2){
+
+            if(Data::user[k].id==101)qDebug()<<k;
+
             ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(Data::user[k].id)));
             ui->tableWidget->setItem(i, 1, new QTableWidgetItem(Data::user[k].phone));
             ui->tableWidget->setItem(i, 2, new QTableWidgetItem(Data::user[k].name));
@@ -180,13 +183,17 @@ void UserManage::on_action_D_triggered(){
     if(box.clickedButton()==yesBtn){
         int row = ui->tableWidget->currentRow();
         int id = ui->tableWidget->item(row, 0)->text().toInt();
-        for(int i=0;i<User::getCount();i++){
+        int i;
+        for(i=0;i<User::getCount();i++){
             if(Data::user[i].id == id){
                 Data::user[i].isMember = -2;
                 User::count--;
+                qDebug()<<"delete id: "<<id;
                 break;
             }
         }
+        if(i==0)
+            qDebug()<<"failed to delete";
         showUsers();
     }
     else if(box.clickedButton()==noBtn)
@@ -256,6 +263,7 @@ void UserManage::saveCurrent(){
             }
         }
     }
+    this->statusBar()->showMessage(tr("保存成功!"), 3000);
 }
 
 void UserManage::on_action_N_triggered()
@@ -284,4 +292,28 @@ void UserManage::search(){
         QMessageBox::information(this, QString("搜索结果"), QString("没有您想要的内容"));
         showUsers();
     }
+}
+
+void UserManage::on_backBtn_clicked()
+{
+    QMessageBox box;
+    box.setWindowTitle("返回上一级");
+    box.setText("是否不保存直接返回？");
+    QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
+    QPushButton * noBtn = box.addButton(tr("取消"), QMessageBox::NoRole);
+    box.exec();
+    if(box.clickedButton() == yesBtn){
+        AdminDialog* admin = new AdminDialog;
+        admin->show();
+        this->close();
+        return;
+    }
+    else if(box.clickedButton() == noBtn){
+        return;
+    }
+}
+
+void UserManage::on_action_S_triggered()
+{
+    saveCurrent();
 }
