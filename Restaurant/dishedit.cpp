@@ -12,7 +12,6 @@ dishEdit::dishEdit(QWidget *parent) :
 }
 
 void dishEdit::set(){
-    for(index=0;Data::dish[index].id!=id;index++);
     ui->typeLabel_2->setText(dishtype);
     ui->nameEdit->setText(name);
     ui->priceEdit->setText(QString("%1").arg(price));
@@ -35,10 +34,14 @@ void dishEdit::on_CancelBtn_clicked()
 
 void dishEdit::on_OkBtn_clicked()
 {
-    Data::dish[index].name = ui->nameEdit->text();
-    Data::dish[index].price = ui->priceEdit->text().toInt();
-    Data::dish[index].notes = ui->noteEdit->text();
-    Data::dish[index].demand = -1;
-    qDebug()<<Data::dish[index].name<<" has been modified";
+    if(Data::hash1.contains(id)){
+        Data::hash1[id]->name = ui->nameEdit->text();
+        Data::hash1[id]->price = ui->priceEdit->text().toInt();
+        Data::hash1[id]->notes = ui->noteEdit->text();
+        Data::hash1[id]->demand = -1;
+        qDebug()<<Data::hash1[id]->name<<" has been modified";
+    }
+    else
+        qDebug()<<"no such item in hash1: "<<id;
     this->close();
 }

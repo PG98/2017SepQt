@@ -30,16 +30,20 @@ void addDish::on_CancelBtn_clicked(){
 }
 
 void addDish::on_OkBtn_clicked(){
-    int count = Dish::count, k=0, newID;
+    int k=0, newID;
     //找出当前类别最大id，添加在其后
     int type = ui->typeBox->currentIndex()+1;
-    for(int i=0;i<count;i++){
-        if((int)Data::dish[i].type == type)
+    QHashIterator<int, Dish*> i(Data::hash1);
+    while(i.hasNext()){
+        i.next();
+        if(i.key()<type*100 && i.key()<(type+1)*100)
             k++;
     }
     newID = type*100 + k;
-    Data::dish[count].setDish(newID, ui->nameEdit->text(), type, ui->priceEdit->text().toInt(), ui->noteEdit->text());
-    Data::dish[count].demand = -2;
+    Dish* d = new Dish;
+    d->setDish(newID, ui->nameEdit->text(), type, ui->priceEdit->text().toInt(), ui->noteEdit->text());
+    d->demand = -2;
+    Data::hash1.insert(newID, d);
     Dish::count++;
     qDebug()<<"new dish added ";
     this->close();

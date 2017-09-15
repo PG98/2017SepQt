@@ -4,14 +4,13 @@
 #include "dish.h"
 #include "user.h"
 #include <QVariant>
+#include <QHash>
+
 class Data{
 public:
     Data(){}
-    static Dish dish[100];
-    static User user[100];
+    static QHash<int, User*> hash0;
+    static QHash<int, Dish*> hash1;
     static void dataInit();
 };
-
-
-
 #endif // DATA_H

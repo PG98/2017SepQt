@@ -101,11 +101,9 @@ void UserManage::showUsers(){
     qDebug()<<"user.count = "<<count;
     ui->tableWidget->setRowCount(count);
     int i=0;
+    /*
     for(int k=0;k<count;k++){
         if(Data::user[k].isMember>-2){
-
-            if(Data::user[k].id==101)qDebug()<<k;
-
             ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(Data::user[k].id)));
             ui->tableWidget->setItem(i, 1, new QTableWidgetItem(Data::user[k].phone));
             ui->tableWidget->setItem(i, 2, new QTableWidgetItem(Data::user[k].name));
@@ -115,7 +113,24 @@ void UserManage::showUsers(){
                 ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QIcon(":/buttons/star.png"), "会员"));
             i++;
         }
+    }*/
+    QHashIterator<int, User*> j(Data::hash0);
+    while(j.hasNext()){
+        j.next();
+        if(j.value()->isMember>-2){
+            ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(j.key())));
+            ui->tableWidget->setItem(i, 1, new QTableWidgetItem(j.value()->phone));
+            ui->tableWidget->setItem(i, 2, new QTableWidgetItem(j.value()->name));
+            if(j.value()->isMember <= 0)
+                ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QIcon(":/buttons/graystar.png"), "普通"));
+            else
+                ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QIcon(":/buttons/star.png"), "会员"));
+            i++;
+        }
     }
+    ui->tableWidget->setRowCount(i);
+    mySortByColumn(0);
+    mySortByColumn(0);
     //ui->tableWidget->resizeColumnToContents(2);
 }
 
@@ -159,6 +174,7 @@ void UserManage::on_action_star_triggered()
     int row = ui->tableWidget->currentRow();
     int id = ui->tableWidget->item(row, 0)->text().toInt();
     qDebug()<<"star id: "<<id;
+    /*
     for(int i=0;i<User::getCount();i++){
         if(Data::user[i].id == id){
             if(Data::user[i].isMember <= 0 || Data::user[i].isMember == 3){ //3是新建用户中的‘普通’
@@ -168,6 +184,15 @@ void UserManage::on_action_star_triggered()
                 Data::user[i].isMember = -1;
             }
         }
+    }*/
+    if(Data::hash0.contains(id)){
+        if(Data::hash0[id]->isMember <= 0 || Data::hash0[id]->isMember == 3){ //3是新建用户中的‘普通’
+            Data::hash0[id]->isMember = 2; //新增会员设为2  以便添加到数据库
+        }else{
+            Data::hash0[id]->isMember = -1;
+        }
+    }else{
+        qDebug()<<"no such id in hash0: "<<id;
     }
     showUsers();
 }
@@ -183,6 +208,7 @@ void UserManage::on_action_D_triggered(){
     if(box.clickedButton()==yesBtn){
         int row = ui->tableWidget->currentRow();
         int id = ui->tableWidget->item(row, 0)->text().toInt();
+        /*
         int i;
         for(i=0;i<User::getCount();i++){
             if(Data::user[i].id == id){
@@ -194,6 +220,13 @@ void UserManage::on_action_D_triggered(){
         }
         if(i==0)
             qDebug()<<"failed to delete";
+            */
+        if(Data::hash0.contains(id)){
+            Data::hash0[id]->isMember = -2;
+            User::count--;
+        }else{
+            qDebug()<<"no such id in hash0: "<<id;
+        }
         showUsers();
     }
     else if(box.clickedButton()==noBtn)
@@ -227,10 +260,11 @@ void UserManage::on_OkBtn_clicked()
 }
 
 void UserManage::saveCurrent(){
-    int count = User::getCount();
+    //int count = User::getCount();
     int flag = 0, id = 0;
     QSqlQuery query;
     QString tempstring;
+    /*
     for(int i=0;i<count;i++){
         id = Data::user[i].id;
         flag = Data::user[i].isMember;
@@ -262,7 +296,42 @@ void UserManage::saveCurrent(){
                 qDebug()<<query.lastError();
             }
         }
+    }*/
+    QHashIterator<int, User*> i(Data::hash0);
+    while(i.hasNext()){
+        i.next();
+        id = i.key();
+        flag = i.value()->isMember;
+        if(flag == -2){     //删除
+            qDebug()<<"delete an account: id "<<id;
+            tempstring = QString("delete from user where id = %1").arg(id);
+            query.exec(tempstring);
+        }
+        else if(flag == -1){    //去除会员属性
+            qDebug()<<"'unMember' this id: "<<id;
+            tempstring = QString("update user set isMember = 0 where id = %1").arg(id);
+            query.exec(tempstring);
+        }
+        else if(flag == 2){     //加星
+            qDebug()<<"'enMember' this id: "<<id;
+            tempstring = QString("update user set isMember =1 where id = %1").arg(id);
+            query.exec(tempstring);
+        }
+        else if(flag == 3 || flag == 4){     //新建
+            flag -= 3;
+            qDebug()<<"insert new user";
+            tempstring = QString("insert into user values(%1, ?, ?, ?, %2)").arg(id).arg(flag);
+            query.prepare(tempstring);
+            query.addBindValue(i.value()->pwd);
+            query.addBindValue(i.value()->phone);
+            query.addBindValue(i.value()->name);
+            if(!query.exec()){
+                qDebug()<<"insert failed!";
+                qDebug()<<query.lastError();
+            }
+        }
     }
+
     this->statusBar()->showMessage(tr("保存成功!"), 3000);
 }
 
@@ -276,12 +345,27 @@ void UserManage::search(){
     ui->tableWidget->clearContents();
     QString str = ui->searchEdit->text();
     int k = 0;
+    /*
     for(int i=0;i<User::getCount();i++){
         if(Data::user[i].name == str||Data::user[i].phone == str||QString("%1").arg(Data::user[i].id) == str){
             ui->tableWidget->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(Data::user[i].id)));
             ui->tableWidget->setItem(k, 1, new QTableWidgetItem(Data::user[i].phone));
             ui->tableWidget->setItem(k, 2, new QTableWidgetItem(Data::user[i].name));
             if(Data::user[i].isMember <= 0)
+                ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QIcon(":/buttons/graystar.png"), "普通"));
+            else
+                ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QIcon(":/buttons/star.png"), "会员"));
+            k++;
+        }
+    }*/
+    QHashIterator<int, User*> i(Data::hash0);
+    while(i.hasNext()){
+        i.next();
+        if(i.value()->name == str||i.value()->phone == str||QString("%1").arg(i.key())==str){
+            ui->tableWidget->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(i.key())));
+            ui->tableWidget->setItem(k, 1, new QTableWidgetItem(i.value()->phone));
+            ui->tableWidget->setItem(k, 2, new QTableWidgetItem(i.value()->name));
+            if(i.value()->isMember <= 0)
                 ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QIcon(":/buttons/graystar.png"), "普通"));
             else
                 ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QIcon(":/buttons/star.png"), "会员"));

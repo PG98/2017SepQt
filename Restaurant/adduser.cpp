@@ -29,19 +29,26 @@ void addUser::on_cancelBtn_clicked()
 
 void addUser::on_okBtn_clicked()
 {
-    int count = User::getCount(), newID;
-    newID = Data::user[count-1].id + 1;
+    int maxid=0, newID;
+    QHashIterator<int, User*> i(Data::hash0);
+    while(i.hasNext()){
+        i.next();
+        if(i.key()>maxid)
+            maxid = i.key();
+    }
+    newID = maxid+1;
     int flag = ui->checkBox->isChecked();
     if(flag)
         flag = 4;
     else flag = 3;
-    //Data::user[count].setUser(newID, ui->pwdEdit->text(), ui->phoneEdit->text(), ui->nameEdit->text(), flag);
-    Data::user[count].id = newID;
-    Data::user[count].name = ui->nameEdit->text();
-    Data::user[count].phone = ui->phoneEdit->text();
-    Data::user[count].isMember = flag;
-    Data::user[count].pwd = ui->pwdEdit->text();
+    User* u = new User;
+    u->id = newID;
+    u->name = ui->nameEdit->text();
+    u->phone = ui->phoneEdit->text();
+    u->isMember = flag;
+    u->pwd = ui->pwdEdit->text();
     User::count++;
+    Data::hash0.insert(maxid, u);
     qDebug()<<"new account added!";
     this->close();
 }

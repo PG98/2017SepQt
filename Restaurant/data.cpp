@@ -1,8 +1,8 @@
 #include "data.h"
 #include <QDebug>
 
-Dish Data::dish[100];
-User Data::user[100];
+QHash<int, Dish*> Data::hash1;
+QHash<int, User*> Data::hash0;
 
 void Data::dataInit(){
     QSqlQuery query;
@@ -10,26 +10,30 @@ void Data::dataInit(){
     query.prepare("select * from user");
     query.exec();
     while(query.next()){
-        user[i].id = query.value(0).toInt();
-        user[i].pwd = query.value(1).toString();
-        user[i].phone = query.value(2).toString();
-        user[i].name = query.value(3).toString();
-        user[i].isMember = query.value(4).toInt();
+        User* u = new User;
+        u->id = query.value(0).toInt();
+        u->pwd = query.value(1).toString();
+        u->phone = query.value(2).toString();
+        u->name = query.value(3).toString();
+        u->isMember = query.value(4).toInt();
+        hash0.insert(u->id, u);
         i++;
     }
     User::count = i;
     //初始化菜单
+    i=0;
     query.prepare("select * from dish");
     query.exec();
-    i=0;
     while(query.next()){
-        dish[i].id = query.value(0).toInt();
-        dish[i].type = DishType(query.value(1).toInt());
-        dish[i].name = query.value(2).toString();
-        dish[i].demand = query.value(3).toInt();
-        dish[i].undone = query.value(4).toInt();
-        dish[i].price = query.value(5).toInt();
-        dish[i].notes = query.value(6).toString();
+        Dish* d = new Dish;
+        d->id = query.value(0).toInt();
+        d->type = DishType(query.value(1).toInt());
+        d->name = query.value(2).toString();
+        d->demand = query.value(3).toInt();
+        d->undone = query.value(4).toInt();
+        d->price = query.value(5).toInt();
+        d->notes = query.value(6).toString();
+        hash1.insert(d->id, d);
         i++;
     }
     Dish::count = i;

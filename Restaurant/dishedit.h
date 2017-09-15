@@ -15,7 +15,6 @@ class dishEdit : public QDialog
 public:
     explicit dishEdit(QWidget *parent = 0);
     ~dishEdit();
-    int index = 0;
     int id = 0;
     QString dishtype;
     QString name;

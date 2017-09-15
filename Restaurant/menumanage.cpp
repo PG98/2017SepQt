@@ -12,7 +12,19 @@ MenuManage::MenuManage(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle(tr("菜单管理"));
+
     qDebug()<<"dish count:"<<Dish::count<<endl;
+
+    qDebug()<<"here comes fucking QHash!";
+    QHash<int, Dish*>::const_iterator i = Data::hash1.constBegin();
+    int k=0;
+    while(i!=Data::hash1.constEnd()){
+        //qDebug()<<i.key()<<":"<<i.value()->name;
+        ++i;
+        k++;
+    }
+    qDebug()<<"total: "<<k;
+    qDebug()<<"test complete...."<<k;
 
     setTypeGroupBox();
     setDetailGroupBox();
@@ -112,57 +124,54 @@ QHBoxLayout* MenuManage::setButtons(){
 //以上各GroupBox初始化
 //显示某种菜品 id升序
 void MenuManage::changeType(int type){
-    //qDebug()<<"type: "<<type+1;
     //传入当前下拉菜单项的下标，对应的dish类是type(enum的首项定义为1)
     if(type==0){
         qDebug()<<"show all";    //按照类别顺序显示表格
         showDishes();
     }
     else{
-        qDebug()<<"clear table";
-        ui->tableWidget->clearContents();
         int k=0;
-        qDebug()<<"dish Type: "<<type;
-        for(int i=0;i<Dish::count;i++){
-            //qDebug()<<QString("%1").arg((int)Data::dish[i].type);
-            if((int)Data::dish[i].type==type && Data::dish[i].demand>=-2){
-                ui->tableWidget->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[i].id)));
-                ui->tableWidget->setItem(k, 1, new QTableWidgetItem(Data::dish[i].getType()));
-                ui->tableWidget->setItem(k, 2, new QTableWidgetItem(Data::dish[i].name));
-                ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QString("%1").arg(Data::dish[i].price)));
-                ui->tableWidget->setItem(k, 4, new QTableWidgetItem(Data::dish[i].notes));
+        QHashIterator<int, Dish*> i(Data::hash1);
+        while(i.hasNext()){
+            i.next();
+            if(i.value()->id>=type*100 && i.value()->id<(type+1)*100 && i.value()->demand>-3){
+                ui->tableWidget->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(i.value()->id)));
+                ui->tableWidget->setItem(k, 1, new QTableWidgetItem(i.value()->getType()));
+                ui->tableWidget->setItem(k, 2, new QTableWidgetItem(i.value()->name));
+                ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QString("%1").arg(i.value()->price)));
+                ui->tableWidget->setItem(k, 4, new QTableWidgetItem(i.value()->notes));
                 k++;
             }
         }
+        ui->tableWidget->setRowCount(k);
+        mySortByColumn(0);
+        mySortByColumn(0);
     }
 }
 
 void MenuManage::showDishes(){
-    int j,index=0, temp[8][20];
-    for(int i=0;i<8;i++)
-        for(int j=0;j<20;j++)
-            temp[i][j]=-1;
-    for(int i=0;i<Dish::count;i++){
-        int t = (int)Data::dish[i].type-1;
-        for(j=0;temp[t][j]!=-1;j++);
-        temp[t][j]=i;
-    }
-    for(int i=0;i<8;i++){
-        for(j=0;temp[i][j]!=-1;j++){
-            if(Data::dish[temp[i][j]].demand>=-1){
-                ui->tableWidget->setItem(index, 0, new QTableWidgetItem(QString("%1").arg(Data::dish[temp[i][j]].id)));
-                ui->tableWidget->setItem(index, 1, new QTableWidgetItem(Data::dish[temp[i][j]].getType()));
-                ui->tableWidget->setItem(index, 2, new QTableWidgetItem(Data::dish[temp[i][j]].name));
-                ui->tableWidget->setItem(index, 3, new QTableWidgetItem(QString("%1").arg(Data::dish[temp[i][j]].price)));
-                ui->tableWidget->setItem(index, 4, new QTableWidgetItem(Data::dish[temp[i][j]].notes));
-                index++;
+    int k=0;
+    for(int j=1;j<=8;j++){
+        QHashIterator<int, Dish*> i(Data::hash1);
+        while(i.hasNext()){
+            i.next();
+            if(i.key()>=j*100 && i.key()<(j+1)*100 && i.value()->demand>-3){
+                ui->tableWidget->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(i.value()->id)));
+                ui->tableWidget->setItem(k, 1, new QTableWidgetItem(i.value()->getType()));
+                ui->tableWidget->setItem(k, 2, new QTableWidgetItem(i.value()->name));
+                ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QString("%1").arg(i.value()->price)));
+                ui->tableWidget->setItem(k, 4, new QTableWidgetItem(i.value()->notes));
+                k++;
             }
         }
     }
+    ui->tableWidget->setRowCount(k);
+    mySortByColumn(0);
+    mySortByColumn(0);
     QFont font = ui->tableWidget->horizontalHeader()->font();
     font.setBold(true);
     ui->tableWidget->horizontalHeader()->setFont(font);
-    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//双击编辑
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//禁止编辑
     /*//可用来禁止编辑
     for(int i=0;i<k;i++){
         ui->tableWidget->item(i,0)->setFlags(Qt::NoItemFlags);
@@ -230,6 +239,7 @@ void MenuManage::deleteDish(){
     QString id = ui->tableWidget->item(row, 0)->text();
     int ID = id.toInt();
     qDebug()<<"delete ID: "<<ID;
+    /*
     for(int i=0;i<Dish::count;i++){
         if(Data::dish[i].id == ID){
             Data::dish[i].demand = -3;
@@ -237,36 +247,18 @@ void MenuManage::deleteDish(){
             break;
         }
     }       //找到id后把该菜品的需求视为-3s，即删除
+    */
+    Data::hash1.value(ID)->demand = -3;
 }
 //
 void MenuManage::on_action_refresh_triggered()
 {
     qDebug()<<"refresh..";
-    changeType(0);
+    showDishes();
     connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
     connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
 }
 //此函数作废
-/*
-void MenuManage::itemEdit(int row,int column){
-    QString id = ui->tableWidget->item(row, 0)->text();
-    int ID = id.toInt(),i;
-    for(i=0;i<Dish::count;i++){
-        if(Data::dish[i].id == ID){
-            Data::dish[i].demand = -1;
-            break;
-        }
-    }
-    QString Name = ui->tableWidget->item(row,2)->text();
-    int price = ui->tableWidget->item(row,3)->text().toInt();
-    QString note = ui->tableWidget->item(row,4)->text();
-    Data::dish[i].name = ui->tableWidget->item(row,2)->text();
-    qDebug()<<"dish name: "<<Name;
-    Data::dish[i].price = price;
-    Data::dish[i].notes = note;
-    qDebug()<<"Edit id: "<<ID;
-    return;
-}*/
 
 void MenuManage::on_action_edit_triggered()
 {
@@ -277,7 +269,7 @@ void MenuManage::on_action_edit_triggered()
     editDialog.notes = ui->tableWidget->item(row, 4)->text();
     editDialog.price = ui->tableWidget->item(row, 3)->text().toInt();
     editDialog.dishtype = ui->tableWidget->item(row, 1)->text();
-    editDialog.set();
+    editDialog.set();//预置
     editDialog.show();
     editDialog.exec();
 }
@@ -301,12 +293,12 @@ void MenuManage::on_action_S_triggered()
 }
 
 void MenuManage::saveCurrent(){
-    int count = Dish::count;
     int flag = 0, id;
     //保存时，被删除的项目demand为-3，新建项目为-2，更改项目为-1
     //每次保存只处理以上更改
     QSqlQuery query;
     QString tempstring;
+    /*
     for(int i=0;i<count;i++){
         id = Data::dish[i].id;
         flag = Data::dish[i].demand;
@@ -348,6 +340,51 @@ void MenuManage::saveCurrent(){
             query.exec(tempstring);
         }
     }
+    */
+    QHashIterator<int, Dish*> i(Data::hash1);
+    while(i.hasNext()){
+        i.next();
+        id = i.key();
+        flag = i.value()->demand;
+        if(flag == -1){
+            qDebug()<<"modified";
+            tempstring = QString("update dish set dishName = :name, price = :price, notes = :notes, demand = 0 where id = %1").arg(id);
+            query.prepare(tempstring);
+            query.bindValue(":name", i.value()->name);
+            query.bindValue(":id", i.value()->price);
+            query.bindValue(":notes", i.value()->notes);
+            if(!query.exec())
+            {
+                qDebug() << query.lastError();
+            }else{
+                qDebug() << "updated!";
+            }
+        }
+        else if(flag == -2){
+            qDebug()<<"insert";
+            tempstring = "insert into dish values (?, ?, ?, 0, 0, ?, ?)";
+            query.prepare(tempstring);
+            query.addBindValue(id);
+            query.addBindValue((int)i.value()->type);
+            query.addBindValue(i.value()->name);
+            query.addBindValue(i.value()->price);
+            query.addBindValue(i.value()->notes);
+            if(!query.exec())
+            {
+                qDebug() << query.lastError();
+            }
+            else
+            {
+                qDebug() << "inserted "<<i.value()->name<<"!";
+            }
+        }
+        else if(flag == -3){
+            qDebug()<<"deleted";
+            tempstring = QString("delete from dish where id = %1").arg(id);
+            query.exec(tempstring);
+        }
+    }
+
 }
 
 void MenuManage::on_OkBtn_clicked()
