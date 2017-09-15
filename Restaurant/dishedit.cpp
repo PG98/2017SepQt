@@ -16,6 +16,10 @@ void dishEdit::set(){
     ui->nameEdit->setText(name);
     ui->priceEdit->setText(QString("%1").arg(price));
     ui->noteEdit->setText(notes);
+    if(special)
+        ui->checkBox->setCheckState(Qt::Checked);
+    else
+        ui->checkBox->setCheckState(Qt::Unchecked);
 }
 
 dishEdit::~dishEdit()
@@ -38,6 +42,7 @@ void dishEdit::on_OkBtn_clicked()
         Data::hash1[id]->name = ui->nameEdit->text();
         Data::hash1[id]->price = ui->priceEdit->text().toInt();
         Data::hash1[id]->notes = ui->noteEdit->text();
+        Data::hash1[id]->special = (int)ui->checkBox->isChecked();
         Data::hash1[id]->demand = -1;
         qDebug()<<Data::hash1[id]->name<<" has been modified";
     }

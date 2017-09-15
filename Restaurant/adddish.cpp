@@ -41,7 +41,7 @@ void addDish::on_OkBtn_clicked(){
     }
     newID = type*100 + k;
     Dish* d = new Dish;
-    d->setDish(newID, ui->nameEdit->text(), type, ui->priceEdit->text().toInt(), ui->noteEdit->text());
+    d->setDish(newID, ui->nameEdit->text(), type, ui->priceEdit->text().toInt(), ui->noteEdit->text(), (int)ui->checkBox->isChecked());
     d->demand = -2;
     Data::hash1.insert(newID, d);
     Dish::count++;

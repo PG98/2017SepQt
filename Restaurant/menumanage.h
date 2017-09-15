@@ -27,6 +27,7 @@ private slots:
     void mySortByColumn(int column);    //表头单击排序
     void MouseTrackItem(int row, int column);
     void rowSelect();
+    void showDishInfo(int row, int column);
     void on_action_D_triggered();
     void on_action_refresh_triggered();
     void on_action_edit_triggered();
@@ -40,7 +41,7 @@ private:
     Ui::MenuManage *ui;
     addDish addDialog;
     dishEdit editDialog;
-    QStringList header = QStringList()<<"编号"<<"种类"<<"名字"<<"单价"<<"备注";
+    QStringList header = QStringList()<<"编号"<<"种类"<<"名字"<<"单价"<<"推荐度";
     //布局
     void setTypeGroupBox();
     void setMenuGroupBox();

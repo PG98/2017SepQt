@@ -20,6 +20,7 @@ public:
     QString name;
     int price;
     QString notes;
+    int special;
     void set();
 
 signals:

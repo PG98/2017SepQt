@@ -37,8 +37,13 @@ MenuManage::MenuManage(QWidget *parent) :
     ui->tableWidget->setMouseTracking(true);
     connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
     ui->tableWidget->horizontalHeader()->setSortIndicatorShown(true);
+    QFont font = ui->tableWidget->horizontalHeader()->font();
+    font.setBold(true);
+    ui->tableWidget->horizontalHeader()->setFont(font);//表头文字样式
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//禁止编辑
     connect(ui->tableWidget, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
     connect(ui->tableWidget, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
+    connect(ui->tableWidget, SIGNAL(cellClicked(int,int)), this, SLOT(showDishInfo(int,int)));
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(ui->dishtype, 0, 0);
@@ -139,7 +144,10 @@ void MenuManage::changeType(int type){
                 ui->tableWidget->setItem(k, 1, new QTableWidgetItem(i.value()->getType()));
                 ui->tableWidget->setItem(k, 2, new QTableWidgetItem(i.value()->name));
                 ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QString("%1").arg(i.value()->price)));
-                ui->tableWidget->setItem(k, 4, new QTableWidgetItem(i.value()->notes));
+                if(i.value()->special)
+                    ui->tableWidget->setItem(k, 4, new QTableWidgetItem(QIcon(":/buttons/star.png"), "特别推荐"));
+                else
+                    ui->tableWidget->setItem(k, 4, new QTableWidgetItem(QIcon(":/buttons/graystar.png"), "普通"));
                 k++;
             }
         }
@@ -160,19 +168,18 @@ void MenuManage::showDishes(){
                 ui->tableWidget->setItem(k, 1, new QTableWidgetItem(i.value()->getType()));
                 ui->tableWidget->setItem(k, 2, new QTableWidgetItem(i.value()->name));
                 ui->tableWidget->setItem(k, 3, new QTableWidgetItem(QString("%1").arg(i.value()->price)));
-                ui->tableWidget->setItem(k, 4, new QTableWidgetItem(i.value()->notes));
+                if(i.value()->special)
+                    ui->tableWidget->setItem(k, 4, new QTableWidgetItem(QIcon(":/buttons/star.png"), "特别推荐"));
+                else
+                    ui->tableWidget->setItem(k, 4, new QTableWidgetItem(QIcon(":/buttons/graystar.png"), "普通"));
                 k++;
             }
         }
     }
-    ui->tableWidget->setRowCount(k);
+    ui->tableWidget->setRowCount(Dish::count);
     mySortByColumn(0);
     mySortByColumn(0);
-    QFont font = ui->tableWidget->horizontalHeader()->font();
-    font.setBold(true);
-    ui->tableWidget->horizontalHeader()->setFont(font);
-    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//禁止编辑
-    /*//可用来禁止编辑
+        /*//可用来禁止编辑
     for(int i=0;i<k;i++){
         ui->tableWidget->item(i,0)->setFlags(Qt::NoItemFlags);
         ui->tableWidget->item(i,1)->setFlags(Qt::NoItemFlags);
@@ -250,7 +257,13 @@ void MenuManage::deleteDish(){
     */
     Data::hash1.value(ID)->demand = -3;
 }
-//
+//change text in the label
+void MenuManage::showDishInfo(int row, int col){
+    Q_UNUSED(col)
+    QString notes = ui->tableWidget->item(row, 4)->text();
+    ui->notesLabel->setText(notes);
+}
+
 void MenuManage::on_action_refresh_triggered()
 {
     qDebug()<<"refresh..";
@@ -266,9 +279,10 @@ void MenuManage::on_action_edit_triggered()
     int id = ui->tableWidget->item(row, 0)->text().toInt();
     editDialog.id = id;
     editDialog.name = ui->tableWidget->item(row, 2)->text();
-    editDialog.notes = ui->tableWidget->item(row, 4)->text();
+    editDialog.notes = ui->notesLabel->text();
     editDialog.price = ui->tableWidget->item(row, 3)->text().toInt();
     editDialog.dishtype = ui->tableWidget->item(row, 1)->text();
+    editDialog.special = Data::hash1[id]->special;
     editDialog.set();//预置
     editDialog.show();
     editDialog.exec();
@@ -362,13 +376,14 @@ void MenuManage::saveCurrent(){
         }
         else if(flag == -2){
             qDebug()<<"insert";
-            tempstring = "insert into dish values (?, ?, ?, 0, 0, ?, ?)";
+            tempstring = "insert into dish values (?, ?, ?, 0, 0, ?, ?, ?)";
             query.prepare(tempstring);
             query.addBindValue(id);
             query.addBindValue((int)i.value()->type);
             query.addBindValue(i.value()->name);
             query.addBindValue(i.value()->price);
             query.addBindValue(i.value()->notes);
+            query.addBindValue(i.value()->special);
             if(!query.exec())
             {
                 qDebug() << query.lastError();

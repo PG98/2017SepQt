@@ -16,7 +16,8 @@ public:
     ~staffLogin();
 
 private slots:
-    void on_loginBtn_clicked();
+    void on_waiterBtn_clicked();
+    void on_waiterBtn_2_clicked();
 
 private:
     Ui::staffLogin *ui;

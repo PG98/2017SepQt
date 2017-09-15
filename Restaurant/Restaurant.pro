@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     stafflogin.cpp \
     chef.cpp \
     waiter.cpp \
-    waiterwindow.cpp
+    waiterwindow.cpp \
+    chefwindow.cpp
 
 HEADERS  += \
     registerdialog.h \
@@ -50,7 +51,9 @@ HEADERS  += \
     stafflogin.h \
     chef.h \
     waiter.h \
-    waiterwindow.h
+    waiterwindow.h \
+    chefwindow.h \
+    table.h
 
 FORMS    += \
     registerdialog.ui \
@@ -64,7 +67,8 @@ FORMS    += \
     adduser.ui \
     selecttable.ui \
     stafflogin.ui \
-    waiterwindow.ui
+    waiterwindow.ui \
+    chefwindow.ui
 
 RESOURCES += \
     images.qrc

@@ -6,6 +6,7 @@ Dish::Dish(){
   name="";
   type=Main;
   demand=0;
+  special = 0;
   undone=false;
 }
 
@@ -22,10 +23,11 @@ QString Dish::getType(){
     return "wrong";
 }
 
-void Dish::setDish(int ID,QString Name,int Type,int Price,QString Notes){
+void Dish::setDish(int ID,QString Name,int Type,int Price,QString Notes, int Special){
     id=ID;
     name=Name;
     type = DishType(Type);
     price = Price;
     notes = Notes;
+    special = Special;
 }

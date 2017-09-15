@@ -3,6 +3,7 @@
 
 QHash<int, Dish*> Data::hash1;
 QHash<int, User*> Data::hash0;
+Table Data::table[10];
 
 void Data::dataInit(){
     QSqlQuery query;
@@ -36,7 +37,17 @@ void Data::dataInit(){
         hash1.insert(d->id, d);
         i++;
     }
-    //员工账号
     Dish::count = i;
+    //餐桌
+    i=0;
+    query.prepare("select * from diningtable");
+    while(query.next()){
+        table[i].id = query.value(0).toInt();
+        table[i].volume = query.value(1).toInt();
+        table[i].state = query.value(2).toInt();
+        i++;
+    }
+
+    //员工账号
 }
 
