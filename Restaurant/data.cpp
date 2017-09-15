@@ -40,7 +40,7 @@ void Data::dataInit(){
     Dish::count = i;
     //餐桌
     i=0;
-    query.prepare("select * from diningtable");
+    query.exec("select * from diningtable");
     while(query.next()){
         table[i].id = query.value(0).toInt();
         table[i].volume = query.value(1).toInt();

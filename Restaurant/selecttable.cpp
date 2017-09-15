@@ -2,12 +2,14 @@
 #include "ui_selecttable.h"
 #include "keybutton.h"
 #include "data.h"
+#include "order.h"
 
 selectTable::selectTable(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::selectTable)
 {
     ui->setupUi(this);
+    this->setWindowTitle(tr("选择餐桌"));
     KeyButton *button[10];
     QHBoxLayout *layout1 = new QHBoxLayout;
     QHBoxLayout *layout2 = new QHBoxLayout;
@@ -38,5 +40,8 @@ selectTable::~selectTable()
 
 void selectTable::setTable(int i){
     Data::table[i].state = -1;
-    qDebug()<<"table: "<<i+1<<"  volume"<<Data::table[i].volume;
+    qDebug()<<"table: "<<i+1<<" volume: "<<Data::table[i].volume;
+    Order* w = new Order;
+    w->show();
+    this->close();
 }

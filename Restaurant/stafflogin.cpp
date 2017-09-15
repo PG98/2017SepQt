@@ -21,13 +21,23 @@ staffLogin::~staffLogin()
 
 void staffLogin::on_waiterBtn_clicked()
 {
-    int id = ui->lineEdit->text().toInt();
-    bool flag = true;
+    int id = ui->lineEdit->text().toInt(), IDcheck;
+    bool flag = false;
     QSqlQuery query;
     QString waiterstring = QString("select * from waiter where id = %1").arg(id);
     query.exec(waiterstring);
     if(!query.exec(waiterstring)){    //查找数据库中对应的号码
             qDebug()<<query.lastError();
+            flag = false;
+    }
+    else{
+        while(query.next()){
+            IDcheck = query.value(0).toInt();
+            qDebug()<<"waiter id: "<<IDcheck;
+        }
+        if(id == IDcheck)
+            flag =true;
+        else
             flag = false;
     }
     if(flag){
@@ -44,14 +54,23 @@ void staffLogin::on_waiterBtn_clicked()
 
 void staffLogin::on_waiterBtn_2_clicked()
 {
-    int id = ui->lineEdit->text().toInt();
+    int id = ui->lineEdit->text().toInt(), IDcheck;
     QString chefstring = QString("select * from chef where id = %1").arg(id);
-    bool flag = true;
+    bool flag = false;
     QSqlQuery query;
     query.exec(chefstring);
     if(!query.exec(chefstring)){    //查找数据库中对应的号码
             qDebug()<<query.lastError();
             flag = false;
+    }
+    else{
+        while(query.next()){
+            IDcheck = query.value(0).toInt();
+            qDebug()<<"chef id: "<<IDcheck;
+        }
+        if(id == IDcheck)
+            flag = true;
+        else flag = false;
     }
     if(flag){
         chefWindow* w = new chefWindow;
