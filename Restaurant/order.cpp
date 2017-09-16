@@ -5,7 +5,7 @@
 #include <QHeaderView>
 
 int Order::orderCount = 0;
-int Order::totalCharge = 0;
+double Order::totalCharge = 0;
 
 Order::Order(QWidget *parent) :
     QMainWindow(parent),
@@ -253,8 +253,8 @@ void Order::delRow(int row, int col){
             int curr = ui->table2->rowCount();
             qDebug()<<curr<<"   "<<row;
             if(curr == row + 1){
-                ui->table2->setRowCount(curr);
-                ui->table2->removeRow(row);
+                //ui->table2->setRowCount(curr);
+                //ui->table2->removeRow(row);           //
             }else{
                 ui->table2->removeRow(row);
             }
@@ -332,7 +332,7 @@ void Order::makeRequest(int n){
         QMessageBox box;
         QPixmap icon(":/images/QRcode.jpg");
         box.setIconPixmap(icon);
-        box.setText("老板手头紧");
+        box.setText(QString("老板手头紧\n你需要支付\n%1 元").arg(totalCharge));
         QPushButton* b = box.addButton(tr("成功转账(&Y)"), QMessageBox::YesRole);
         box.exec();
         if(box.clickedButton() == b)

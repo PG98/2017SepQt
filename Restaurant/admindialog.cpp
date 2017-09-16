@@ -1,5 +1,6 @@
 #include "admindialog.h"
 #include "ui_admindialog.h"
+#include <QSqlError>
 
 AdminDialog::AdminDialog(QWidget *parent) :
     QDialog(parent),
@@ -32,6 +33,14 @@ AdminDialog::~AdminDialog()
 void AdminDialog::on_menuBtn_clicked()
 {
     MenuManage* menuWindow = new MenuManage;
+    QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE");
+    database.setDatabaseName("database.db");
+    bool tableFlag=false;
+    if(!database.open()){
+        qDebug()<<database.lastError();
+        qFatal("failed to connect");
+    }
+    Data::dataInit();
     menuWindow->show();
     this->close();
 }
@@ -39,6 +48,7 @@ void AdminDialog::on_menuBtn_clicked()
 void AdminDialog::on_userBtn_clicked()
 {
     UserManage* userWindow = new UserManage;
+    //Data::dataInit();
     userWindow->show();
     this->close();
 }

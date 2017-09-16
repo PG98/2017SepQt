@@ -331,7 +331,6 @@ void UserManage::saveCurrent(){
             }
         }
     }
-
     this->statusBar()->showMessage(tr("保存成功!"), 3000);
 }
 

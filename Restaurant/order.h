@@ -36,7 +36,7 @@ private:
     Ui::Order *ui;
     KeyButton* button[3];
     static int orderCount;
-    static int totalCharge;
+    static double totalCharge;
     QStringList header = QStringList()<<"编号"<<"种类"<<"名字"<<"单价"<<"推荐度";
     QStringList header1 = QStringList()<<"编号"<<"名字"<<"单价"<<"推荐度"<<"份数";
     void setbox1();

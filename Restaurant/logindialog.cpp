@@ -65,6 +65,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     connect(ui->loginBtn, SIGNAL(clicked(bool)), this, SLOT(login_clicked()));
     connect(ui->nameCmBox, SIGNAL(editTextChanged(QString)), this, SLOT(getUserInfo(QString)));//把手机号编辑框中的字符传给函数，判断账户是否存在
     connect(ui->pwdLineEdit, SIGNAL(returnPressed()), ui->loginBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //回车绑定登陆按钮
+    connect(ui->nameCmBox, SIGNAL(returnPressed()), ui->loginBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //回车绑定登陆按钮
 
     //打开数据库文件
     /*
@@ -111,7 +112,6 @@ LoginDialog::LoginDialog(QWidget *parent) :
              }
     }*/
 //=============================================对账户数据库的连接结束
-
     Data::dataInit();
 }
 
@@ -141,7 +141,7 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
             adminDlg= new AdminDialog;
             adminDlg->show();
             //adminDlg->exec();无所谓
-            this->close();
+            //this->close();
         }
         else{
             if(ui->pwdLineEdit->text() == "")
@@ -187,7 +187,7 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
                 }
                 selectTable* select_table = new selectTable;
                 select_table->show();
-                this->close();
+                //this->close();
             }
         }
     }

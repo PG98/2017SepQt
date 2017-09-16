@@ -7,6 +7,7 @@ Table Data::table[10];
 int Data::customerID = 0;
 
 void Data::dataInit(){
+    qDebug()<<"Data initialize.........";
     QSqlQuery query;
     int i=0;
     query.prepare("select * from user");
@@ -47,6 +48,10 @@ void Data::dataInit(){
         table[i].id = query.value(0).toInt();
         table[i].volume = query.value(1).toInt();
         table[i].state = query.value(2).toInt();
+        table[i].customerID = query.value(3).toInt();
+        table[i].water = query.value(4).toInt();
+        table[i].remind = query.value(5).toInt();
+        table[i].pay = query.value(6).toInt();
         i++;
     }
 

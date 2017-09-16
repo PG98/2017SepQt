@@ -348,6 +348,7 @@ void MenuManage::saveCurrent(){
             query.exec(tempstring);
         }
     }
+    this->statusBar()->showMessage(tr("保存成功!"), 3000);
 }
 
 void MenuManage::on_OkBtn_clicked()
