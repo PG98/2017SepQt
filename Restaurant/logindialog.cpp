@@ -12,7 +12,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle(tr("登陆"));
     this->setFixedSize(this->width(),this->height());//固定窗口大小
-
+    ui->staffBtn->setDefault(false);
     //this->setStyleSheet("background-color:lavender;");//窗口背景颜色
     //this->setStyleSheet("border-image:url(:/images/backgnd.png);");//背景图片
     QImage im;

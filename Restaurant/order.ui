@@ -6,66 +6,45 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1118</width>
+    <height>661</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGroupBox" name="box1">
+   <widget class="QGroupBox" name="box4">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>100</y>
-      <width>341</width>
-      <height>391</height>
+      <x>430</x>
+      <y>120</y>
+      <width>391</width>
+      <height>451</height>
      </rect>
     </property>
     <property name="title">
-     <string>GroupBox</string>
+     <string>GroupBox4</string>
     </property>
     <widget class="QTableWidget" name="table1">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>80</y>
-       <width>261</width>
-       <height>251</height>
+       <x>30</x>
+       <y>60</y>
+       <width>281</width>
+       <height>271</height>
       </rect>
      </property>
     </widget>
-   </widget>
-   <widget class="QGroupBox" name="box2">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>100</y>
-      <width>331</width>
-      <height>391</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>GroupBox</string>
-    </property>
-    <widget class="QTableWidget" name="table2">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>80</y>
-       <width>301</width>
-       <height>231</height>
-      </rect>
-     </property>
-    </widget>
+    <zorder>table1</zorder>
+    <zorder>typeBox</zorder>
    </widget>
    <widget class="QGroupBox" name="typeBox">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>10</y>
-      <width>331</width>
+      <x>480</x>
+      <y>50</y>
+      <width>341</width>
       <height>81</height>
      </rect>
     </property>
@@ -83,13 +62,121 @@
      </property>
     </widget>
    </widget>
+   <widget class="QGroupBox" name="box3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>120</y>
+      <width>361</width>
+      <height>451</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>GroupBox3</string>
+    </property>
+    <widget class="QTableWidget" name="table2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>251</width>
+       <height>231</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="box1">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>331</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>GroupBox</string>
+    </property>
+    <widget class="QPushButton" name="iconBtn">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>64</width>
+       <height>64</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+    background-image :url(:/images/noodle.png) 
+    
+}
+QPushButton:hover
+{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+    background-image :url(:/images/noodle2.png) 
+} 
+
+QPushButton:pressed
+{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+   background-image :url(:/images/noodle3.png) 
+} </string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>50</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>您当前的总价为：</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="priceLabel">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>50</y>
+       <width>59</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1118</width>
      <height>25</height>
     </rect>
    </property>

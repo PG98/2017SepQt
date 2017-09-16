@@ -86,5 +86,8 @@
         <file>images/worker.png</file>
         <file>images/join_2.png</file>
         <file>images/join.png</file>
+        <file>images/noodle.png</file>
+        <file>images/noodle3.png</file>
+        <file>images/noodle2.png</file>
     </qresource>
 </RCC>
