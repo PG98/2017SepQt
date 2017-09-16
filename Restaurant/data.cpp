@@ -34,6 +34,7 @@ void Data::dataInit(){
         d->undone = query.value(4).toInt();
         d->price = query.value(5).toInt();
         d->notes = query.value(6).toString();
+        d->special = query.value(7).toInt();
         hash1.insert(d->id, d);
         i++;
     }

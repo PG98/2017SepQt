@@ -12,19 +12,9 @@ MenuManage::MenuManage(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle(tr("菜单管理"));
+    this->setFixedSize(this->width(), this->height());
 
     qDebug()<<"dish count:"<<Dish::count<<endl;
-
-    qDebug()<<"here comes fucking QHash!";
-    QHash<int, Dish*>::const_iterator i = Data::hash1.constBegin();
-    int k=0;
-    while(i!=Data::hash1.constEnd()){
-        //qDebug()<<i.key()<<":"<<i.value()->name;
-        ++i;
-        k++;
-    }
-    qDebug()<<"total: "<<k;
-    qDebug()<<"test complete...."<<k;
 
     setTypeGroupBox();
     setDetailGroupBox();
@@ -51,7 +41,7 @@ MenuManage::MenuManage(QWidget *parent) :
     layout->addWidget(ui->detail, 0, 1, 2, 1);
     layout->addLayout(bottomLayout, 2, 0, 1, 2);
     layout->setColumnStretch(1, 1);
-    layout->setColumnMinimumWidth(0, 500);
+    layout->setColumnMinimumWidth(0, 532);
     layout->setRowMinimumHeight(0,100);
 
     QWidget* widget = new QWidget;
@@ -210,7 +200,7 @@ void MenuManage::MouseTrackItem(int row, int column){
 
 void MenuManage::rowSelect(){   //鼠标移动、点击效果
     static bool track = true;
-    qDebug()<<track;
+    //qDebug()<<track;
     if(track){
         ui->tableWidget->setStyleSheet("selection-background-color:burlywood;"); //选中项的颜色
         qDebug()<<ui->tableWidget->currentRow();
@@ -260,7 +250,8 @@ void MenuManage::deleteDish(){
 //change text in the label
 void MenuManage::showDishInfo(int row, int col){
     Q_UNUSED(col)
-    QString notes = ui->tableWidget->item(row, 4)->text();
+    int id = ui->tableWidget->item(row, 0)->text().toInt();
+    QString notes = Data::hash1[id]->notes;
     ui->notesLabel->setText(notes);
 }
 
@@ -312,61 +303,19 @@ void MenuManage::saveCurrent(){
     //每次保存只处理以上更改
     QSqlQuery query;
     QString tempstring;
-    /*
-    for(int i=0;i<count;i++){
-        id = Data::dish[i].id;
-        flag = Data::dish[i].demand;
-        if(flag == -1){
-            qDebug()<<"modified";
-            tempstring = QString("update dish set dishName = :name, price = :price, notes = :notes, demand = 0 where id = %1").arg(id);
-            query.prepare(tempstring);
-            query.bindValue(":name", Data::dish[i].name);
-            query.bindValue(":id", Data::dish[i].price);
-            query.bindValue(":notes", Data::dish[i].notes);
-            if(!query.exec())
-            {
-                qDebug() << query.lastError();
-            }else{
-                qDebug() << "updated!";
-            }
-        }
-        else if(flag == -2){
-            qDebug()<<"insert";
-            tempstring = "insert into dish values (?, ?, ?, 0, 0, ?, ?)";
-            query.prepare(tempstring);
-            query.addBindValue(id);
-            query.addBindValue((int)Data::dish[i].type);
-            query.addBindValue(Data::dish[i].name);
-            query.addBindValue(Data::dish[i].price);
-            query.addBindValue(Data::dish[i].notes);
-            if(!query.exec())
-            {
-                qDebug() << query.lastError();
-            }
-            else
-            {
-                qDebug() << "inserted "<<Data::dish[i].name<<"!";
-            }
-        }
-        else if(flag == -3){
-            qDebug()<<"deleted";
-            tempstring = QString("delete from dish where id = %1").arg(id);
-            query.exec(tempstring);
-        }
-    }
-    */
     QHashIterator<int, Dish*> i(Data::hash1);
     while(i.hasNext()){
         i.next();
         id = i.key();
         flag = i.value()->demand;
         if(flag == -1){
-            qDebug()<<"modified";
-            tempstring = QString("update dish set dishName = :name, price = :price, notes = :notes, demand = 0 where id = %1").arg(id);
+            qDebug()<<i.value()->name<<" has been modified";
+            tempstring = QString("update dish set dishName = :name, price = :price, notes = :notes, demand = 0, special = :special where id = %1").arg(id);
             query.prepare(tempstring);
             query.bindValue(":name", i.value()->name);
-            query.bindValue(":id", i.value()->price);
             query.bindValue(":notes", i.value()->notes);
+            query.bindValue(":price", i.value()->price);
+            query.bindValue(":special", i.value()->special);
             if(!query.exec())
             {
                 qDebug() << query.lastError();
@@ -375,7 +324,7 @@ void MenuManage::saveCurrent(){
             }
         }
         else if(flag == -2){
-            qDebug()<<"insert";
+            qDebug()<<i.value()->name<<" has been inserted";
             tempstring = "insert into dish values (?, ?, ?, 0, 0, ?, ?, ?)";
             query.prepare(tempstring);
             query.addBindValue(id);
@@ -394,12 +343,11 @@ void MenuManage::saveCurrent(){
             }
         }
         else if(flag == -3){
-            qDebug()<<"deleted";
+            qDebug()<<i.value()->name<<" has been deleted";
             tempstring = QString("delete from dish where id = %1").arg(id);
             query.exec(tempstring);
         }
     }
-
 }
 
 void MenuManage::on_OkBtn_clicked()
@@ -454,9 +402,4 @@ void MenuManage::on_backBtn_clicked(){
     else if (box.clickedButton() == cancelBut)
         return;
 }
-
-
-
-
-
 

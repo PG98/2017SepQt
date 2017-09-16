@@ -89,7 +89,7 @@ static bool createConnection(){
                 query.exec("insert into dish values(206, 2, '泰式凤爪', 0, 0, 28, 'null', 0)");
                 query.exec("insert into dish values(301, 3, '澳洲龙虾', 0, 0, 85, 'null', 0)");
                 query.exec("insert into dish values(302, 3, '象拔蚌', 0, 0, 50, 'null', 0)");
-                query.exec("insert into dish values(303, 3, '皮皮虾', 0, 0, 66, 'null', 0)");
+                query.exec("insert into dish values(303, 3, '皮皮虾', 0, 0, 66, 'null', 1)");
                 query.exec("insert into dish values(304, 3, '对虾', 0, 0, 35, 'null', 0)");
                 query.exec("insert into dish values(305, 3, '梭子蟹', 0, 0, 70, 'null', 0)");
                 query.exec("insert into dish values(306, 3, '大闸蟹', 0, 0, 80, 'null', 0)");
