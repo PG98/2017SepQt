@@ -3,9 +3,9 @@
 #include <QDebug>
 #include "data.h"
 #include <QHeaderView>
-#include <QtWidgets>
 
 int Order::orderCount = 0;
+int Order::totalCharge = 0;
 
 Order::Order(QWidget *parent) :
     QMainWindow(parent),
@@ -18,19 +18,26 @@ Order::Order(QWidget *parent) :
     setbox1();
     setbox4();
     setbox3();
+    QHBoxLayout* buttons = setButtons();
     showDishes();
     setTableAppearance();
     connect(ui->table1->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
     connect(ui->table1, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
+    connect(ui->table2, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem2(int, int)));//鼠标移动效果
     connect(ui->table1, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
+    connect(ui->table2, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect2()));//单击选中行
     connect(ui->table2, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(delRow(int, int)));
     connect(ui->table1, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(addOrder(int)));
+    for(int i=0;i<3;i++){
+        connect(button[i], SIGNAL(keyClicked(int)),this, SLOT(makeRequest(int)));
+    }
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(ui->box1, 0, 0);
     layout->addWidget(ui->typeBox, 0, 1);
     layout->addWidget(ui->box3, 1, 0);
     layout->addWidget(ui->box4, 1, 1);
+    layout->addLayout(buttons, 2, 0, 1, 2);
     layout->setColumnStretch(0, 1);
     layout->setColumnStretch(1, 1);
     layout->setRowStretch(0, 1);
@@ -83,6 +90,9 @@ void Order::setbox4(){
     ui->table1->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->table1->setColumnCount(5);
     ui->table1->setRowCount(Dish::count);
+    for(int i=0;i<5;i++){
+        ui->table1->setColumnWidth(i, 80);
+    }
     //showDishes();
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(ui->table1, 0, 0);
@@ -96,7 +106,10 @@ void Order::setbox3(){
     ui->table2->verticalHeader()->setVisible(false);
     ui->table2->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->table2->setColumnCount(5);
-    //ui->table2->setRowCount(0);
+    for(int i=0;i<5;i++){
+        ui->table2->setColumnWidth(i, 80);
+    }
+    ui->table2->setRowCount(0);
     ui->table2->setShowGrid(false);
 
     QVBoxLayout* layout = new QVBoxLayout;
@@ -106,6 +119,23 @@ void Order::setbox3(){
     ui->table2->setAlternatingRowColors(true);
     //ui->table2->resizeColumnToContents(4);
     ui->table2->horizontalHeader()->setStyleSheet("QHeaderView::section{background:lightcoral;}"); //设置表头背景色
+}
+
+QHBoxLayout* Order::setButtons(){
+    QHBoxLayout* layout = new QHBoxLayout;
+    for(int i=0;i<3;i++){
+        button[i] = new KeyButton;
+        button[i]->setIndex(i);
+        button[i]->setEnabled(false);
+        button[i]->setFixedHeight(40);
+        layout->addWidget(button[i]);
+    }
+    ui->submitBtn->setFixedHeight(40);
+    layout->addWidget(ui->submitBtn);
+    button[0]->setText(tr("加水"));
+    button[1]->setText(tr("催单"));
+    button[2]->setText(tr("买单"));
+    return layout;
 }
 
 void Order::showDishes(){
@@ -131,7 +161,7 @@ void Order::showDishes(){
     mySortByColumn(0);
     mySortByColumn(0);
 }
-
+//下拉选项改变 显示特定菜品种类
 void Order::changeType(int type){
     //传入当前下拉菜单项的下标，对应的dish类是type(enum的首项定义为1)
     if(type==0){
@@ -176,7 +206,7 @@ void Order::setTableAppearance(){
 void Order::mySortByColumn(int column)
 {
     static bool f = true;
-    qDebug()<<"sort: ";
+    qDebug()<<"sort";
     ui->table1->sortByColumn(column, f ? Qt::AscendingOrder : Qt::DescendingOrder);
     f = !f;
 }
@@ -185,30 +215,55 @@ void Order::MouseTrackItem(int row, int column){
     Q_UNUSED(column);
     ui->table1->setStyleSheet("selection-background-color:cornflowerblue;"); //选中项的颜色
     ui->table1->setCurrentCell(row, QItemSelectionModel::Select); //设置该行为选中项。
+}
 
+void Order::MouseTrackItem2(int row, int column){
+    Q_UNUSED(column);
+    ui->table2->setStyleSheet("selection-background-color:slategray;"); //悬浮项的颜色
+    ui->table2->setCurrentCell(row, QItemSelectionModel::Select); //设置该行为选中项。
 }
 
 void Order::rowSelect(){   //鼠标点击表格效果
     static bool track = true;
-    qDebug()<<track;
+    //qDebug()<<track;
     if(track){
         ui->table1->setStyleSheet("selection-background-color:khaki;"); //选中项的颜色
-        qDebug()<<ui->table1->currentRow();
+        //qDebug()<<ui->table1->currentRow();
         ui->table1->setMouseTracking(false);
     }
-    else{
+    else
         ui->table1->setMouseTracking(true);
-        connect(ui->table1->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(mySortByColumn(int)));//单击表头排序
-        connect(ui->table1, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
+    track = !track;
+}
+void Order::rowSelect2(){   //鼠标点击
+    static bool track = true;
+    if(track){
+        ui->table2->setStyleSheet("selection-background-color:wheat;"); //选中项的颜色
+        ui->table2->setMouseTracking(false);
     }
+    else
+        ui->table2->setMouseTracking(true);
     track = !track;
 }
 
 void Order::delRow(int row, int col){
     Q_UNUSED(col)
-    ui->table2->removeRow(row);
     int sub = ui->table2->item(row, 4)->text().toInt();
-    orderCount -= sub;  //删除行后减去相应的菜品份数
+    if(sub == 1){
+            int curr = ui->table2->rowCount();
+            qDebug()<<curr<<"   "<<row;
+            if(curr == row + 1){
+                ui->table2->setRowCount(curr);
+                ui->table2->removeRow(row);
+            }else{
+                ui->table2->removeRow(row);
+            }
+    }
+    else
+        ui->table2->setItem(row, 4, new QTableWidgetItem(QString("%1").arg(--sub)));
+    orderCount--;  //删除行后减去相应的菜品份数
+    totalCharge -= ui->table2->item(row, 2)->text().toInt();
+    showCharge();
 }
 
 void Order::addOrder(int row){
@@ -219,12 +274,13 @@ void Order::addOrder(int row){
             int newcount = ui->table2->item(i, 4)->text().toInt() + 1;
             ui->table2->setItem(i, 4, new QTableWidgetItem(QString("%1").arg(newcount)));
             orderCount++;
+            totalCharge += ui->table2->item(i, 2)->text().toInt();
+            showCharge();
             //qDebug()<<Data::hash1[id]->name<<", newCount: "<<newcount;
             return;
         }
     }
     int newRow = ui->table2->rowCount() + 1;
-    qDebug()<<"rowCount: "<<newRow<<"  orderCount: "<<orderCount;
     ui->table2->setRowCount(newRow); //newRow为总行数，使用时下标仍从0开始
     if(Data::hash1.contains(id)){
         ui->table2->setItem(newRow-1, 0, new QTableWidgetItem(QString("%1").arg(Data::hash1[id]->id)));
@@ -236,8 +292,50 @@ void Order::addOrder(int row){
         else
             ui->table2->setItem(newRow-1, 3, new QTableWidgetItem(QIcon(":/buttons/graystar.png"), "普通"));
         ui->table2->setItem(newRow-1, 4, new QTableWidgetItem(QString("1")));
+        orderCount++;
+        totalCharge += Data::hash1[id]->price;
+        showCharge();
+        qDebug()<<"rowCount: "<<newRow-1<<"  orderCount: "<<orderCount;
     }
     else{
         qDebug()<<"index fault using hash1";
+    }
+}
+
+void Order::showCharge(){
+    ui->priceLabel->setText(QString("%1 元").arg(totalCharge));
+}
+
+void Order::on_submitBtn_clicked()
+{
+    static bool buttonsEnabled = false;
+    if(!buttonsEnabled){
+        buttonsEnabled = true;
+        for(int i=0;i<3;i++){
+            button[i]->setEnabled(true);
+        }
+    }
+}
+
+void Order::makeRequest(int n){
+    qDebug()<<"currentTable: "<<currentTable;
+    //根据按钮下标判断操作
+    QMessageBox::information(NULL, tr("提示"), tr("消息成功送达服务员"));
+    if(n == 0){
+        Data::table[currentTable].water = true;
+    }
+    else if(n == 1){
+        Data::table[currentTable].remind = true;
+    }
+    else{
+        Data::table[currentTable].pay = true;
+        QMessageBox box;
+        QPixmap icon(":/images/QRcode.jpg");
+        box.setIconPixmap(icon);
+        box.setText("老板手头紧");
+        QPushButton* b = box.addButton(tr("成功转账(&Y)"), QMessageBox::YesRole);
+        box.exec();
+        if(box.clickedButton() == b)
+            box.close();
     }
 }

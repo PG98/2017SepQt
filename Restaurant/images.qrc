@@ -89,5 +89,7 @@
         <file>images/noodle.png</file>
         <file>images/noodle3.png</file>
         <file>images/noodle2.png</file>
+        <file>images/QRcode.jpg</file>
+        <file>images/facepalm.jpg</file>
     </qresource>
 </RCC>

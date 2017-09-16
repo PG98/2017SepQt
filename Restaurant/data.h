@@ -13,6 +13,7 @@ public:
     static QHash<int, User*> hash0;
     static QHash<int, Dish*> hash1;
     static Table table[10];
+    static int customerID;
     static void dataInit();
 };
 #endif // DATA_H

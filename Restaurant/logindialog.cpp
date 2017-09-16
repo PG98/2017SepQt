@@ -3,7 +3,6 @@
 #include "stafflogin.h"
 #include <QMessageBox>
 #include <QKeyEvent>        //回车登陆
-#include "data.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -179,9 +178,13 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
             }
             //用户名和密码均正确
             else{
-                qDebug()<<"matchflag ="<<matchFlag;
-                //Order* orderwindow = new Order;
-                //orderwindow->show();
+                //qDebug()<<"matchflag ="<<matchFlag;
+                QSqlQuery query;
+                query.exec("select * from user where phone = "+userphone);
+                while(query.next()){
+                        Data::customerID = query.value(0).toInt();
+                    qDebug()<<"customerID: "<<Data::customerID;
+                }
                 selectTable* select_table = new selectTable;
                 select_table->show();
                 this->close();

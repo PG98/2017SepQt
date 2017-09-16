@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1118</width>
-    <height>661</height>
+    <width>920</width>
+    <height>713</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,8 +42,8 @@
    <widget class="QGroupBox" name="typeBox">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>50</y>
+      <x>460</x>
+      <y>20</y>
       <width>341</width>
       <height>81</height>
      </rect>
@@ -170,13 +170,26 @@ QPushButton:pressed
      </property>
     </widget>
    </widget>
+   <widget class="QPushButton" name="submitBtn">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>600</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>提交菜单</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1118</width>
+     <width>920</width>
      <height>25</height>
     </rect>
    </property>

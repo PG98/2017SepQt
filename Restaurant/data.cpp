@@ -4,6 +4,7 @@
 QHash<int, Dish*> Data::hash1;
 QHash<int, User*> Data::hash0;
 Table Data::table[10];
+int Data::customerID = 0;
 
 void Data::dataInit(){
     QSqlQuery query;

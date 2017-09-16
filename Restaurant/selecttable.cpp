@@ -16,7 +16,7 @@ selectTable::selectTable(QWidget *parent) :
     QHBoxLayout *layout3 = new QHBoxLayout;
     for(int i=0;i<10;i++){
         button[i] = new KeyButton(QString("NO.%1").arg(i+1));
-        button[i]->setIndex(i);
+        button[i]->setIndex(i); //从0开始
         button[i]->setAutoDefault(false);
         if(i<3)
             layout1->addWidget(button[i]);
@@ -40,8 +40,9 @@ selectTable::~selectTable()
 
 void selectTable::setTable(int i){
     Data::table[i].state = -1;
-    qDebug()<<"table: "<<i+1<<" volume: "<<Data::table[i].volume;
+    qDebug()<<"table: "<<i<<", volume: "<<Data::table[i].volume;
     Order* w = new Order;
+    w->currentTable = i;
     w->show();
     this->close();
 }
