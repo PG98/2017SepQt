@@ -53,7 +53,8 @@ HEADERS  += \
     waiter.h \
     waiterwindow.h \
     chefwindow.h \
-    table.h
+    table.h \
+    orderinfo.h
 
 FORMS    += \
     registerdialog.ui \

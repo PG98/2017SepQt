@@ -35,7 +35,6 @@ void AdminDialog::on_menuBtn_clicked()
     MenuManage* menuWindow = new MenuManage;
     QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE");
     database.setDatabaseName("database.db");
-    bool tableFlag=false;
     if(!database.open()){
         qDebug()<<database.lastError();
         qFatal("failed to connect");

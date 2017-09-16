@@ -3,6 +3,7 @@
 
 QHash<int, Dish*> Data::hash1;
 QHash<int, User*> Data::hash0;
+Waiter Data::waiter[10];
 Table Data::table[10];
 int Data::customerID = 0;
 
@@ -56,5 +57,13 @@ void Data::dataInit(){
     }
 
     //员工账号
+    query.exec("select * from waiter");
+    while(query.next()){
+        waiter[i].id = query.value(0).toInt();
+        waiter[i].table1 = query.value(1).toInt();
+        waiter[i].table2 = query.value(2).toInt();
+        waiter[i].comment = query.value(3).toDouble();
+        waiter[i].history = query.value(4).toInt();
+    }
 }
 

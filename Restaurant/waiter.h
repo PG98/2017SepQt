@@ -2,12 +2,13 @@
 #define WAITER_H
 
 
-class waiter
+class Waiter
 {
 public:
-    waiter();
+    Waiter();
     int id;
-    int call[10];
+    int table1;
+    int table2;
     double comment;
     int history;
 };

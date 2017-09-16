@@ -1,6 +1,6 @@
 #include "waiter.h"
 
-waiter::waiter()
+Waiter::Waiter()
 {
 
 }

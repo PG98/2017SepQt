@@ -42,6 +42,7 @@ void staffLogin::on_waiterBtn_clicked()
     }
     if(flag){
         waiterWindow* w = new waiterWindow;
+        w->id = id;
         w->show();
         this->close();
     }
