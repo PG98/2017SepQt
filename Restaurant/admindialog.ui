@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>563</width>
+    <height>332</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="menuBtn">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>60</x>
      <y>110</y>
      <width>91</width>
      <height>101</height>
@@ -35,17 +35,63 @@
   <widget class="QPushButton" name="userBtn">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>110</y>
-     <width>91</width>
-     <height>101</height>
+     <x>200</x>
+     <y>90</y>
+     <width>145</width>
+     <height>145</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">    QPushButton{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+    background-image :url(:/images/join.png) 
+    
+}
+QPushButton:hover
+{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+    background-image :url(:/images/join_2.png) 
+} 
+
+QPushButton:pressed
+{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+   background-image :url(:/images/join_2.png) 
+} </string>
+   </property>
    <property name="text">
-    <string>用户管理</string>
+    <string/>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>150</y>
+     <width>80</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
    </property>
   </widget>
  </widget>

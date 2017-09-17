@@ -339,7 +339,7 @@ void Order::on_submitBtn_clicked()
     //设置stage，表示上次提交最后一项的下标。不能在左边的表格中删除已经提交过的菜名。
      //提交新增的项目
     for(int i=stage;i<=ui->table2->rowCount()-2;i++){
-        orderInfo* info = new orderInfo(++Data::orderCount, currentTable, ui->table2->item(i, 0)->text().toInt(), -1, ui->table2->item(i,4)->text().toInt());
+        orderInfo* info = new orderInfo(Data::orderCount++, currentTable, ui->table2->item(i, 0)->text().toInt(), -1, ui->table2->item(i,4)->text().toInt());
         Data::list<<info;
     }
     /*
@@ -348,7 +348,7 @@ void Order::on_submitBtn_clicked()
         qDebug()<<"table: "<<i.next().tableid<<"  dish: "<<i.next().dishid<<"  status:"<<i.next().status<<"  count:"<<i.next().count;
     }
     */
-    //遍历
+    //遍历 输出内存中整个list
     for(orderInfo* info : Data::list){
         qDebug()<<"orderID: "<<info->id<<" "<<info->tableid<<" "<<info->dishid<<"  "<<info->count<<" status: "<<info->status;
     }

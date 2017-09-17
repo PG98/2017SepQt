@@ -3,6 +3,7 @@
 #include <QtWidgets>
 #include <QDebug>
 #include <QHeaderView>
+#include <QSqlError>
 
 chefWindow::chefWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -10,8 +11,10 @@ chefWindow::chefWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle(tr("厨师"));
+    this->setFixedWidth(this->width());
     setbox1();
     setbox2();
+    setTableAppearance();
     connect(ui->table1, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem(int, int)));//鼠标移动效果
     connect(ui->table2, SIGNAL(cellEntered(int,int)), this, SLOT(MouseTrackItem2(int, int)));//鼠标移动效果
     connect(ui->table1, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
@@ -71,6 +74,13 @@ void chefWindow::setTableAppearance(){
     ui->table2->horizontalHeader()->setSortIndicatorShown(true);
     ui->table2->horizontalHeader()->setFont(font);//表头文字样式
     ui->table2->setEditTriggers(QAbstractItemView::NoEditTriggers);//禁止编辑
+
+    for(int i=0;i<5;i++){
+        ui->table1->setColumnWidth(i, 80);
+        ui->table2->setColumnWidth(i, 80);
+    }
+    ui->table1->setFixedWidth(402);
+    ui->table2->setFixedWidth(402);
 }
 
 
@@ -143,16 +153,11 @@ void chefWindow::updateCell(int row){
     for(int i=0;i<5;i++){
         ui->table1->item(row, i)->setFlags(Qt::NoItemFlags);
     }
-    //以下应该改为下标操作而不是遍历
-    for(orderInfo* info : Data::list){
-        if(info->id == orderid){
-            //qDebug()<<"cooking orderid: "<<info.id<<", dishid: "<<info.dishid<<", chefid: "<<info.chefid<<", status: "<<info.status;
-            info->status = 0;
-            info->chefid = id;
-            qDebug()<<"cooking orderid: "<<info->id<<", dishid: "<<info->dishid<<", chefid: "<<info->chefid<<", status: "<<info->status;
-            break;
-        }
-    }
+    //顺序设置下标，操作链表不用遍历
+    Data::list[orderid]->status = 0;
+    Data::list[orderid]->chefid = id;
+    qDebug()<<"cooking...orderid: "<<Data::list[orderid]->id<<", dishid: "<<Data::list[orderid]->dishid<<", chefid: "<<Data::list[orderid]->chefid<<", status: "<<Data::list[orderid]->status;
+
     int row2 = ui->table2->rowCount();
     ui->table2->setRowCount(row2+1);
     ui->table2->setItem(row2, 0, new QTableWidgetItem(ui->table1->item(row, 0)->text()));
@@ -163,13 +168,21 @@ void chefWindow::updateCell(int row){
 }
 
 void chefWindow::complete(int row){
-    int id = ui->table2->item(row, 0)->text().toInt();
-    for(orderInfo* info: Data::list){
-        if(info->id == id){
-            info->status = 1;
-            for(int i=0;i<5;i++)
-                ui->table2->item(row, i)->setFlags(Qt::NoItemFlags);
-            break;
-        }
+    int orderid = ui->table2->item(row, 0)->text().toInt();
+    Data::list[orderid]->status = 1;
+    for(int i=0;i<5;i++)
+        ui->table2->item(row, i)->setFlags(Qt::NoItemFlags);
+    Data::chef[index].history++;
+}
+
+void chefWindow::on_action_U_triggered()
+{
+    int history = Data::chef[index].history;
+    QSqlQuery query;
+    query.prepare(QString("update chef set history = %1 where id = %2").arg(history).arg(id));
+    if(!query.exec()){
+        qDebug()<<query.lastError();
+    }else{
+        qDebug()<<"updated: chefid="<<id<<", history="<<history;
     }
 }

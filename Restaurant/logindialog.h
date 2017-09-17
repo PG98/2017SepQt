@@ -43,6 +43,7 @@ private:
     QString username;
     int member;
     bool matchFlag = false;
+    void setAppearance();
     //数据库操作命令
     //如果.db文件已存在，select;否则create。
     QString select_table = "select tbl_name name from sqlite_master where type = 'table'";

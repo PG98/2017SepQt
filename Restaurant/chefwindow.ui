@@ -75,6 +75,7 @@
      <string>选择操作</string>
     </property>
     <addaction name="action_R"/>
+    <addaction name="action_U"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -90,6 +91,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_R"/>
+   <addaction name="action_U"/>
   </widget>
   <action name="action_R">
    <property name="icon">
@@ -98,6 +100,15 @@
    </property>
    <property name="text">
     <string>刷新(&amp;R)</string>
+   </property>
+  </action>
+  <action name="action_U">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/buttons/up-arrow-2.png</normaloff>:/buttons/up-arrow-2.png</iconset>
+   </property>
+   <property name="text">
+    <string>上传绩效(&amp;U)</string>
    </property>
   </action>
  </widget>

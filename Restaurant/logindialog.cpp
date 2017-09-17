@@ -15,6 +15,22 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui->staffBtn->setFocusPolicy(Qt::NoFocus);
     //this->setStyleSheet("background-color:lavender;");//窗口背景颜色
     //this->setStyleSheet("border-image:url(:/images/backgnd.png);");//背景图片
+    setAppearance();
+    QWidget::setTabOrder(ui->pwdLineEdit, ui->loginBtn);
+    connect(ui->regBtn, SIGNAL(clicked(bool)), this, SLOT(register_clicked()));
+    connect(ui->loginBtn, SIGNAL(clicked(bool)), this, SLOT(login_clicked()));
+    connect(ui->nameCmBox, SIGNAL(editTextChanged(QString)), this, SLOT(getUserInfo(QString)));//把手机号编辑框中的字符传给函数，判断账户是否存在
+    connect(ui->pwdLineEdit, SIGNAL(returnPressed()), ui->loginBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //回车绑定登陆按钮
+
+    Data::dataInit();
+}
+
+LoginDialog::~LoginDialog()
+{
+    delete ui;
+}
+
+void LoginDialog::setAppearance(){
     QImage im;
     im.load(":/images/background.png");
     QPalette palette;
@@ -60,19 +76,6 @@ LoginDialog::LoginDialog(QWidget *parent) :
                             "QPushButton:pressed{background-color:rgb(85, 170, 255);\
                                              border-style: inset; }"
                              );
-
-    QWidget::setTabOrder(ui->pwdLineEdit, ui->loginBtn);
-    connect(ui->regBtn, SIGNAL(clicked(bool)), this, SLOT(register_clicked()));
-    connect(ui->loginBtn, SIGNAL(clicked(bool)), this, SLOT(login_clicked()));
-    connect(ui->nameCmBox, SIGNAL(editTextChanged(QString)), this, SLOT(getUserInfo(QString)));//把手机号编辑框中的字符传给函数，判断账户是否存在
-    connect(ui->pwdLineEdit, SIGNAL(returnPressed()), ui->loginBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //回车绑定登陆按钮
-
-    Data::dataInit();
-}
-
-LoginDialog::~LoginDialog()
-{
-    delete ui;
 }
 
 void LoginDialog::register_clicked(){
@@ -95,6 +98,9 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
         if(ui->pwdLineEdit->text()=="admin"){
             adminDlg= new AdminDialog;
             adminDlg->show();
+            ui->nameCmBox->clear();
+            ui->pwdLineEdit->clear();
+            ui->nameCmBox->setFocus();
             //adminDlg->exec();无所谓
             //this->close();
         }
@@ -142,9 +148,12 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
                     customerID = query.value(0).toInt();
                     qDebug()<<"customerID: "<<customerID;
                 }
-                selectTable* select_table = new selectTable;
-                select_table->setCurrentID(customerID);     //传入当前登陆的用户账号，以便后面的交互操作
-                select_table->show();
+                selectTable* selectDialog = new selectTable;
+                selectDialog->setCurrentID(customerID);     //传入当前登陆的用户账号，以便后面的交互操作
+                selectDialog->show();
+                ui->nameCmBox->clear();
+                ui->pwdLineEdit->clear();
+                ui->nameCmBox->setFocus();
                 //this->close();
             }
         }
@@ -211,7 +220,6 @@ void LoginDialog::getUserInfo(QString phone){
         QPixmap def=QPixmap::fromImage(img.scaled(ui->userPic->width(),ui->userPic->height()));
         ui->userPic->setPixmap(def);
     }
-//  */
 }
 
 void LoginDialog::on_staffBtn_clicked()

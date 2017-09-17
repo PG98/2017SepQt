@@ -27,6 +27,8 @@ private slots:
     void updateCell(int);
     void complete(int);
 
+    void on_action_U_triggered();
+
 private:
     QStringList header = QStringList()<<"订单号"<<"桌号"<<"菜品编号"<<"名字"<<"份数";
     Ui::chefWindow *ui;

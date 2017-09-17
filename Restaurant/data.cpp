@@ -58,6 +58,7 @@ void Data::dataInit(){
         i++;
     }
     //员工账号
+    i=0;
     query.exec("select * from waiter");
     while(query.next()){
         waiter[i].id = query.value(0).toInt();
@@ -66,6 +67,7 @@ void Data::dataInit(){
         waiter[i].comment = query.value(3).toDouble();
         waiter[i].history = query.value(4).toInt();
     }
+    i=0;
     query.exec("select * from chef");
     while(query.next()){
         chef[i].id = query.value(0).toInt();
