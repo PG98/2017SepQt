@@ -238,7 +238,7 @@ void UserManage::on_OkBtn_clicked()
     QMessageBox box;
     box.setWindowTitle("完成编辑");
     box.setText("是否退出？");
-    QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
+    QPushButton *yesBtn = box.addButton(tr("退出(&Y)"), QMessageBox::YesRole);
     QPushButton *backBtn = box.addButton(tr("返回上一级(&Y)"), QMessageBox::NoRole);
     QPushButton *cancelBtn = box.addButton(tr("取消"), QMessageBox::RejectRole);
     box.exec();
@@ -381,7 +381,7 @@ void UserManage::on_backBtn_clicked()
 {
     QMessageBox box;
     box.setWindowTitle("返回上一级");
-    box.setText("是否不保存直接返回？");
+    box.setText("是否返回？");
     QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
     QPushButton * noBtn = box.addButton(tr("取消"), QMessageBox::NoRole);
     box.exec();

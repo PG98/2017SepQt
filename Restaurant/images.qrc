@@ -91,5 +91,9 @@
         <file>images/noodle2.png</file>
         <file>images/QRcode.jpg</file>
         <file>images/facepalm.jpg</file>
+        <file>images/menu_2.png</file>
+        <file>images/menu1.png</file>
+        <file>images/backgnd.jpg</file>
+        <file>images/dalao.gif</file>
     </qresource>
 </RCC>

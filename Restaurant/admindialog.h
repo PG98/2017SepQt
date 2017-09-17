@@ -22,6 +22,8 @@ private slots:
 
     void on_userBtn_clicked();
 
+    void on_staffBtn_clicked();
+
 private:
     Ui::AdminDialog *ui;
 };

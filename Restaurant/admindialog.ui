@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>563</width>
-    <height>332</height>
+    <width>623</width>
+    <height>407</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,17 +16,50 @@
   <widget class="QPushButton" name="menuBtn">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>110</y>
-     <width>91</width>
-     <height>101</height>
+     <x>40</x>
+     <y>150</y>
+     <width>150</width>
+     <height>150</height>
     </rect>
    </property>
    <property name="focusPolicy">
     <enum>Qt::StrongFocus</enum>
    </property>
+   <property name="styleSheet">
+    <string notr="true">    QPushButton{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+    background-image :url(:/images/menu1.png) 
+    
+}
+QPushButton:hover
+{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+    background-image :url(:/images/menu_2.png) 
+} 
+
+QPushButton:pressed
+{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+   background-image :url(:/images/menu_2.png) 
+} </string>
+   </property>
    <property name="text">
-    <string>菜单管理</string>
+    <string/>
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
@@ -35,8 +68,8 @@
   <widget class="QPushButton" name="userBtn">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>90</y>
+     <x>240</x>
+     <y>150</y>
      <width>145</width>
      <height>145</height>
     </rect>
@@ -81,17 +114,33 @@ QPushButton:pressed
     <string>Ctrl+S</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="staffBtn">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>150</y>
-     <width>80</width>
-     <height>24</height>
+     <x>460</x>
+     <y>180</y>
+     <width>111</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>staffBtn</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>30</y>
+     <width>441</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 35pt &quot;微软雅黑&quot;;</string>
+   </property>
+   <property name="text">
+    <string>餐厅信息管理系统</string>
    </property>
   </widget>
  </widget>

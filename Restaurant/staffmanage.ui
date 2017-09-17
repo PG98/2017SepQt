@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>staffManage</class>
+ <widget class="QDialog" name="staffManage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>986</width>
+    <height>593</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QGroupBox" name="box">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>40</y>
+     <width>841</width>
+     <height>521</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Heiti SC</family>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QGroupBox{
+	&quot;border-image:url(:/images/background.png);&quot;
+}</string>
+   </property>
+   <property name="title">
+    <string>员工信息管理</string>
+   </property>
+   <widget class="QTableView" name="tableView_1">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>100</y>
+      <width>500</width>
+      <height>250</height>
+     </rect>
+    </property>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
+   </widget>
+   <widget class="QTableView" name="tableView_2">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>100</y>
+      <width>200</width>
+      <height>250</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="showBtn">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>390</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>刷新</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="submitBtn">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>390</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>提交修改</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="delBtn">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>390</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>删除服务员</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="undoBtn">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>390</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>撤销</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addBtn">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>390</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>添加服务员</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addBtn2">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>390</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>添加厨师</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="delBtn2">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>390</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>删除厨师</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>30</y>
+      <width>211</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>20</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 20pt &quot;微软雅黑&quot;;</string>
+    </property>
+    <property name="text">
+     <string>服务员信息</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>30</y>
+      <width>91</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>20</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 20pt &quot;微软雅黑&quot;;</string>
+    </property>
+    <property name="text">
+     <string>厨师信息</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

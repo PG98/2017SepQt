@@ -17,6 +17,8 @@ staffLogin::staffLogin(QWidget *parent) :
 staffLogin::~staffLogin()
 {
     delete ui;
+    ui->waiterBtn->setFocusPolicy(Qt::NoFocus);
+    ui->waiterBtn_2->setFocusPolicy(Qt::NoFocus);
 }
 
 void staffLogin::on_waiterBtn_clicked()

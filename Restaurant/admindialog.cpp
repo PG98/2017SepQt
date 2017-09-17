@@ -1,28 +1,18 @@
 #include "admindialog.h"
 #include "ui_admindialog.h"
 #include <QSqlError>
+#include "staffmanage.h"
 
 AdminDialog::AdminDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdminDialog)
 {
     ui->setupUi(this);
-
-    ui->menuBtn->setStyleSheet("QPushButton{background-color:cornflowerblue;\
-                                color: white;   border-radius: 10px;  border: 2px groove gray;\
-                                border-style: outset;}"
-                               "QPushButton:hover{background-color:white; color: black;}"
-                              "QPushButton:pressed{background-color:rgb(85, 170, 255);\
-                                               border-style: inset; }"
-                               );
-    //ui->regBtn->setStyleSheet("QPushButton{background-color:mediumseagreen; color:white;border-radius: 10px;  border: 2px groove gray;border-style: outset;}");
-    ui->userBtn->setStyleSheet("QPushButton{background-color:mediumseagreen;\
-                              color: white;   border-radius: 10px;  border: 2px groove gray;\
-                              border-style: outset;}"
-                             "QPushButton:hover{background-color:white; color: black;}"
-                            "QPushButton:pressed{background-color:rgb(85, 170, 255);\
-                                             border-style: inset; }"
-                             );
+    QImage img;
+    img.load(":/images/backgnd.png");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(img.scaled(this->width(),this->height())));
+    this->setPalette(palette);
 }
 
 AdminDialog::~AdminDialog()
@@ -49,5 +39,12 @@ void AdminDialog::on_userBtn_clicked()
     UserManage* userWindow = new UserManage;
     //Data::dataInit();
     userWindow->show();
+    this->close();
+}
+
+void AdminDialog::on_staffBtn_clicked()
+{
+    staffManage* staffDlg = new staffManage;
+    staffDlg->show();
     this->close();
 }

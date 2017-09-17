@@ -356,7 +356,7 @@ void MenuManage::on_OkBtn_clicked()
     QMessageBox box;
     box.setWindowTitle("完成编辑");
     box.setText("是否退出？");
-    QPushButton *yesBtn = box.addButton(tr("是(&Y)"), QMessageBox::YesRole);
+    QPushButton *yesBtn = box.addButton(tr("退出(&Y)"), QMessageBox::YesRole);
     QPushButton *backBtn = box.addButton(tr("返回上一级(&Y)"), QMessageBox::NoRole);
     QPushButton *cancelBtn = box.addButton(tr("取消"), QMessageBox::RejectRole);
     box.exec();
