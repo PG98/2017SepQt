@@ -20,7 +20,7 @@ public:
     static Waiter waiter[5];
     static Chef chef[5];
     static int orderCount;
-    static QList<orderInfo> list;
+    static QList<orderInfo*> list;
     static void dataInit();
 };
 #endif // DATA_H

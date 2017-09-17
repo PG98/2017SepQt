@@ -7,7 +7,7 @@ Waiter Data::waiter[5];
 Chef Data::chef[5];
 Table Data::table[10];
 int Data::orderCount = 0;
-QList<orderInfo> Data::list;
+QList<orderInfo*> Data::list;
 
 void Data::dataInit(){
     qDebug()<<"Data initialize.........";

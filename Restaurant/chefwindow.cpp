@@ -116,23 +116,23 @@ void chefWindow::on_action_R_triggered(){
     ui->table1->setRowCount(0);
     ui->table2->clearContents();
     ui->table2->setRowCount(0);
-    for(orderInfo info : Data::list){
-        if(info.status == -1){
+    for(orderInfo* info : Data::list){
+        if(info->status == -1){
             ui->table1->setRowCount(ui->table1->rowCount()+1);
-            ui->table1->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(info.id)));
-            ui->table1->setItem(k, 1, new QTableWidgetItem(QString("%1").arg(info.tableid)));
-            ui->table1->setItem(k, 2, new QTableWidgetItem(QString("%1").arg(info.dishid)));
-            ui->table1->setItem(k, 3, new QTableWidgetItem(Data::hash1[info.dishid]->name));
-            ui->table1->setItem(k, 4, new QTableWidgetItem(QString("%1").arg(info.count)));
+            ui->table1->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(info->id)));
+            ui->table1->setItem(k, 1, new QTableWidgetItem(QString("%1").arg(info->tableid)));
+            ui->table1->setItem(k, 2, new QTableWidgetItem(QString("%1").arg(info->dishid)));
+            ui->table1->setItem(k, 3, new QTableWidgetItem(Data::hash1[info->dishid]->name));
+            ui->table1->setItem(k, 4, new QTableWidgetItem(QString("%1").arg(info->count)));
             k++;
         }
-        if(info.chefid == id && info.status == 0){
+        if(info->chefid == id && info->status == 0){
             ui->table2->setRowCount(ui->table2->rowCount()+1);
-            ui->table2->setItem(j, 0, new QTableWidgetItem(QString("%1").arg(info.id)));
-            ui->table2->setItem(j, 1, new QTableWidgetItem(QString("%1").arg(info.tableid)));
-            ui->table2->setItem(j, 2, new QTableWidgetItem(QString("%1").arg(info.dishid)));
-            ui->table2->setItem(j, 3, new QTableWidgetItem(Data::hash1[info.dishid]->name));
-            ui->table2->setItem(j, 4, new QTableWidgetItem(QString("%1").arg(info.count)));
+            ui->table2->setItem(j, 0, new QTableWidgetItem(QString("%1").arg(info->id)));
+            ui->table2->setItem(j, 1, new QTableWidgetItem(QString("%1").arg(info->tableid)));
+            ui->table2->setItem(j, 2, new QTableWidgetItem(QString("%1").arg(info->dishid)));
+            ui->table2->setItem(j, 3, new QTableWidgetItem(Data::hash1[info->dishid]->name));
+            ui->table2->setItem(j, 4, new QTableWidgetItem(QString("%1").arg(info->count)));
             j++;
         }
     }
@@ -144,11 +144,12 @@ void chefWindow::updateCell(int row){
         ui->table1->item(row, i)->setFlags(Qt::NoItemFlags);
     }
     //以下应该改为下标操作而不是遍历
-    for(orderInfo info : Data::list){
-        if(info.id == orderid){
-            info.status = 0;
-            info.chefid = id;
-            qDebug()<<"cooking orderid: "<<info.id<<", dishid: "<<info.dishid<<", chefid: "<<info.chefid;
+    for(orderInfo* info : Data::list){
+        if(info->id == orderid){
+            //qDebug()<<"cooking orderid: "<<info.id<<", dishid: "<<info.dishid<<", chefid: "<<info.chefid<<", status: "<<info.status;
+            info->status = 0;
+            info->chefid = id;
+            qDebug()<<"cooking orderid: "<<info->id<<", dishid: "<<info->dishid<<", chefid: "<<info->chefid<<", status: "<<info->status;
             break;
         }
     }
@@ -163,9 +164,9 @@ void chefWindow::updateCell(int row){
 
 void chefWindow::complete(int row){
     int id = ui->table2->item(row, 0)->text().toInt();
-    for(orderInfo info: Data::list){
-        if(info.id == id){
-            info.status = 1;
+    for(orderInfo* info: Data::list){
+        if(info->id == id){
+            info->status = 1;
             for(int i=0;i<5;i++)
                 ui->table2->item(row, i)->setFlags(Qt::NoItemFlags);
             break;
