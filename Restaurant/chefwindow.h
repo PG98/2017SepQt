@@ -24,9 +24,11 @@ private slots:
     void rowSelect();
     void rowSelect2();
     void on_action_R_triggered();
+    void updateCell(int);
+    void complete(int);
 
 private:
-    QStringList header = QStringList()<<"桌号"<<"菜品编号"<<"名字"<<"份数";
+    QStringList header = QStringList()<<"订单号"<<"桌号"<<"菜品编号"<<"名字"<<"份数";
     Ui::chefWindow *ui;
     void setbox1();
     void setbox2();

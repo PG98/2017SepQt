@@ -4,7 +4,6 @@
 #include "data.h"
 #include <QHeaderView>
 
-int Order::orderCount = 0;
 double Order::totalCharge = 0;
 
 Order::Order(QWidget *parent) :
@@ -33,7 +32,7 @@ Order::Order(QWidget *parent) :
     }
     addOrder(0);
     totalCharge = 0;
-    orderCount = 0;
+    //orderCount = 0;
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(ui->box1, 0, 0);
@@ -271,7 +270,8 @@ void Order::delRow(int row, int col){
         }
         else
             ui->table2->setItem(row, 4, new QTableWidgetItem(QString("%1").arg(--sub)));
-        orderCount--;  //删除行后减去相应的菜品份数
+        //orderCount--;  //删除行后减去相应的菜品份数
+        Data::orderCount--;
         totalCharge -= ui->table2->item(row, 2)->text().toInt();
         showCharge();
     }else{
@@ -280,6 +280,8 @@ void Order::delRow(int row, int col){
 }
 
 void Order::addOrder(int row){
+    //static bool connect = false;
+    //if(!connect) connect = true;
     int id = ui->table1->item(row, 0)->text().toInt();
     qDebug()<<"add dish(id) to order: "<<id;
     for(int i=0;i<ui->table2->rowCount();i++){
@@ -287,7 +289,7 @@ void Order::addOrder(int row){
             int newcount = ui->table2->item(i, 4)->text().toInt() + 1;
             ui->table2->setItem(i, 4, new QTableWidgetItem(QString("%1").arg(newcount)));
             //以下是静态变量的变更
-            orderCount++;
+            //orderCount++;
             totalCharge += ui->table2->item(i, 2)->text().toInt();
             showCharge();
             //qDebug()<<Data::hash1[id]->name<<", newCount: "<<newcount;
@@ -312,11 +314,9 @@ void Order::addOrder(int row){
         ui->table2->setItem(newRow, 2, new QTableWidgetItem("           "));
         ui->table2->setItem(newRow, 3, new QTableWidgetItem("           "));
         ui->table2->setItem(newRow, 4, new QTableWidgetItem(QString("           ")));
-        //
-        orderCount++;
         totalCharge += Data::hash1[id]->price;
         showCharge();
-        qDebug()<<"rowCount: "<<newRow-1<<"  orderCount: "<<orderCount;
+        //qDebug()<<"rowCount: "<<newRow-1<<"  orderCount: "<<orderCount;
     }
     else{
         qDebug()<<"index fault using hash1";
@@ -329,7 +329,7 @@ void Order::showCharge(){
 
 void Order::on_submitBtn_clicked()
 {
-    qDebug()<<"submit, customerID: "<<Data::customerID;
+    qDebug()<<"submit, customerID: "<<customerID;
     if(!firstCommit){
         firstCommit = true;
         for(int i=0;i<3;i++){
@@ -339,7 +339,7 @@ void Order::on_submitBtn_clicked()
     //设置stage，表示上次提交最后一项的下标。不能在左边的表格中删除已经提交过的菜名。
      //提交新增的项目
     for(int i=stage;i<=ui->table2->rowCount()-2;i++){
-        orderInfo info(currentTable, ui->table2->item(i, 0)->text().toInt(), -1, ui->table2->item(i,4)->text().toInt());
+        orderInfo info(++Data::orderCount, currentTable, ui->table2->item(i, 0)->text().toInt(), -1, ui->table2->item(i,4)->text().toInt());
         Data::list<<info;
     }
     /*
@@ -348,10 +348,10 @@ void Order::on_submitBtn_clicked()
         qDebug()<<"table: "<<i.next().tableid<<"  dish: "<<i.next().dishid<<"  status:"<<i.next().status<<"  count:"<<i.next().count;
     }
     */
+    //遍历
     for(orderInfo info : Data::list){
-        qDebug()<<info.tableid<<" "<<info.dishid<<"  "<<info.count;
+        qDebug()<<"orderID: "<<info.id<<" "<<info.tableid<<" "<<info.dishid<<"  "<<info.count<<" status: "<<info.status;
     }
-
     stage = ui->table2->rowCount()-1;//本次提交
 }
 

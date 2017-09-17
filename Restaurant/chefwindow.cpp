@@ -17,9 +17,14 @@ chefWindow::chefWindow(QWidget *parent) :
     connect(ui->table1, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect()));//单击选中行
     connect(ui->table2, SIGNAL(cellClicked(int,int)),this, SLOT(rowSelect2()));//单击选中行
     //点击功能
-    QHBoxLayout* layout = new QHBoxLayout;
-    layout->addWidget(ui->box1);
-    layout->addWidget(ui->box2);
+    connect(ui->table1, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(updateCell(int)));
+    connect(ui->table2, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(complete(int)));
+
+    QGridLayout* layout = new QGridLayout;
+    layout->addWidget(ui->box1, 0, 0, 1, 1);
+    layout->addWidget(ui->box2, 0, 1, 1, 1);
+    layout->setColumnStretch(0,1);
+    layout->setColumnStretch(1,1);
     QWidget* widget = new QWidget;
     widget->setLayout(layout);
     this->setCentralWidget(widget);
@@ -34,7 +39,7 @@ void chefWindow::setbox1(){
     ui->box1->setTitle(tr("系统当前待接管菜品"));
     ui->table1->verticalHeader()->setVisible(false);
     ui->table1->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->table1->setColumnCount(4);
+    ui->table1->setColumnCount(5);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(ui->table1);
@@ -47,11 +52,11 @@ void chefWindow::setbox2(){
     ui->box2->setTitle(tr("正在处理"));
     ui->table2->verticalHeader()->setVisible(false);
     ui->table2->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->table2->setColumnCount(3);
+    ui->table2->setColumnCount(5);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(ui->table2);
-    ui->box1->setLayout(layout);
+    ui->box2->setLayout(layout);
     ui->table2->setHorizontalHeaderLabels(header);
     ui->table2->horizontalHeader()->setStyleSheet("QHeaderView::section{background:lightcoral;}"); //设置表头背景色
 }
@@ -106,16 +111,64 @@ void chefWindow::rowSelect2(){   //鼠标点击
 //刷新
 void chefWindow::on_action_R_triggered(){
      //遍历,每次从头即可
-    int k = 0;
+    int j = 0, k = 0;
     ui->table1->clearContents();
+    ui->table1->setRowCount(0);
+    ui->table2->clearContents();
+    ui->table2->setRowCount(0);
     for(orderInfo info : Data::list){
         if(info.status == -1){
             ui->table1->setRowCount(ui->table1->rowCount()+1);
-            ui->table1->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(info.tableid)));
-            ui->table1->setItem(k, 1, new QTableWidgetItem(QString("%1").arg(info.dishid)));
-            ui->table1->setItem(k, 2, new QTableWidgetItem(Data::hash1[info.dishid]->name));
-            ui->table1->setItem(k, 3, new QTableWidgetItem(QString("%1").arg(info.count)));
+            ui->table1->setItem(k, 0, new QTableWidgetItem(QString("%1").arg(info.id)));
+            ui->table1->setItem(k, 1, new QTableWidgetItem(QString("%1").arg(info.tableid)));
+            ui->table1->setItem(k, 2, new QTableWidgetItem(QString("%1").arg(info.dishid)));
+            ui->table1->setItem(k, 3, new QTableWidgetItem(Data::hash1[info.dishid]->name));
+            ui->table1->setItem(k, 4, new QTableWidgetItem(QString("%1").arg(info.count)));
             k++;
+        }
+        if(info.chefid == id && info.status == 0){
+            ui->table2->setRowCount(ui->table2->rowCount()+1);
+            ui->table2->setItem(j, 0, new QTableWidgetItem(QString("%1").arg(info.id)));
+            ui->table2->setItem(j, 1, new QTableWidgetItem(QString("%1").arg(info.tableid)));
+            ui->table2->setItem(j, 2, new QTableWidgetItem(QString("%1").arg(info.dishid)));
+            ui->table2->setItem(j, 3, new QTableWidgetItem(Data::hash1[info.dishid]->name));
+            ui->table2->setItem(j, 4, new QTableWidgetItem(QString("%1").arg(info.count)));
+            j++;
+        }
+    }
+}
+
+void chefWindow::updateCell(int row){
+    int orderid = ui->table1->item(row, 0)->text().toInt();
+    for(int i=0;i<5;i++){
+        ui->table1->item(row, i)->setFlags(Qt::NoItemFlags);
+    }
+    //以下应该改为下标操作而不是遍历
+    for(orderInfo info : Data::list){
+        if(info.id == orderid){
+            info.status = 0;
+            info.chefid = id;
+            qDebug()<<"cooking orderid: "<<info.id<<", dishid: "<<info.dishid<<", chefid: "<<info.chefid;
+            break;
+        }
+    }
+    int row2 = ui->table2->rowCount();
+    ui->table2->setRowCount(row2+1);
+    ui->table2->setItem(row2, 0, new QTableWidgetItem(ui->table1->item(row, 0)->text()));
+    ui->table2->setItem(row2, 1, new QTableWidgetItem(ui->table1->item(row, 1)->text()));
+    ui->table2->setItem(row2, 2, new QTableWidgetItem(ui->table1->item(row, 2)->text()));
+    ui->table2->setItem(row2, 3, new QTableWidgetItem(ui->table1->item(row, 3)->text()));
+    ui->table2->setItem(row2, 4, new QTableWidgetItem(ui->table1->item(row, 4)->text()));
+}
+
+void chefWindow::complete(int row){
+    int id = ui->table2->item(row, 0)->text().toInt();
+    for(orderInfo info: Data::list){
+        if(info.id == id){
+            info.status = 1;
+            for(int i=0;i<5;i++)
+                ui->table2->item(row, i)->setFlags(Qt::NoItemFlags);
+            break;
         }
     }
 }

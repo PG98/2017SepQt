@@ -36,7 +36,7 @@ private:
     Ui::LoginDialog *ui;
     QSqlDatabase database;
     bool tableFlag;
-
+    int customerID;
     int userid;
     QString userpwd;
     QString userphone;

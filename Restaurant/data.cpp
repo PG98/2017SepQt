@@ -3,9 +3,10 @@
 
 QHash<int, Dish*> Data::hash1;
 QHash<int, User*> Data::hash0;
-Waiter Data::waiter[10];
+Waiter Data::waiter[5];
+Chef Data::chef[5];
 Table Data::table[10];
-int Data::customerID = 0;
+int Data::orderCount = 0;
 QList<orderInfo> Data::list;
 
 void Data::dataInit(){
@@ -64,6 +65,11 @@ void Data::dataInit(){
         waiter[i].table2 = query.value(2).toInt();
         waiter[i].comment = query.value(3).toDouble();
         waiter[i].history = query.value(4).toInt();
+    }
+    query.exec("select * from chef");
+    while(query.next()){
+        chef[i].id = query.value(0).toInt();
+        chef[i].history = query.value(1).toInt();
     }
 
 }

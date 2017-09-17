@@ -43,6 +43,10 @@ void staffLogin::on_waiterBtn_clicked()
     if(flag){
         waiterWindow* w = new waiterWindow;
         w->id = id;
+        for(int i=0;i<5;i++){
+            if(Data::waiter[i].id == id)
+                w->index = i;
+        }
         w->show();
         this->close();
     }
@@ -76,6 +80,10 @@ void staffLogin::on_waiterBtn_2_clicked()
     if(flag){
         chefWindow* w = new chefWindow;
         w->id = id;
+        for(int i=0;i<5;i++){
+            if(Data::chef[i].id == id)
+                w->index = i;
+        }
         w->show();
         this->close();
     }

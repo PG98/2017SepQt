@@ -67,51 +67,6 @@ LoginDialog::LoginDialog(QWidget *parent) :
     connect(ui->nameCmBox, SIGNAL(editTextChanged(QString)), this, SLOT(getUserInfo(QString)));//把手机号编辑框中的字符传给函数，判断账户是否存在
     connect(ui->pwdLineEdit, SIGNAL(returnPressed()), ui->loginBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //回车绑定登陆按钮
 
-    //打开数据库文件
-    /*
-    tableFlag = false;
-    database = QSqlDatabase::addDatabase("QSQLITE");
-    database.setDatabaseName("database.db");
-    if(!database.open()){
-        qDebug()<<database.lastError();
-        qFatal("failed to connect");
-    }
-    else{
-        qDebug()<<"open success";
-        */
-//以下验证table是否存在
-/*      QSqlQuery query;
-        query.prepare(select_table);
-        if(!query.exec()){
-                    qDebug()<<query.lastError();
-                }
-                else{
-                    QString tableName;
-                    while(query.next()){
-                        tableName = query.value(0).toString();
-                        qDebug()<<tableName;
-                        if(tableName.compare("user")){  //string比对相同返回0
-                            tableFlag=false;
-                            qDebug()<<"table does not exist";
-                        }
-                        else{
-                            tableFlag=true;
-                            qDebug()<<"table exists";
-                        }
-                    }
-                }
-        if(tableFlag==false)        //初次打开时table不存在
-             {
-                 query.prepare(create_user);
-                 if(!query.exec()){
-                     qDebug()<<query.lastError();
-                 }
-                 else{
-                     qDebug()<<"table created!";
-                 }
-             }
-    }*/
-//=============================================对账户数据库的连接结束
     Data::dataInit();
 }
 
@@ -184,10 +139,11 @@ void LoginDialog::login_clicked(){      //此处应该对一些错误输入有�
                 query.bindValue(":phone", ui->nameCmBox->currentText());
                 query.exec();
                 while(query.next()){
-                    Data::customerID = query.value(0).toInt();
-                    qDebug()<<"customerID: "<<Data::customerID;
+                    customerID = query.value(0).toInt();
+                    qDebug()<<"customerID: "<<customerID;
                 }
                 selectTable* select_table = new selectTable;
+                select_table->setCurrentID(customerID);     //传入当前登陆的用户账号，以便后面的交互操作
                 select_table->show();
                 //this->close();
             }

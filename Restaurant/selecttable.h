@@ -14,9 +14,11 @@ class selectTable : public QDialog
 public:
     explicit selectTable(QWidget *parent = 0);
     ~selectTable();
+    void setCurrentID(int id) {currentID = id;}
 
 private:
     Ui::selectTable *ui;
+    int currentID;
 
 private slots:
     void setTable(int);

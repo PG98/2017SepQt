@@ -43,6 +43,7 @@ void selectTable::setTable(int i){
     qDebug()<<"table: "<<i<<", volume: "<<Data::table[i].volume;
     Order* w = new Order;
     w->currentTable = i;
+    w->setCustomerId(currentID);
     w->show();
     this->close();
 }

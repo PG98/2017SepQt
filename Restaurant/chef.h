@@ -2,10 +2,10 @@
 #define CHEF_H
 
 
-class chef
+class Chef
 {
 public:
-    chef();
+    Chef();
     int id;
     int history;
 };
