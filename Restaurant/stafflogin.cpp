@@ -23,6 +23,10 @@ staffLogin::~staffLogin()
 
 void staffLogin::on_waiterBtn_clicked()
 {
+    if(ui->lineEdit->text() ==""){
+        QMessageBox::warning(this,tr("警告"), tr("员工号为空！"));
+        ui->lineEdit->setFocus();
+    }
     int id = ui->lineEdit->text().toInt(), IDcheck;
     bool flag = false;
     QSqlQuery query;
@@ -61,6 +65,10 @@ void staffLogin::on_waiterBtn_clicked()
 
 void staffLogin::on_waiterBtn_2_clicked()
 {
+    if(ui->lineEdit->text() ==""){
+        QMessageBox::warning(this,tr("警告"), tr("员工号为空！"));
+        ui->lineEdit->setFocus();
+    }
     int id = ui->lineEdit->text().toInt(), IDcheck;
     QString chefstring = QString("select * from chef where id = %1").arg(id);
     bool flag = false;
@@ -94,4 +102,9 @@ void staffLogin::on_waiterBtn_2_clicked()
         ui->lineEdit->clear();
         ui->lineEdit->setFocus();
     }
+}
+
+void staffLogin::on_pushButton_clicked()
+{
+
 }

@@ -2,6 +2,7 @@
 #define SELECTTABLE_H
 
 #include <QDialog>
+#include "keybutton.h"
 
 namespace Ui {
 class selectTable;
@@ -19,9 +20,12 @@ public:
 private:
     Ui::selectTable *ui;
     int currentID;
+    KeyButton *button[10];
 
 private slots:
     void setTable(int);
+    void setTableState();
+    void on_toolButton_clicked();
 };
 
 #endif // SELECTTABLE_H

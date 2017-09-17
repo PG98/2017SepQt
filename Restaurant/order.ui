@@ -36,8 +36,6 @@
       </rect>
      </property>
     </widget>
-    <zorder>table1</zorder>
-    <zorder>typeBox</zorder>
    </widget>
    <widget class="QGroupBox" name="typeBox">
     <property name="geometry">
@@ -181,6 +179,19 @@ QPushButton:pressed
     </property>
     <property name="text">
      <string>提交菜单</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="queryBtn">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>600</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>进度查询</string>
     </property>
    </widget>
   </widget>

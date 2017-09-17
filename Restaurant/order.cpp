@@ -2,6 +2,7 @@
 #include "ui_order.h"
 #include <QDebug>
 #include "data.h"
+#include "orderquery.h"
 #include <QHeaderView>
 
 double Order::totalCharge = 0;
@@ -12,7 +13,7 @@ Order::Order(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle(tr("点菜"));
-    this->setFixedWidth(this->width());
+    //this->setFixedWidth(this->width());
     setTypeBox();
     setbox1();
     setbox4();
@@ -125,10 +126,18 @@ void Order::setbox3(){
 
 QHBoxLayout* Order::setButtons(){
     QHBoxLayout* layout = new QHBoxLayout;
+    layout->addWidget(ui->queryBtn);
     for(int i=0;i<3;i++){
         button[i] = new KeyButton;
         button[i]->setIndex(i);
         button[i]->setEnabled(false);
+        button[i]->setStyleSheet("QPushButton{background-color:lightslategray;\
+                                    color: white;   border-radius: 10px;  border: 2px groove gray;\
+                                    border-style: outset;}"
+                                   "QPushButton:hover{background-color:white; color: lightsteelblue;}"
+                                  "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                                   border-style: inset; }"
+                                   );
         button[i]->setFixedHeight(40);
         layout->addWidget(button[i]);
     }
@@ -376,4 +385,12 @@ void Order::makeRequest(int n){
         if(box.clickedButton() == b)
             box.close();
     }
+}
+
+void Order::on_queryBtn_clicked()
+{
+    orderQuery* q = new orderQuery;
+    q->tableid = currentTable;
+    q->show();
+    q->exec();
 }
