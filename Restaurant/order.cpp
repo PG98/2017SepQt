@@ -31,6 +31,9 @@ Order::Order(QWidget *parent) :
     for(int i=0;i<3;i++){
         connect(button[i], SIGNAL(keyClicked(int)),this, SLOT(makeRequest(int)));
     }
+    addOrder(0);
+    totalCharge = 0;
+    orderCount = 0;
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(ui->box1, 0, 0);
@@ -248,31 +251,42 @@ void Order::rowSelect2(){   //鼠标点击
 
 void Order::delRow(int row, int col){
     Q_UNUSED(col)
-    int sub = ui->table2->item(row, 4)->text().toInt();
-    if(sub == 1){
-            int curr = ui->table2->rowCount();
-            qDebug()<<curr<<"   "<<row;
-            if(curr == row + 1){
-                //ui->table2->setRowCount(curr);
-                //ui->table2->removeRow(row);           //
-            }else{
-                ui->table2->removeRow(row);
-            }
+    if(row >= stage){
+        int sub = ui->table2->item(row, 4)->text().toInt();
+        if(sub == 1){
+                int curr = ui->table2->rowCount();
+                if(curr == row + 1){            //删除表格上最后一行的情况
+                    qDebug()<<"test ";
+                    ui->table2->setRowCount(curr+1);
+                    ui->table2->setItem(curr, 0, new QTableWidgetItem("======"));
+                    ui->table2->setItem(curr, 1, new QTableWidgetItem("======"));
+                    ui->table2->setItem(curr, 2, new QTableWidgetItem("======"));
+                    ui->table2->setItem(curr, 3, new QTableWidgetItem("======"));
+                    ui->table2->setItem(curr, 4, new QTableWidgetItem(QString("=====")));
+                    ui->table2->removeRow(row);
+                    //不在下面垫一行会崩溃。。。
+                }else{
+                    ui->table2->removeRow(row);
+                }
+        }
+        else
+            ui->table2->setItem(row, 4, new QTableWidgetItem(QString("%1").arg(--sub)));
+        orderCount--;  //删除行后减去相应的菜品份数
+        totalCharge -= ui->table2->item(row, 2)->text().toInt();
+        showCharge();
+    }else{
+        QMessageBox::warning(this, tr("警告"), tr("不能删除已经提交过的菜品"));
     }
-    else
-        ui->table2->setItem(row, 4, new QTableWidgetItem(QString("%1").arg(--sub)));
-    orderCount--;  //删除行后减去相应的菜品份数
-    totalCharge -= ui->table2->item(row, 2)->text().toInt();
-    showCharge();
 }
 
 void Order::addOrder(int row){
     int id = ui->table1->item(row, 0)->text().toInt();
-    qDebug()<<"add id to order: "<<id;
+    qDebug()<<"add dish(id) to order: "<<id;
     for(int i=0;i<ui->table2->rowCount();i++){
-        if(ui->table2->item(i, 0)->text().toInt() == id){
+        if(ui->table2->item(i, 0)->text().toInt() == id && i>=stage){
             int newcount = ui->table2->item(i, 4)->text().toInt() + 1;
             ui->table2->setItem(i, 4, new QTableWidgetItem(QString("%1").arg(newcount)));
+            //以下是静态变量的变更
             orderCount++;
             totalCharge += ui->table2->item(i, 2)->text().toInt();
             showCharge();
@@ -280,8 +294,8 @@ void Order::addOrder(int row){
             return;
         }
     }
-    int newRow = ui->table2->rowCount() + 1;
-    ui->table2->setRowCount(newRow); //newRow为总行数，使用时下标仍从0开始
+    int newRow = ui->table2->rowCount();
+    ui->table2->setRowCount(newRow + 1); //newRow为总行数，使用时下标从0开始
     if(Data::hash1.contains(id)){
         ui->table2->setItem(newRow-1, 0, new QTableWidgetItem(QString("%1").arg(Data::hash1[id]->id)));
         ui->table2->setItem(newRow-1, 1, new QTableWidgetItem(Data::hash1[id]->name));
@@ -292,6 +306,13 @@ void Order::addOrder(int row){
         else
             ui->table2->setItem(newRow-1, 3, new QTableWidgetItem(QIcon(":/buttons/graystar.png"), "普通"));
         ui->table2->setItem(newRow-1, 4, new QTableWidgetItem(QString("1")));
+        //
+        ui->table2->setItem(newRow, 0, new QTableWidgetItem("           "));
+        ui->table2->setItem(newRow, 1, new QTableWidgetItem("           "));
+        ui->table2->setItem(newRow, 2, new QTableWidgetItem("           "));
+        ui->table2->setItem(newRow, 3, new QTableWidgetItem("           "));
+        ui->table2->setItem(newRow, 4, new QTableWidgetItem(QString("           ")));
+        //
         orderCount++;
         totalCharge += Data::hash1[id]->price;
         showCharge();
@@ -308,13 +329,30 @@ void Order::showCharge(){
 
 void Order::on_submitBtn_clicked()
 {
-    static bool buttonsEnabled = false;
-    if(!buttonsEnabled){
-        buttonsEnabled = true;
+    qDebug()<<"submit, customerID: "<<Data::customerID;
+    if(!firstCommit){
+        firstCommit = true;
         for(int i=0;i<3;i++){
             button[i]->setEnabled(true);
         }
     }
+    //设置stage，表示上次提交最后一项的下标。不能在左边的表格中删除已经提交过的菜名。
+     //提交新增的项目
+    for(int i=stage;i<=ui->table2->rowCount()-2;i++){
+        orderInfo info(currentTable, ui->table2->item(i, 0)->text().toInt(), -1, ui->table2->item(i,4)->text().toInt());
+        Data::list<<info;
+    }
+    /*
+    QListIterator<orderInfo> i(Data::list);
+    while(i.hasNext()){
+        qDebug()<<"table: "<<i.next().tableid<<"  dish: "<<i.next().dishid<<"  status:"<<i.next().status<<"  count:"<<i.next().count;
+    }
+    */
+    for(orderInfo info : Data::list){
+        qDebug()<<info.tableid<<" "<<info.dishid<<"  "<<info.count;
+    }
+
+    stage = ui->table2->rowCount()-1;//本次提交
 }
 
 void Order::makeRequest(int n){

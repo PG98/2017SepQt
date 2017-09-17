@@ -5,6 +5,7 @@
 #include "user.h"
 #include "table.h"
 #include "waiter.h"
+#include "orderinfo.h"
 #include <QVariant>
 #include <QList>
 #include <QHash>
@@ -17,6 +18,7 @@ public:
     static Table table[10];
     static Waiter waiter[10];
     static int customerID;
+    static QList<orderInfo> list;
     static void dataInit();
 };
 #endif // DATA_H

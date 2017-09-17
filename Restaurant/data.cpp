@@ -6,6 +6,7 @@ QHash<int, User*> Data::hash0;
 Waiter Data::waiter[10];
 Table Data::table[10];
 int Data::customerID = 0;
+QList<orderInfo> Data::list;
 
 void Data::dataInit(){
     qDebug()<<"Data initialize.........";
