@@ -7,7 +7,7 @@ waiterWindow::waiterWindow(QWidget *parent) :
     ui(new Ui::waiterWindow)
 {
     ui->setupUi(this);
-    for(int i=0;i<10;i++){
+    for(int i=0;i<5;i++){
         if(Data::waiter[i].id == id)
             index = i;
     }

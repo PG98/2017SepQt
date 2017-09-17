@@ -7,6 +7,7 @@ class chef
 public:
     chef();
     int id;
+    int history;
 };
 
 #endif // CHEF_H

@@ -137,12 +137,12 @@ static bool createConnection(){
                 query.exec("insert into waiter values(204, 0, 0, 5.0, 0)");
                 query.exec("insert into waiter values(205, 0, 0, 5.0, 0)");
                 //===================================================
-                query.exec("create table chef (id int primary key)");
-                query.exec("insert into chef values(301)");
-                query.exec("insert into chef values(302)");
-                query.exec("insert into chef values(303)");
-                query.exec("insert into chef values(304)");
-                query.exec("insert into chef values(305)");
+                query.exec("create table chef (id int primary key, history int)");
+                query.exec("insert into chef values(301, 0)");
+                query.exec("insert into chef values(302, 0)");
+                query.exec("insert into chef values(303, 0)");
+                query.exec("insert into chef values(304, 0)");
+                query.exec("insert into chef values(305, 0)");
                 //====================================================
                 if(!query.exec()){
                      qDebug()<<query.lastError();

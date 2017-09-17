@@ -20,7 +20,6 @@ public:
 
 private slots:
     void claimTable(int);
-
     void on_pushButton_clicked();
 
 private:

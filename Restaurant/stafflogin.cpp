@@ -75,6 +75,7 @@ void staffLogin::on_waiterBtn_2_clicked()
     }
     if(flag){
         chefWindow* w = new chefWindow;
+        w->id = id;
         w->show();
         this->close();
     }
