@@ -32,7 +32,6 @@ private slots:
     void changeType(int);
     void makeRequest(int);
     void on_submitBtn_clicked();
-
     void on_queryBtn_clicked();
 
 private:
@@ -53,6 +52,7 @@ private:
     void showDishes();
     void setTableAppearance();
     void showCharge();
+    void conclude();
 };
 
 #endif // ORDER_H

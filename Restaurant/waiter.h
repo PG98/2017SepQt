@@ -5,12 +5,12 @@
 class Waiter
 {
 public:
-    Waiter();
-    int id;
-    int table1;
-    int table2;
-    double comment;
-    int history;
+    Waiter() {}
+    int id = 0;
+    int table1 = 0;
+    int table2 = 0;
+    double rating = 0;
+    int history = 0;
 };
 
 #endif // WAITER_H

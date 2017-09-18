@@ -6,8 +6,8 @@ class Chef
 {
 public:
     Chef();
-    int id;
-    int history;
+    int id = 0;
+    int history = 0;
 };
 
 #endif // CHEF_H

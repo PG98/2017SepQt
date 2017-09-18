@@ -3,6 +3,7 @@
 #include "data.h"
 #include "waiterwindow.h"
 #include "chefwindow.h"
+#include "managerdialog.h"
 #include <QtSql>
 #include "QtWidgets"
 
@@ -19,6 +20,7 @@ staffLogin::~staffLogin()
     delete ui;
     ui->waiterBtn->setFocusPolicy(Qt::NoFocus);
     ui->waiterBtn_2->setFocusPolicy(Qt::NoFocus);
+
 }
 
 void staffLogin::on_waiterBtn_clicked()
@@ -26,6 +28,7 @@ void staffLogin::on_waiterBtn_clicked()
     if(ui->lineEdit->text() ==""){
         QMessageBox::warning(this,tr("警告"), tr("员工号为空！"));
         ui->lineEdit->setFocus();
+        return;
     }
     int id = ui->lineEdit->text().toInt(), IDcheck;
     bool flag = false;
@@ -50,8 +53,10 @@ void staffLogin::on_waiterBtn_clicked()
         waiterWindow* w = new waiterWindow;
         w->id = id;
         for(int i=0;i<5;i++){
-            if(Data::waiter[i].id == id)
+            if(Data::waiter[i].id == id){
+                qDebug()<<"waiter index:"<<i<<", waiterID: "<<id;
                 w->index = i;
+            }
         }
         w->show();
         this->close();
@@ -104,7 +109,15 @@ void staffLogin::on_waiterBtn_2_clicked()
     }
 }
 
-void staffLogin::on_pushButton_clicked()
+void staffLogin::on_managerBtn_clicked()
 {
-
+    if(ui->lineEdit->text() ==""){
+        QMessageBox::warning(this,tr("警告"), tr("员工号为空！"));
+        ui->lineEdit->setFocus();
+    }
+    if(ui->lineEdit->text() == "101"){
+        managerDialog* w = new managerDialog;
+        w->show();
+        this->close();
+    }
 }

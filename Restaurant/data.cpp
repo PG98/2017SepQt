@@ -40,6 +40,8 @@ void Data::dataInit(){
         d->price = query.value(5).toInt();
         d->notes = query.value(6).toString();
         d->special = query.value(7).toInt();
+        d->rating = query.value(8).toDouble();
+        d->history = query.value(9).toInt();
         hash1.insert(d->id, d);
         i++;
     }
@@ -55,7 +57,7 @@ void Data::dataInit(){
         table[i].water = query.value(4).toInt();
         table[i].remind = query.value(5).toInt();
         table[i].pay = query.value(6).toInt();
-        table[i].waiterID = query.value(7).toInt();
+        table[i].waiterIndex = query.value(7).toInt();
         i++;
     }
     //员工账号
@@ -65,14 +67,16 @@ void Data::dataInit(){
         waiter[i].id = query.value(0).toInt();
         waiter[i].table1 = query.value(1).toInt();
         waiter[i].table2 = query.value(2).toInt();
-        waiter[i].comment = query.value(3).toDouble();
+        waiter[i].rating = query.value(3).toDouble();
         waiter[i].history = query.value(4).toInt();
+        i++;
     }
     i=0;
     query.exec("select * from chef");
     while(query.next()){
         chef[i].id = query.value(0).toInt();
         chef[i].history = query.value(1).toInt();
+        i++;
     }
 
 }

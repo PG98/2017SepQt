@@ -7,7 +7,7 @@ public:
     orderInfo(){}
     orderInfo(int ID, int t, int d, int s, int c):id(ID), tableid(t), dishid(d), status(s), count(c){}
     int id;
-    int tableid;
+    int tableid;//下标（0起）
     int dishid;
     int status; //-1等待厨师接单，0做菜中，1完成等待服务员上菜
     int count;  //份数

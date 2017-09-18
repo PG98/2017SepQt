@@ -15,7 +15,9 @@ public:
     bool undone;
     int price;
     int special;
+    int history;
     QString notes;
+    double rating;
     //以上和数据库列名对应
     QString getType();
     static int count;

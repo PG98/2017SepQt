@@ -28,11 +28,11 @@ SOURCES += main.cpp\
     selecttable.cpp \
     stafflogin.cpp \
     chef.cpp \
-    waiter.cpp \
     waiterwindow.cpp \
     chefwindow.cpp \
     staffmanage.cpp \
-    orderquery.cpp
+    orderquery.cpp \
+    managerdialog.cpp
 
 HEADERS  += \
     registerdialog.h \
@@ -58,7 +58,8 @@ HEADERS  += \
     table.h \
     orderinfo.h \
     staffmanage.h \
-    orderquery.h
+    orderquery.h \
+    managerdialog.h
 
 FORMS    += \
     registerdialog.ui \
@@ -75,7 +76,8 @@ FORMS    += \
     waiterwindow.ui \
     chefwindow.ui \
     staffmanage.ui \
-    orderquery.ui
+    orderquery.ui \
+    managerdialog.ui
 
 RESOURCES += \
     images.qrc

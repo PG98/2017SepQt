@@ -149,6 +149,7 @@ void MenuManage::changeType(int type){
 
 void MenuManage::showDishes(){
     int k=0;
+    //乱序迭代，用自带函数排序
     for(int j=1;j<=8;j++){
         QHashIterator<int, Dish*> i(Data::hash1);
         while(i.hasNext()){
@@ -325,7 +326,7 @@ void MenuManage::saveCurrent(){
         }
         else if(flag == -2){
             qDebug()<<i.value()->name<<" has been inserted";
-            tempstring = "insert into dish values (?, ?, ?, 0, 0, ?, ?, ?)";
+            tempstring = "insert into dish values (?, ?, ?, 0, 0, ?, ?, ?, 5)";
             query.prepare(tempstring);
             query.addBindValue(id);
             query.addBindValue((int)i.value()->type);

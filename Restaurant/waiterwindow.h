@@ -21,17 +21,11 @@ public:
 private slots:
     void claimTable(int);
     void on_waterBtn1_clicked();
-
     void on_remindBtn1_clicked();
-
     void on_payBtn1_clicked();
-
     void on_waterBtn2_clicked();
-
     void on_remindBtn2_clicked();
-
     void on_payBtn2_clicked();
-
     void on_refreshBtn_clicked();
 
 private:

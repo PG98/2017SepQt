@@ -62,7 +62,7 @@
     <string>厨师登陆</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="managerBtn">
    <property name="geometry">
     <rect>
      <x>230</x>

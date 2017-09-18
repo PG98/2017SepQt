@@ -349,6 +349,9 @@ void Order::on_submitBtn_clicked()
      //提交新增的项目
     for(int i=stage;i<=ui->table2->rowCount()-2;i++){
         orderInfo* info = new orderInfo(Data::orderCount++, currentTable, ui->table2->item(i, 0)->text().toInt(), -1, ui->table2->item(i,4)->text().toInt());
+        //每项分别：编号，当前桌号（0起），菜品id，份数
+        Data::hash1[ui->table2->item(i, 0)->text().toInt()]->history += ui->table2->item(i,4)->text().toInt();
+        //更新对应菜品历史次数
         Data::list<<info;
     }
     /*
@@ -367,11 +370,12 @@ void Order::on_submitBtn_clicked()
 void Order::makeRequest(int n){
     qDebug()<<"currentTable: "<<currentTable;
     //根据按钮下标判断操作
-    QMessageBox::information(NULL, tr("提示"), tr("消息成功送达服务员"));
     if(n == 0){
+        QMessageBox::information(NULL, tr("提示"), tr("消息成功送达服务员"));
         Data::table[currentTable].water = true;
     }
     else if(n == 1){
+        QMessageBox::information(NULL, tr("提示"), tr("消息成功送达服务员"));
         Data::table[currentTable].remind = true;
     }
     else{
@@ -384,6 +388,8 @@ void Order::makeRequest(int n){
         box.exec();
         if(box.clickedButton() == b)
             box.close();
+        //打开评价服务员，菜品窗口
+        conclude();
     }
 }
 
@@ -393,4 +399,17 @@ void Order::on_queryBtn_clicked()
     q->tableid = currentTable;
     q->show();
     q->exec();
+}
+
+void Order::conclude(){
+    Data::table[currentTable].state = 0;
+    int waiterIndex = Data::table[currentTable].waiterIndex;
+    Data::table[currentTable].waiterIndex = 0;
+    if(Data::waiter[waiterIndex].table1 == currentTable){
+        qDebug()<<"waiterID"<<Data::waiter[waiterIndex].id<<"table1:"<<Data::waiter[waiterIndex].table1<<"index:"<<currentTable<<"currentTableID:"<<Data::table[currentTable].id;
+        Data::waiter[waiterIndex].table1 = -1;  //重置服务员状态
+        Data::waiter[waiterIndex].history++;
+    }else{
+
+    }
 }

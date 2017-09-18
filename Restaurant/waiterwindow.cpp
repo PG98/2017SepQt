@@ -16,6 +16,8 @@ waiterWindow::~waiterWindow()
 }
 
 void waiterWindow::init(){
+    table1 = -1;
+    table2 = -1;
     QHBoxLayout* layout1 = new QHBoxLayout;
     QHBoxLayout* layout2 = new QHBoxLayout;
     for(int i=0;i<10;i++){
@@ -40,14 +42,15 @@ void waiterWindow::claimTable(int i){
         on_refreshBtn_clicked();
         return;
     }
-    else if(Data::table[i].state > 0){
+    else if(Data::table[i].state == 0){
         QMessageBox::warning(this, QString("警告"), QString("抱歉，该桌没有客人"));
         on_refreshBtn_clicked();
         return;
     }
+    //优先填入1
     if(Data::waiter[index].table1 == 0){
         Data::waiter[index].table1 = i;
-        Data::table[i].waiterID = id;
+        Data::table[i].waiterIndex = index;
         table1 = i;
         ui->box1->setTitle(QString("table %1").arg(i));
         button[i]->setText(tr("服务中"));
@@ -57,7 +60,7 @@ void waiterWindow::claimTable(int i){
         Data::waiter[index].table2 = i;
         table2 = i;
         ui->box2->setTitle(QString("table %1").arg(i));
-        button[i]->setText(tr("老子在这"));
+        button[i]->setText(tr("服务中"));
         Data::table[i].state = id;
     }
     else{
@@ -66,8 +69,8 @@ void waiterWindow::claimTable(int i){
     }
 
 }
-//应该做成按钮，状态改变更换图标
 
+//应该做成按钮，状态改变更换图标
 void waiterWindow::on_refreshBtn_clicked()
 {
     for(int i=0;i<10;i++){
@@ -82,22 +85,36 @@ void waiterWindow::on_refreshBtn_clicked()
         }
         else if(state == id){
             button[i]->setText("服务中");
-            button[i]->setEnabled(false);
+            button[i]->setEnabled(true);
         }
         else{
             button[i]->setText("已被接管");
             button[i]->setEnabled(false);
         }
     }
-    if(table1){
-        ui->waterBtn1->setIcon(Data::table[table1].water ? QIcon(path1) : QIcon(path2));
-        ui->remindBtn1->setIcon(Data::table[table1].remind ? QIcon(path1) : QIcon(path2));
-        ui->payBtn1->setIcon(Data::table[table1].pay ? QIcon(path1) : QIcon(path2));
+    if(table1!=-1){
+        ui->box1->setTitle(QString("桌号:%1 服务中").arg(table1+1));//starts from 1
+        ui->waterBtn1->setIcon(Data::table[table1].water ? QIcon(path2) : QIcon(path1));
+        ui->remindBtn1->setIcon(Data::table[table1].remind ? QIcon(path2) : QIcon(path1));
+        ui->payBtn1->setIcon(Data::table[table1].pay ? QIcon(path2) : QIcon(path1));
     }
-    if(table2){
-        ui->waterBtn2->setIcon(Data::table[table2].water ? QIcon(path1) : QIcon(path2));
-        ui->remindBtn2->setIcon(Data::table[table2].remind ? QIcon(path1) : QIcon(path2));
-        ui->payBtn2->setIcon(Data::table[table2].pay ? QIcon(path1) : QIcon(path2));
+    else{
+        ui->box1->setTitle(QString("空缺"));
+        ui->waterBtn1->setEnabled(false);
+        ui->remindBtn1->setEnabled(false);
+        ui->payBtn1->setEnabled(false);
+    }
+    if(table2!=-1){
+        ui->box2->setTitle(QString("桌号:%1 服务中").arg(table2));
+        ui->waterBtn2->setIcon(Data::table[table2].water ? QIcon(path2) : QIcon(path1));
+        ui->remindBtn2->setIcon(Data::table[table2].remind ? QIcon(path2) : QIcon(path1));
+        ui->payBtn2->setIcon(Data::table[table2].pay ? QIcon(path2) : QIcon(path1));
+    }
+    else{
+        ui->box2->setTitle(QString("空缺"));
+        ui->waterBtn2->setEnabled(false);
+        ui->remindBtn2->setEnabled(false);
+        ui->payBtn2->setEnabled(false);
     }
 }
 
@@ -126,7 +143,7 @@ void waiterWindow::on_payBtn1_clicked()
     if(table1!=-1){
         if(Data::table[table1].pay == true){
             Data::table[table1].pay = false;
-            ui->payBtn2->setIcon(QIcon(path1));
+            ui->payBtn1->setIcon(QIcon(path1));
         }
     }
 }

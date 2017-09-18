@@ -43,6 +43,7 @@ void addDish::on_OkBtn_clicked(){
     Dish* d = new Dish;
     d->setDish(newID, ui->nameEdit->text(), type, ui->priceEdit->text().toInt(), ui->noteEdit->text(), (int)ui->checkBox->isChecked());
     d->demand = -2;
+    d->rating = 5;
     Data::hash1.insert(newID, d);
     Dish::count++;
     qDebug()<<"new dish added ";

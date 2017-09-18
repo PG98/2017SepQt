@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>160</y>
-      <width>281</width>
-      <height>301</height>
+      <y>170</y>
+      <width>251</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="title">
@@ -30,7 +30,7 @@
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>80</y>
+       <y>60</y>
        <width>151</width>
        <height>41</height>
       </rect>
@@ -43,7 +43,7 @@
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>140</y>
+       <y>120</y>
        <width>151</width>
        <height>41</height>
       </rect>
@@ -56,7 +56,7 @@
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>200</y>
+       <y>180</y>
        <width>151</width>
        <height>41</height>
       </rect>
@@ -69,10 +69,10 @@
    <widget class="QGroupBox" name="box2">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>160</y>
+      <x>430</x>
+      <y>170</y>
       <width>271</width>
-      <height>301</height>
+      <height>251</height>
      </rect>
     </property>
     <property name="title">
@@ -82,7 +82,7 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>80</y>
+       <y>60</y>
        <width>151</width>
        <height>41</height>
       </rect>
@@ -95,7 +95,7 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>140</y>
+       <y>120</y>
        <width>151</width>
        <height>41</height>
       </rect>
@@ -108,7 +108,7 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>200</y>
+       <y>180</y>
        <width>151</width>
        <height>41</height>
       </rect>
@@ -118,30 +118,30 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="box">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>30</y>
-      <width>461</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>GroupBox</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="refreshBtn">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>250</y>
       <width>101</width>
-      <height>131</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="text">
      <string>refresh</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="box">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>20</y>
+      <width>551</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>餐桌一览</string>
     </property>
    </widget>
   </widget>

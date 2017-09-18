@@ -26,6 +26,7 @@ private slots:
     void setTable(int);
     void setTableState();
 
+    void on_pushButton_clicked();
 };
 
 #endif // SELECTTABLE_H

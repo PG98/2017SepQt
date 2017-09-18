@@ -8,6 +8,7 @@ selectTable::selectTable(QWidget *parent) :
     ui(new Ui::selectTable)
 {
     ui->setupUi(this);
+    ui->pushButton->setIcon(QIcon(":/images/refresh.png"));
     this->setWindowTitle(tr("选择餐桌"));
     QHBoxLayout *layout1 = new QHBoxLayout;
     QHBoxLayout *layout2 = new QHBoxLayout;
@@ -37,6 +38,14 @@ selectTable::selectTable(QWidget *parent) :
     layout->addLayout(layout2);
     layout->addLayout(layout3);
     ui->box->setLayout(layout);
+    ui->pushButton->setIcon(QIcon(":/buttons/refresh.png"));
+    ui->pushButton->setStyleSheet("QPushButton{background-color:lightsteelblue;\
+                                color: black;   border-radius: 12px;  border: 3px groove gray;\
+                                border-style: outset;}"
+                               "QPushButton:hover{background-color:white; color: lightsteelblue;}"
+                              "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                               border-style: inset; }"
+                               );
 }
 
 selectTable::~selectTable()
@@ -57,7 +66,7 @@ void selectTable::setTable(int i){
 void selectTable::setTableState(){
     for(int i=0;i<10;i++){
         if(Data::table[i].state == 0){
-            button[i]->setStyleSheet("QPushButton{background-color:palegreen;\
+            button[i]->setStyleSheet("QPushButton{background-color:seagreen;\
                                         color: black;   border-radius: 10px;  border: 2px groove gray;\
                                         border-style: outset;}"
                                        "QPushButton:hover{background-color:white; color: lightsteelblue;}"
@@ -73,4 +82,8 @@ void selectTable::setTableState(){
                                        );
         }
     }
+}
+
+void selectTable::on_pushButton_clicked(){
+    setTableState();
 }

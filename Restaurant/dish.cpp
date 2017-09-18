@@ -2,11 +2,8 @@
 int Dish::count = 0;
 
 Dish::Dish(){
-  id=1;
   name="";
   type=Main;
-  demand=0;
-  special = 0;
   undone=false;
 }
 
