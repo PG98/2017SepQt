@@ -78,10 +78,10 @@
     <widget class="QLabel" name="imageLabel">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>40</y>
+       <x>20</x>
+       <y>140</y>
        <width>131</width>
-       <height>111</height>
+       <height>181</height>
       </rect>
      </property>
      <property name="text">
@@ -91,8 +91,8 @@
     <widget class="QLabel" name="notesLabel">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>200</y>
+       <x>20</x>
+       <y>50</y>
        <width>71</width>
        <height>41</height>
       </rect>
@@ -206,7 +206,7 @@
   </widget>
   <action name="action_N">
    <property name="icon">
-    <iconset>
+    <iconset resource="images.qrc">
      <normaloff>:/buttons/add.png</normaloff>:/buttons/add.png</iconset>
    </property>
    <property name="text">
@@ -218,7 +218,7 @@
   </action>
   <action name="action_D">
    <property name="icon">
-    <iconset>
+    <iconset resource="images.qrc">
      <normaloff>:/buttons/delete.png</normaloff>:/buttons/delete.png</iconset>
    </property>
    <property name="text">
@@ -230,7 +230,7 @@
   </action>
   <action name="action_Z">
    <property name="icon">
-    <iconset>
+    <iconset resource="images.qrc">
      <normaloff>:/buttons/undo.png</normaloff>:/buttons/undo.png</iconset>
    </property>
    <property name="text">
@@ -249,7 +249,7 @@
   </action>
   <action name="action_refresh">
    <property name="icon">
-    <iconset>
+    <iconset resource="images.qrc">
      <normaloff>:/buttons/refresh-1.png</normaloff>:/buttons/refresh-1.png</iconset>
    </property>
    <property name="text">
@@ -258,7 +258,7 @@
   </action>
   <action name="action_S">
    <property name="icon">
-    <iconset>
+    <iconset resource="images.qrc">
      <normaloff>:/buttons/save.png</normaloff>:/buttons/save.png</iconset>
    </property>
    <property name="text">
@@ -270,7 +270,7 @@
   </action>
   <action name="action_edit">
    <property name="icon">
-    <iconset>
+    <iconset resource="images.qrc">
      <normaloff>:/buttons/edit.png</normaloff>:/buttons/edit.png</iconset>
    </property>
    <property name="text">
@@ -278,6 +278,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

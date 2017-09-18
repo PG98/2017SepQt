@@ -55,6 +55,7 @@ void Data::dataInit(){
         table[i].water = query.value(4).toInt();
         table[i].remind = query.value(5).toInt();
         table[i].pay = query.value(6).toInt();
+        table[i].waiterID = query.value(7).toInt();
         i++;
     }
     //员工账号

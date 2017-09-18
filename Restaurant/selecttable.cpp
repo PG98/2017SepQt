@@ -74,8 +74,3 @@ void selectTable::setTableState(){
         }
     }
 }
-
-void selectTable::on_toolButton_clicked()
-{
-    setTableState();
-}

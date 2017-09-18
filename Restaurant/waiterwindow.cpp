@@ -19,7 +19,7 @@ void waiterWindow::init(){
     QHBoxLayout* layout1 = new QHBoxLayout;
     QHBoxLayout* layout2 = new QHBoxLayout;
     for(int i=0;i<10;i++){
-        button[i] = new KeyButton(QString("NO.%1").arg(i));
+        button[i] = new KeyButton(QString("桌%1").arg(i));
         button[i]->setIndex(i);
         button[i]->setAutoDefault(false);
         if(i<5)
@@ -35,11 +35,22 @@ void waiterWindow::init(){
 }
 
 void waiterWindow::claimTable(int i){
+    if(Data::table[i].state > 0){
+        QMessageBox::warning(this, QString("警告"), QString("抱歉，该桌已在服务中"));
+        on_refreshBtn_clicked();
+        return;
+    }
+    else if(Data::table[i].state > 0){
+        QMessageBox::warning(this, QString("警告"), QString("抱歉，该桌没有客人"));
+        on_refreshBtn_clicked();
+        return;
+    }
     if(Data::waiter[index].table1 == 0){
         Data::waiter[index].table1 = i;
+        Data::table[i].waiterID = id;
         table1 = i;
         ui->box1->setTitle(QString("table %1").arg(i));
-        button[i]->setText(tr("老子在这"));
+        button[i]->setText(tr("服务中"));
         Data::table[i].state = id;
     }
     else if(Data::waiter[index].table2 == 0){
@@ -49,33 +60,104 @@ void waiterWindow::claimTable(int i){
         button[i]->setText(tr("老子在这"));
         Data::table[i].state = id;
     }
-    else return;
-}
+    else{
+        QMessageBox::warning(this, QString("警告"), QString("您当前服务已达到上限"));
+        return;
+    }
 
-void waiterWindow::on_pushButton_clicked()//refresh
+}
+//应该做成按钮，状态改变更换图标
+
+void waiterWindow::on_refreshBtn_clicked()
 {
     for(int i=0;i<10;i++){
         int state = Data::table[i].state;
-        if(state == -1)
-            button[i]->setText("来人啊");
-        else if(state == 0)
+        if(state == -1){
+            button[i]->setText("需要服务");
+            button[i]->setEnabled(true);
+        }
+        else if(state == 0){
             button[i]->setText("空闲");
-        else if(state == id)
-            button[i]->setText("老子在这");
-        else
-            button[i]->setText("被艹");
+            button[i]->setEnabled(false);
+        }
+        else if(state == id){
+            button[i]->setText("服务中");
+            button[i]->setEnabled(false);
+        }
+        else{
+            button[i]->setText("已被接管");
+            button[i]->setEnabled(false);
+        }
     }
-    if(table1!=0){
-        if(Data::table[table1].water == true)
-            ui->label->setText("1");
-        else ui->label->setText("0");
-        if(Data::table[table1].remind == true)
-            ui->label_2->setText("1");
-        else ui->label_2->setText("0");
+    if(table1){
+        ui->waterBtn1->setIcon(Data::table[table1].water ? QIcon(path1) : QIcon(path2));
+        ui->remindBtn1->setIcon(Data::table[table1].remind ? QIcon(path1) : QIcon(path2));
+        ui->payBtn1->setIcon(Data::table[table1].pay ? QIcon(path1) : QIcon(path2));
     }
-    if(table2!=0){
-        if(Data::table[table1].water == true)
-            ui->label->setText("1");
-        else ui->label->setText("0");
+    if(table2){
+        ui->waterBtn2->setIcon(Data::table[table2].water ? QIcon(path1) : QIcon(path2));
+        ui->remindBtn2->setIcon(Data::table[table2].remind ? QIcon(path1) : QIcon(path2));
+        ui->payBtn2->setIcon(Data::table[table2].pay ? QIcon(path1) : QIcon(path2));
     }
 }
+
+void waiterWindow::on_waterBtn1_clicked()
+{
+    if(table1!=-1){
+        if(Data::table[table1].water == true){
+            Data::table[table1].water = false;
+            ui->payBtn2->setIcon(QIcon(path1));
+        }
+    }
+}
+
+void waiterWindow::on_remindBtn1_clicked()
+{
+    if(table1!=-1){
+        if(Data::table[table1].remind == true){
+            Data::table[table1].remind = false;
+            ui->payBtn2->setIcon(QIcon(path1));
+        }
+    }
+}
+
+void waiterWindow::on_payBtn1_clicked()
+{
+    if(table1!=-1){
+        if(Data::table[table1].pay == true){
+            Data::table[table1].pay = false;
+            ui->payBtn2->setIcon(QIcon(path1));
+        }
+    }
+}
+
+void waiterWindow::on_waterBtn2_clicked()
+{
+    if(table2 != -1){
+        if(Data::table[table2].water == true){
+            Data::table[table2].water = false;
+            ui->payBtn2->setIcon(QIcon(path1));
+        }
+    }
+}
+
+void waiterWindow::on_remindBtn2_clicked()
+{
+    if(table2 != -1){
+        if(Data::table[table2].remind == true){
+            Data::table[table2].remind = false;
+            ui->payBtn2->setIcon(QIcon(path1));
+        }
+    }
+}
+
+void waiterWindow::on_payBtn2_clicked()
+{
+    if(table2!=-1){
+        if(Data::table[table2].pay == true){
+            Data::table[table2].pay = false;
+            ui->payBtn2->setIcon(QIcon(path1));
+        }
+    }
+}
+

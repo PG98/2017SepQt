@@ -38,7 +38,6 @@ void AdminDialog::on_menuBtn_clicked()
 void AdminDialog::on_userBtn_clicked()
 {
     UserManage* userWindow = new UserManage;
-    //Data::dataInit();
     userWindow->show();
     this->close();
 }

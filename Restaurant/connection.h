@@ -118,17 +118,17 @@ static bool createConnection(){
                 query.exec("insert into dish values(803, 8, '茅台', 0, 0, 2000, 'null', 1)");
                 query.exec("insert into dish values(804, 8, '五粮液', 0, 0, 1100, 'null', 1)");
                 //===================================================
-                query.exec("create table diningtable (id int primary key, volume int, state int, customerID int, water int, remind int, pay int)");//0空闲，-1等待服务，>0正在被服务
-                query.exec("insert into diningtable values(1, 6, 0, 0, 0, 0, 0)");
-                query.exec("insert into diningtable values(2, 6, 0, 0, 0, 0, 0)");
-                query.exec("insert into diningtable values(3, 6, 0, 0, 0, 0, 0)");
-                query.exec("insert into diningtable values(4, 10, 0, 0, 0, 0, 0)");
-                query.exec("insert into diningtable values(5, 10, 0, 0, 0, 0, 0)");
-                query.exec("insert into diningtable values(6, 10, 0, 0, 0, 0, 0)");
-                query.exec("insert into diningtable values(7, 10, 0, 0, 0, 0, 0)");
-                query.exec("insert into diningtable values(8, 15, 0, 0, 0, 0, 0)");
-                query.exec("insert into diningtable values(9, 15, 0, 0, 0, 0, 0)");
-                query.exec("insert into diningtable values(10, 15, 0, 0, 0, 0, 0)");
+                query.exec("create table diningtable (id int primary key, volume int, state int, customerID int, water int, remind int, pay int, waiterid int)");//0空闲，-1等待服务，>0正在被服务
+                query.exec("insert into diningtable values(1, 6, 0, 0, 0, 0, 0, 0)");
+                query.exec("insert into diningtable values(2, 6, 0, 0, 0, 0, 0, 0)");
+                query.exec("insert into diningtable values(3, 6, 0, 0, 0, 0, 0, 0)");
+                query.exec("insert into diningtable values(4, 10, 0, 0, 0, 0, 0, 0)");
+                query.exec("insert into diningtable values(5, 10, 0, 0, 0, 0, 0, 0)");
+                query.exec("insert into diningtable values(6, 10, 0, 0, 0, 0, 0, 0)");
+                query.exec("insert into diningtable values(7, 10, 0, 0, 0, 0, 0, 0)");
+                query.exec("insert into diningtable values(8, 15, 0, 0, 0, 0, 0, 0)");
+                query.exec("insert into diningtable values(9, 15, 0, 0, 0, 0, 0, 0)");
+                query.exec("insert into diningtable values(10, 15, 0, 0, 0, 0, 0, 0)");
                 //===================================================
                 query.exec("create table waiter (id int primary key, table1 int, table2 int, comment real, history int)");
                 query.exec("insert into waiter values(201, 0, 0, 5.0, 5)");

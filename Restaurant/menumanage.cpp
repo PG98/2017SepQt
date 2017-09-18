@@ -252,7 +252,7 @@ void MenuManage::showDishInfo(int row, int col){
     Q_UNUSED(col)
     int id = ui->tableWidget->item(row, 0)->text().toInt();
     QString notes = Data::hash1[id]->notes;
-    ui->notesLabel->setText(notes);
+    ui->notesLabel->setText(QString("菜品详情： %1").arg(notes));
 }
 
 void MenuManage::on_action_refresh_triggered()

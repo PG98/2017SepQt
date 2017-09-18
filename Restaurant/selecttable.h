@@ -25,7 +25,7 @@ private:
 private slots:
     void setTable(int);
     void setTableState();
-    void on_toolButton_clicked();
+
 };
 
 #endif // SELECTTABLE_H
