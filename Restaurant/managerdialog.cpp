@@ -89,8 +89,7 @@ void managerDialog::setBox3(){
     ui->tableWidget->setColumnCount(6);
     int i=0;
     for(orderInfo* info : Data::list){
-        i++;
-        ui->tableWidget->setRowCount(i);
+        ui->tableWidget->setRowCount(i+1);
         int id = info->dishid;
         int status = info->status;
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(info->id)));
@@ -107,13 +106,14 @@ void managerDialog::setBox3(){
         else{
             ui->tableWidget->setItem(i, 5, new QTableWidgetItem("已完成"));
         }
+        i++;
     }
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(ui->tableWidget);
     ui->box3->setLayout(layout);
-    ui->dishTable->setHorizontalHeaderLabels(streamHeader);
-    ui->dishTable->horizontalHeader()->setStyleSheet("QHeaderView::section{background:bisque;}");
-    ui->dishTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background:bisque;}");
+    ui->tableWidget->setHorizontalHeaderLabels(streamHeader);
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 void managerDialog::sortDishes(int column)
