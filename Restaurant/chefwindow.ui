@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>752</width>
     <height>600</height>
    </rect>
   </property>
@@ -66,7 +66,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>752</width>
      <height>25</height>
     </rect>
    </property>
@@ -76,6 +76,7 @@
     </property>
     <addaction name="action_R"/>
     <addaction name="action_U"/>
+    <addaction name="action_F"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -83,6 +84,12 @@
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -92,6 +99,8 @@
    </attribute>
    <addaction name="action_R"/>
    <addaction name="action_U"/>
+   <addaction name="separator"/>
+   <addaction name="action_F"/>
   </widget>
   <action name="action_R">
    <property name="icon">
@@ -109,6 +118,15 @@
    </property>
    <property name="text">
     <string>上传绩效(&amp;U)</string>
+   </property>
+  </action>
+  <action name="action_F">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/buttons/exclamation-mark.png</normaloff>:/buttons/exclamation-mark.png</iconset>
+   </property>
+   <property name="text">
+    <string>查询加急</string>
    </property>
   </action>
  </widget>

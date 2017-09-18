@@ -7,6 +7,7 @@ Waiter Data::waiter[5];
 Chef Data::chef[5];
 Table Data::table[10];
 int Data::orderCount = 0;
+int Data::urgent[20];
 QList<orderInfo*> Data::list;
 
 void Data::dataInit(){
@@ -78,6 +79,8 @@ void Data::dataInit(){
         chef[i].history = query.value(1).toInt();
         i++;
     }
-
+    for(int i=0;i<20;i++){
+        urgent[i]=0;
+    }
 }
 

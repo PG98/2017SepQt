@@ -9,7 +9,7 @@ public:
     int waiterIndex;
     int volume;
     bool water = false;
-    bool remind = false;
+    int remind = -1;
     bool pay = false;
     int state; //0为空闲 -1等待服务  大于0：被id为state的服务员接管
 };

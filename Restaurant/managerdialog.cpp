@@ -12,8 +12,7 @@ managerDialog::managerDialog(QWidget *parent) :
     setBox1();
     setBox2();
     setBox3();
-    connect(ui->dishTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(sortDishes()));
-
+    connect(ui->dishTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(sortDishes(int)));
     ui->stackedWidget->addWidget(ui->page1);
     ui->stackedWidget->addWidget(ui->page2);
     connect(ui->button, SIGNAL(clicked(bool)), this, SLOT(switchPage()));
@@ -116,8 +115,7 @@ void managerDialog::setBox3(){
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
-void managerDialog::sortDishes(int column)
-{
+void managerDialog::sortDishes(int column){
     static bool f = true;
     ui->dishTable->sortByColumn(column, f ? Qt::AscendingOrder : Qt::DescendingOrder);
     f = !f;

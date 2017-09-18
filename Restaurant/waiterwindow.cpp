@@ -8,6 +8,7 @@ waiterWindow::waiterWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     init();
+    on_refreshBtn_clicked();
 }
 
 waiterWindow::~waiterWindow()
@@ -55,6 +56,9 @@ void waiterWindow::claimTable(int i){
         ui->box1->setTitle(QString("table %1").arg(i));
         button[i]->setText(tr("服务中"));
         Data::table[i].state = id;
+        ui->waterBtn1->setEnabled(true);
+        ui->remindBtn1->setEnabled(true);
+        ui->payBtn1->setEnabled(true);
     }
     else if(Data::waiter[index].table2 == 0){
         Data::waiter[index].table2 = i;
@@ -62,12 +66,15 @@ void waiterWindow::claimTable(int i){
         ui->box2->setTitle(QString("table %1").arg(i));
         button[i]->setText(tr("服务中"));
         Data::table[i].state = id;
+        ui->waterBtn2->setEnabled(true);
+        ui->remindBtn2->setEnabled(true);
+        ui->payBtn2->setEnabled(true);
     }
     else{
         QMessageBox::warning(this, QString("警告"), QString("您当前服务已达到上限"));
         return;
     }
-
+    on_refreshBtn_clicked();
 }
 
 //应该做成按钮，状态改变更换图标
@@ -131,9 +138,15 @@ void waiterWindow::on_waterBtn1_clicked()
 void waiterWindow::on_remindBtn1_clicked()
 {
     if(table1!=-1){
-        if(Data::table[table1].remind == true){
-            Data::table[table1].remind = false;
-            ui->payBtn2->setIcon(QIcon(path1));
+        if(Data::table[table1].remind!=-1){
+            //找出订单号对应菜品名字
+            int dishid = Data::list[Data::table[table1].remind]->dishid;
+            QString dish = Data::hash1[dishid]->name;
+            QMessageBox::information(this, QString("congratulations"), QString("请向厨师要求对订单号 %1, %2 加快进度。").arg(Data::table[table1].remind).arg(dish));
+            int i;
+            for(i=0;Data::urgent[i] && i<19;i++);  //遍历，添加订单到末尾
+            Data::urgent[i] = Data::table[table2].remind;
+            ui->payBtn1->setIcon(QIcon(path1));
         }
     }
 }
@@ -161,8 +174,13 @@ void waiterWindow::on_waterBtn2_clicked()
 void waiterWindow::on_remindBtn2_clicked()
 {
     if(table2 != -1){
-        if(Data::table[table2].remind == true){
-            Data::table[table2].remind = false;
+        if(Data::table[table2].remind!=-1){
+            int dishid = Data::list[Data::table[table2].remind]->dishid;
+            QString dish = Data::hash1[dishid]->name;
+            QMessageBox::information(this, QString("congratulations"), QString("请向厨师要求对订单号 %1, %2 加快进度。").arg(Data::table[table2].remind).arg(dish));
+            int i;
+            for(i=0;Data::urgent[i] && i<19;i++);  //遍历，添加订单到末尾
+            Data::urgent[i] = Data::table[table2].remind;
             ui->payBtn2->setIcon(QIcon(path1));
         }
     }

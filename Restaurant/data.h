@@ -20,6 +20,7 @@ public:
     static Waiter waiter[5];
     static Chef chef[5];
     static int orderCount;
+    static int urgent[20];   // 催菜的订单号
     static QList<orderInfo*> list;
     static void dataInit();
 };

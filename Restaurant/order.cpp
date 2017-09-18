@@ -375,8 +375,15 @@ void Order::makeRequest(int n){
         Data::table[currentTable].water = true;
     }
     else if(n == 1){
-        QMessageBox::information(NULL, tr("提示"), tr("消息成功送达服务员"));
-        Data::table[currentTable].remind = true;
+        int row = ui->table2->currentRow();
+        //通过桌号、菜id找出需要加急的菜品订单号
+        for(orderInfo* info : Data::list){
+            if(info->tableid == currentTable && info->dishid == ui->table2->item(row, 0)->text().toInt()){
+                Data::table[currentTable].remind = info->id;
+                QMessageBox::information(NULL, tr("提示"), QString("成功要求服务员对 %1 加快进度").arg(ui->table2->item(row, 1)->text()));
+            }
+        }
+        qDebug()<<"remind chefs on order id: "<<Data::table[currentTable].remind;
     }
     else{
         Data::table[currentTable].pay = true;

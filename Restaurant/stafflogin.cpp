@@ -73,6 +73,7 @@ void staffLogin::on_waiterBtn_2_clicked()
     if(ui->lineEdit->text() ==""){
         QMessageBox::warning(this,tr("警告"), tr("员工号为空！"));
         ui->lineEdit->setFocus();
+        return;
     }
     int id = ui->lineEdit->text().toInt(), IDcheck;
     QString chefstring = QString("select * from chef where id = %1").arg(id);
@@ -100,6 +101,7 @@ void staffLogin::on_waiterBtn_2_clicked()
                 w->index = i;
         }
         w->show();
+        w->on_action_R_triggered();
         this->close();
     }
     else{
