@@ -3,6 +3,7 @@
 #include <QDebug>
 #include "data.h"
 #include "orderquery.h"
+#include "finishdialog.h"
 #include <QHeaderView>
 
 double Order::totalCharge = 0;
@@ -396,7 +397,10 @@ void Order::makeRequest(int n){
         if(box.clickedButton() == b)
             box.close();
         //打开评价服务员，菜品窗口
+        FinishDialog* f = new FinishDialog;
+        f->show();
         conclude();
+        this->close();
     }
 }
 
@@ -417,6 +421,8 @@ void Order::conclude(){
         Data::waiter[waiterIndex].table1 = -1;  //重置服务员状态
         Data::waiter[waiterIndex].history++;
     }else{
-
+        qDebug()<<"waiterID"<<Data::waiter[waiterIndex].id<<"table1:"<<Data::waiter[waiterIndex].table2<<"index:"<<currentTable<<"currentTableID:"<<Data::table[currentTable].id;
+        Data::waiter[waiterIndex].table2 = -1;  //重置服务员状态
+        Data::waiter[waiterIndex].history++;
     }
 }

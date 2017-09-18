@@ -76,6 +76,12 @@ void LoginDialog::setAppearance(){
                             "QPushButton:pressed{background-color:rgb(85, 170, 255);\
                                              border-style: inset; }"
                              );
+    ui->staffBtn->setStyleSheet("QPushButton{background-color:antiquewhite;\
+                                color: white;   border-radius: 13px;  border: 4px groove gray;\
+                                border-style: outset;}"
+                               "QPushButton:hover{background-color:white; color: black;}"
+                              "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                               border-style: inset; }");
 }
 
 void LoginDialog::register_clicked(){

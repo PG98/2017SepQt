@@ -7,6 +7,7 @@ waiterWindow::waiterWindow(QWidget *parent) :
     ui(new Ui::waiterWindow)
 {
     ui->setupUi(this);
+    this->setFixedSize(this->width(), this->height());
     init();
     on_refreshBtn_clicked();
 }
