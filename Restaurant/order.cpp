@@ -397,9 +397,9 @@ void Order::makeRequest(int n){
         if(box.clickedButton() == b)
             box.close();
         //打开评价服务员，菜品窗口
-        FinishDialog* f = new FinishDialog;
+        FinishDialog* f = new FinishDialog(this, currentTable);
+        //f->tableid = currentTable;
         f->show();
-        conclude();
         this->close();
     }
 }
@@ -412,17 +412,4 @@ void Order::on_queryBtn_clicked()
     q->exec();
 }
 
-void Order::conclude(){
-    Data::table[currentTable].state = 0;
-    int waiterIndex = Data::table[currentTable].waiterIndex;
-    Data::table[currentTable].waiterIndex = 0;
-    if(Data::waiter[waiterIndex].table1 == currentTable){
-        qDebug()<<"waiterID"<<Data::waiter[waiterIndex].id<<"table1:"<<Data::waiter[waiterIndex].table1<<"index:"<<currentTable<<"currentTableID:"<<Data::table[currentTable].id;
-        Data::waiter[waiterIndex].table1 = -1;  //重置服务员状态
-        Data::waiter[waiterIndex].history++;
-    }else{
-        qDebug()<<"waiterID"<<Data::waiter[waiterIndex].id<<"table1:"<<Data::waiter[waiterIndex].table2<<"index:"<<currentTable<<"currentTableID:"<<Data::table[currentTable].id;
-        Data::waiter[waiterIndex].table2 = -1;  //重置服务员状态
-        Data::waiter[waiterIndex].history++;
-    }
-}
+

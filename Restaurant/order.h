@@ -52,7 +52,6 @@ private:
     void showDishes();
     void setTableAppearance();
     void showCharge();
-    void conclude();
 };
 
 #endif // ORDER_H
