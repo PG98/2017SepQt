@@ -34,6 +34,8 @@ private slots:
     void on_submitBtn_clicked();
     void on_queryBtn_clicked();
 
+    void on_iconBtn_clicked();
+
 private:
     Ui::Order *ui;
     KeyButton* button[3];

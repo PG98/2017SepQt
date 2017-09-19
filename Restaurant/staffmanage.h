@@ -31,6 +31,8 @@ private slots:
 
     void on_delBtn2_clicked();
 
+    void on_backBtn_clicked();
+
 private:
     Ui::staffManage *ui;
     QSqlTableModel* model1;

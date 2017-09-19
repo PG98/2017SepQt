@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/MAdmin.png</file>
-        <file>images/MFinger.jpg</file>
         <file>images/admin.jpg</file>
         <file>images/password.png</file>
         <file>images/phone.png</file>

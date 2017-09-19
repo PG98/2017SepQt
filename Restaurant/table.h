@@ -6,7 +6,7 @@ public:
     Table(){}
     int id;
     int customerID;
-    int waiterIndex;
+    int waiterIndex = -1;
     int volume;
     bool water = false;
     int remind = -1;

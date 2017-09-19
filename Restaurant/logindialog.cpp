@@ -46,7 +46,7 @@ void LoginDialog::setAppearance(){
     //ui->pwdLineEdit->setStyleSheet("background:transparent;");
     //设置默认头像
     QImage img;
-    QString path0 = ":/images/user.png";
+    QString path0 = ":/images/default.png";
     img.load(path0);
     QPixmap def=QPixmap::fromImage(img.scaled(ui->userPic->width(),ui->userPic->height()));
     ui->userPic->setPixmap(def);

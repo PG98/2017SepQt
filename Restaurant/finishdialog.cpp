@@ -66,6 +66,7 @@ void FinishDialog::on_pushButton_clicked()
 {
     conclude();
     DB_update();
+    this->close();
 }
 
 void FinishDialog::conclude(){
@@ -104,5 +105,6 @@ void FinishDialog::conclude(){
 }
 
 void FinishDialog::DB_update(){
+    //
 
 }

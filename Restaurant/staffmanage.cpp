@@ -1,5 +1,6 @@
 #include "staffmanage.h"
 #include "ui_staffmanage.h"
+#include "admindialog.h"
 #include <QDebug>
 #include "data.h"
 #include <QtWidgets>
@@ -44,6 +45,7 @@ staffManage::staffManage(QWidget *parent) :
     ui->tableView_2->setAlternatingRowColors(true);
     ui->tableView_2->setModel(model2);//
     ui->tableView_2->show();
+    ui->backBtn->setIcon(QIcon(":/buttons/previous.png"));
 }
 
 staffManage::~staffManage()
@@ -123,4 +125,11 @@ void staffManage::on_delBtn2_clicked()
         model2->revertAll();     //不删除就撤销上一步
     }
     else model2->submitAll();    //否则提交
+}
+
+void staffManage::on_backBtn_clicked()
+{
+    AdminDialog* a = new AdminDialog;
+    a->show();
+    this->close();
 }

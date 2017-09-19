@@ -132,7 +132,7 @@ QHBoxLayout* Order::setButtons(){
         button[i] = new KeyButton;
         button[i]->setIndex(i);
         button[i]->setEnabled(false);
-        button[i]->setStyleSheet("QPushButton{background-color:lightslategray;\
+        button[i]->setStyleSheet("QPushButton{background-color:paleturquoise;\
                                     color: white;   border-radius: 10px;  border: 2px groove gray;\
                                     border-style: outset;}"
                                    "QPushButton:hover{background-color:white; color: lightsteelblue;}"
@@ -391,7 +391,11 @@ void Order::makeRequest(int n){
         QMessageBox box;
         QPixmap icon(":/images/QRcode.jpg");
         box.setIconPixmap(icon);
-        box.setText(QString("老板手头紧\n你需要支付\n%1 元").arg(totalCharge));
+        if(!Data::hash0[customerID]->isMember){
+            box.setText(QString("\n你需要支付\n%1 元").arg(totalCharge));
+        }
+        else
+            box.setText(QString("尊敬的会员，九五折后你需要支付\n %1 元").arg(totalCharge*0.95));
         QPushButton* b = box.addButton(tr("成功转账(&Y)"), QMessageBox::YesRole);
         box.exec();
         if(box.clickedButton() == b)
@@ -412,4 +416,9 @@ void Order::on_queryBtn_clicked()
     q->exec();
 }
 
-
+void Order::on_iconBtn_clicked()
+{
+    QString helpString = "双击添加当前项到左边托盘（可反复点击）\n 双击托盘中菜品可以取消订单\n点击下方按钮向工作人员提出需求";
+    QMessageBox::information(this, tr("帮助"), helpString);
+    //QMessageBox
+}

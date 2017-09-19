@@ -319,6 +319,7 @@ void UserManage::saveCurrent(){
         }
         else if(flag == 3 || flag == 4){     //新建
             flag -= 3;
+            i.value()->isMember-=3;
             qDebug()<<"insert new user";
             tempstring = QString("insert into user values(%1, ?, ?, ?, %2)").arg(id).arg(flag);
             query.prepare(tempstring);
