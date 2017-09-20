@@ -34,6 +34,7 @@ Order::Order(QWidget *parent) :
     }
     addOrder(0);
     totalCharge = 0;
+    showCharge();
     //orderCount = 0;
 
     QGridLayout *layout = new QGridLayout;
@@ -50,6 +51,12 @@ Order::Order(QWidget *parent) :
     QWidget* widget = new QWidget;
     widget->setLayout(layout);
     setCentralWidget(widget);
+    //外观设置
+    QImage im;
+    im.load(":/images/backgnd1.jpg");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(im.scaled(this->width(),this->height())));
+    this->setPalette(palette);
 }
 
 Order::~Order()
@@ -132,10 +139,10 @@ QHBoxLayout* Order::setButtons(){
         button[i] = new KeyButton;
         button[i]->setIndex(i);
         button[i]->setEnabled(false);
-        button[i]->setStyleSheet("QPushButton{background-color:paleturquoise;\
-                                    color: white;   border-radius: 10px;  border: 2px groove gray;\
+        button[i]->setStyleSheet("QPushButton{background-color:lightskyblue;\
+                                    color: black;   border-radius: 10px;  border: 2px groove gray;\
                                     border-style: outset;}"
-                                   "QPushButton:hover{background-color:white; color: lightsteelblue;}"
+                                   "QPushButton:hover{background-color:lightsteelblue; color:black;}"
                                   "QPushButton:pressed{background-color:rgb(85, 170, 255);\
                                                    border-style: inset; }"
                                    );
@@ -280,8 +287,7 @@ void Order::delRow(int row, int col){
         }
         else
             ui->table2->setItem(row, 4, new QTableWidgetItem(QString("%1").arg(--sub)));
-        //orderCount--;  //删除行后减去相应的菜品份数
-        Data::orderCount--;
+        //Data::orderCount--;   //总数统一在提交时计算
         totalCharge -= ui->table2->item(row, 2)->text().toInt();
         showCharge();
     }else{
@@ -340,6 +346,7 @@ void Order::showCharge(){
 void Order::on_submitBtn_clicked()
 {
     qDebug()<<"submit, customerID: "<<customerID;
+    //第一次提交后才设置按钮可用
     if(!firstCommit){
         firstCommit = true;
         for(int i=0;i<3;i++){

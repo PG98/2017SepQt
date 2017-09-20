@@ -144,6 +144,7 @@ static bool createConnection(){
                 query.exec("insert into chef values(304, 5)");
                 query.exec("insert into chef values(305, 5)");
                 //====================================================
+                query.exec("create table journal(tableid int, dish varchar, price int, count int, date varchar)");
                 if(!query.exec()){
                      qDebug()<<query.lastError();
                  }

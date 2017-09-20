@@ -11,6 +11,8 @@ staffManage::staffManage(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle(tr("内部账号管理"));
+    ui->backBtn->setFocusPolicy(Qt::NoFocus);
+    ui->backBtn->setDefault(false);
 
     model1 = new QSqlTableModel(this);
     model2 = new QSqlTableModel(this);
@@ -46,6 +48,12 @@ staffManage::staffManage(QWidget *parent) :
     ui->tableView_2->setModel(model2);//
     ui->tableView_2->show();
     ui->backBtn->setIcon(QIcon(":/buttons/previous.png"));
+    //background
+    QImage im;
+    im.load(":/images/backgnd.png");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(im.scaled(this->width(),this->height())));
+    this->setPalette(palette);
 }
 
 staffManage::~staffManage()

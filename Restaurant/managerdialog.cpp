@@ -2,6 +2,7 @@
 #include "ui_managerdialog.h"
 #include "data.h"
 #include <QtWidgets>
+#include <QMovie>
 
 managerDialog::managerDialog(QWidget *parent) :
     QDialog(parent),
@@ -28,7 +29,7 @@ void managerDialog::setBox1(){
     ui->chefTable->verticalHeader()->setVisible(false);
     ui->chefTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->chefTable->setColumnCount(2);
-    for(int i=0;Data::chef[i].id;i++){
+    for(int i=0;Data::chef[i].id!=-1 && i<10;i++){
         ui->chefTable->setRowCount(ui->chefTable->rowCount()+1);
         ui->chefTable->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(Data::chef[i].id)));
         ui->chefTable->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(Data::chef[i].history)));
@@ -40,7 +41,7 @@ void managerDialog::setBox1(){
     ui->waiterTable->verticalHeader()->setVisible(false);
     ui->waiterTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->waiterTable->setColumnCount(3);
-    for(int i=0;Data::waiter[i].id;i++){
+    for(int i=0;Data::waiter[i].id!=-1 && i<10;i++){
         ui->waiterTable->setRowCount(ui->waiterTable->rowCount()+1);
         ui->waiterTable->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(Data::waiter[i].id)));
         ui->waiterTable->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(Data::waiter[i].history)));
@@ -83,6 +84,7 @@ void managerDialog::setBox2(){
 }
 
 void managerDialog::setBox3(){
+   //表格
     ui->tableWidget->verticalHeader()->setVisible(false);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->setColumnCount(6);
@@ -113,6 +115,15 @@ void managerDialog::setBox3(){
     ui->tableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background:bisque;}");
     ui->tableWidget->setHorizontalHeaderLabels(streamHeader);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //
+    ui->refreshBtn->setIcon(QIcon(":/images/refresh.png"));
+    ui->refreshBtn->setStyleSheet("QPushButton{background-color:lightsteelblue;\
+                                color: black;   border-radius: 14px;  border: 3px groove gray;\
+                                border-style: outset;}"
+                               "QPushButton:hover{background-color:white; color: lightsteelblue;}"
+                              "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                               border-style: inset; }"
+                               );
 }
 
 void managerDialog::sortDishes(int column){
@@ -128,4 +139,12 @@ void managerDialog::switchPage(){
     else if(index == 0)
         index = 1;
     ui->stackedWidget->setCurrentIndex(index);
+}
+
+void managerDialog::on_refreshBtn_clicked()
+{
+    setBox3();
+    QMovie* movie = new QMovie(":/images/dalao.gif");
+    ui->movieLabel->setMovie(movie);
+    movie->start();
 }

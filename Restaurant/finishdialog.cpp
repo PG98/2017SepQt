@@ -9,6 +9,7 @@ FinishDialog::FinishDialog(QWidget *parent, int currentTable) :
 {
     ui->setupUi(this);
     this->setWindowTitle("评价");
+    this->setFixedSize(this->width(), this->height());
     setBox1();
     setBox2();
     ui->pushButton->setText("完成并退出");
@@ -19,6 +20,12 @@ FinishDialog::FinishDialog(QWidget *parent, int currentTable) :
     ui->pushButton->setFixedWidth(120);
 
     this->setLayout(layout);
+    //外观设置
+    QImage im;
+    im.load(":/images/backgnd1.jpg");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(im.scaled(this->width(),this->height())));
+    this->setPalette(palette);
 }
 
 FinishDialog::~FinishDialog()
@@ -41,6 +48,9 @@ void FinishDialog::setBox2(){
     ui->tableWidget->verticalHeader()->setVisible(false);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->setColumnCount(3);
+    for(int i=0;i<3;i++){
+        ui->tableWidget->setColumnWidth(i, 151);
+    }
     int i=0;
     for(orderInfo* info : Data::list){
         if(info->tableid == tableid){

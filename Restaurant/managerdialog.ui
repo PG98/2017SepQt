@@ -136,6 +136,32 @@
       </property>
      </widget>
     </widget>
+    <widget class="QPushButton" name="refreshBtn">
+     <property name="geometry">
+      <rect>
+       <x>670</x>
+       <y>140</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>刷新</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="movieLabel">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>280</y>
+       <width>161</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QPushButton" name="button">

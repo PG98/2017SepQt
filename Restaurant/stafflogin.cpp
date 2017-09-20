@@ -13,14 +13,13 @@ staffLogin::staffLogin(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lineEdit->setPlaceholderText(tr("服务员'2'开头，厨师'3'开头"));
+    ui->waiterBtn->setFocusPolicy(Qt::NoFocus);
+    ui->waiterBtn_2->setFocusPolicy(Qt::NoFocus);
 }
 
 staffLogin::~staffLogin()
 {
     delete ui;
-    ui->waiterBtn->setFocusPolicy(Qt::NoFocus);
-    ui->waiterBtn_2->setFocusPolicy(Qt::NoFocus);
-
 }
 
 void staffLogin::on_waiterBtn_clicked()

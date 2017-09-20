@@ -6,7 +6,7 @@ class Waiter
 {
 public:
     Waiter() {}
-    int id = 0;
+    int id = -1;
     int table1 = 0;
     int table2 = 0;
     double rating = 0;

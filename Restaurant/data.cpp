@@ -3,8 +3,8 @@
 
 QHash<int, Dish*> Data::hash1;
 QHash<int, User*> Data::hash0;
-Waiter Data::waiter[5];
-Chef Data::chef[5];
+Waiter Data::waiter[10];
+Chef Data::chef[10];
 Table Data::table[10];
 int Data::orderCount = 0;
 int Data::urgent[20];

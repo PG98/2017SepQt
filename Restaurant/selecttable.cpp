@@ -38,6 +38,12 @@ selectTable::selectTable(QWidget *parent) :
     layout->addLayout(layout2);
     layout->addLayout(layout3);
     ui->box->setLayout(layout);
+    //外观设置
+    QImage im;
+    im.load(":/images/backgnd1.jpg");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(im.scaled(this->width(),this->height())));
+    this->setPalette(palette);
     ui->pushButton->setIcon(QIcon(":/buttons/refresh.png"));
     ui->pushButton->setStyleSheet("QPushButton{background-color:lightsteelblue;\
                                 color: black;   border-radius: 12px;  border: 3px groove gray;\
@@ -66,7 +72,7 @@ void selectTable::setTable(int i){
 void selectTable::setTableState(){
     for(int i=0;i<10;i++){
         if(Data::table[i].state == 0){
-            button[i]->setStyleSheet("QPushButton{background-color:seagreen;\
+            button[i]->setStyleSheet("QPushButton{background-color:mediumseagreen;\
                                         color: black;   border-radius: 10px;  border: 2px groove gray;\
                                         border-style: outset;}"
                                        "QPushButton:hover{background-color:white; color: lightsteelblue;}"

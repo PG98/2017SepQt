@@ -17,8 +17,8 @@ public:
     static QHash<int, User*> hash0;
     static QHash<int, Dish*> hash1;
     static Table table[10];
-    static Waiter waiter[5];
-    static Chef chef[5];
+    static Waiter waiter[10];
+    static Chef chef[10];
     static int orderCount;
     static int urgent[20];   // 催菜的订单号
     static QList<orderInfo*> list;

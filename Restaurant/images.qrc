@@ -91,7 +91,10 @@
         <file>images/facepalm.jpg</file>
         <file>images/menu_2.png</file>
         <file>images/menu1.png</file>
-        <file>images/backgnd.jpg</file>
         <file>images/dalao.gif</file>
+        <file>images/backgnd.png</file>
+        <file>images/staff.png</file>
+        <file>images/staff1.png</file>
+        <file>images/backgnd1.jpg</file>
     </qresource>
 </RCC>

@@ -19,6 +19,8 @@ private slots:
     void sortDishes(int column);
     void switchPage();
 
+    void on_refreshBtn_clicked();
+
 private:
     Ui::managerDialog *ui;
     void setBox1();

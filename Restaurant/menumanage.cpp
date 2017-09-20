@@ -47,6 +47,12 @@ MenuManage::MenuManage(QWidget *parent) :
     QWidget* widget = new QWidget;
     widget->setLayout(layout);
     setCentralWidget(widget);
+    //background
+    QImage im;
+    im.load(":/images/backgnd.png");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(im.scaled(this->width(),this->height())));
+    this->setPalette(palette);
 }
 
 MenuManage::~MenuManage()
@@ -103,7 +109,7 @@ void MenuManage::setDetailGroupBox(){
 
     //其他label 可加入
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(ui->imageLabel, 0, 0, 3, 2);
+    layout->addWidget(ui->imageLabel, 1, 0, 3, 2);
     layout->addWidget(ui->notesLabel, 0, 0);
     ui->detail->setLayout(layout);
 }
@@ -253,7 +259,7 @@ void MenuManage::showDishInfo(int row, int col){
     Q_UNUSED(col)
     int id = ui->tableWidget->item(row, 0)->text().toInt();
     QString notes = Data::hash1[id]->notes;
-    ui->notesLabel->setText(QString("菜品详情： %1").arg(notes));
+    ui->notesLabel->setText(QString("菜品详情： \n%1").arg(notes));
 }
 
 void MenuManage::on_action_refresh_triggered()

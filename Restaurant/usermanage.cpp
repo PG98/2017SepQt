@@ -31,6 +31,12 @@ UserManage::UserManage(QWidget *parent) :
     QWidget* widget = new QWidget;
     widget->setLayout(layout);
     setCentralWidget(widget);
+    //background
+    QImage im;
+    im.load(":/images/backgnd.png");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(im.scaled(this->width(),this->height())));
+    this->setPalette(palette);
 }
 
 UserManage::~UserManage()

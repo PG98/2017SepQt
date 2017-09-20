@@ -10,7 +10,7 @@ AdminDialog::AdminDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle(tr("管理员"));
     QImage img;
-    img.load(":/images/backgnd.jpg");
+    img.load(":/images/backgnd.png");
     QPalette palette;
     palette.setBrush(this->backgroundRole(),QBrush(img.scaled(this->width(),this->height())));
     this->setPalette(palette);

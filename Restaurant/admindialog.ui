@@ -117,14 +117,35 @@ QPushButton:pressed
   <widget class="QPushButton" name="staffBtn">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>180</y>
-     <width>111</width>
-     <height>91</height>
+     <x>440</x>
+     <y>140</y>
+     <width>151</width>
+     <height>151</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">    QPushButton{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+    background-image :url(:/images/staff1.png)  
+}
+QPushButton:hover
+{
+    color: white;
+    font: bold 10pt;
+    border:none;
+    min-height: 24px;
+    min-width: 60px;
+    background-color:rgba(255,255,255,0);
+    background-image :url(:/images/staff.png) 
+} </string>
+   </property>
    <property name="text">
-    <string>staffBtn</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
