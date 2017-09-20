@@ -1,12 +1,15 @@
 #include "orderquery.h"
 #include "ui_orderquery.h"
 #include "data.h"
+#include <QDebug>
 
 orderQuery::orderQuery(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::orderQuery)
 {
     ui->setupUi(this);
+    ui->pushButton->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton->setDefault(false);
 }
 
 orderQuery::~orderQuery(){
