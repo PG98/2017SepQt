@@ -16,7 +16,7 @@ waiterWindow::waiterWindow(QWidget *parent) :
     this->setPalette(palette);
     ui->refreshBtn->setIcon(QIcon(":/buttons/refresh.png"));
     ui->refreshBtn->setStyleSheet("QPushButton{background-color:white;\
-                                      color: white;   border-radius: 12px;  border: 3px groove gray;\
+                                      color: black;   border-radius: 12px;  border: 3px groove gray;\
                                       border-style: outset;}"
                                      "QPushButton:hover{background-color:silver; color: black;}"
                                     "QPushButton:pressed{background-color:rgb(85, 170, 255);\

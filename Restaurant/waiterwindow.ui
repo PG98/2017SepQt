@@ -23,6 +23,11 @@
       <height>251</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
     <property name="title">
      <string>桌1</string>
     </property>
@@ -74,6 +79,11 @@
       <width>271</width>
       <height>251</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
     </property>
     <property name="title">
      <string>桌2</string>
@@ -147,6 +157,11 @@
       <width>551</width>
       <height>131</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="title">
      <string>餐桌一览</string>

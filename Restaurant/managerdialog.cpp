@@ -153,7 +153,7 @@ void managerDialog::setBox4(){
      ui->tableView_2->verticalHeader()->hide();
      ui->tableView_2->setAlternatingRowColors(true);
      ui->tableView_2->setModel(model);//
-     ui->tableView_2->setEditTriggers(false);
+     ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
      ui->tableView_2->show();
 }
 

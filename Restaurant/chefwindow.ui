@@ -23,6 +23,14 @@
       <height>301</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Weibei SC</family>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="title">
      <string>GroupBox</string>
     </property>
@@ -45,6 +53,14 @@
       <width>261</width>
       <height>271</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Weibei SC</family>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="title">
      <string>GroupBox</string>

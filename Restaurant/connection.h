@@ -81,6 +81,10 @@ static bool createConnection(){
                 query.exec("insert into user values( 129, '123456', '10030', 'user129', 1)");
                 //======================================
                 query.exec("create table dish (id int primary key, type int, dishName varchar(40), demand int,undone int, price int, notes varchar(40), special int, rating real, history int)");
+                query.exec("insert into dish values(101, 1, '米饭', 0, 0, 3, 'null', 0, 5, 0)");
+                query.exec("insert into dish values(102, 1, '炒饭', 0, 0, 8, 'null', 0, 5, 0)");
+                query.exec("insert into dish values(201, 2, '酱萝卜', 0, 0, 10, 'null', 0, 5, 0)");
+                query.exec("insert into dish values(202, 2, '话梅芸豆', 0, 0, 12, 'null', 0, 5, 0)");
                 query.exec("insert into dish values(201, 2, '酱萝卜', 0, 0, 10, 'null', 0, 5, 0)");
                 query.exec("insert into dish values(202, 2, '话梅芸豆', 0, 0, 12, 'null', 0, 5, 0)");
                 query.exec("insert into dish values(203, 2, '泡椒木耳', 0, 0, 10, 'null', 0, 5, 0)");
@@ -145,47 +149,7 @@ static bool createConnection(){
                 query.exec("insert into chef values(305, 5)");
                 //====================================================
                 query.exec("create table journal(tableid int, dish varchar, price int, count int, date varchar)");
-                if(!query.exec()){
-                     qDebug()<<query.lastError();
-                 }
-                 else{
-                     qDebug()<<"table created!";
-                 }
              }
-        //菜谱表单
-        /*
-        query.prepare();
-        if(!query.exec()){
-                    qDebug()<<query.lastError();
-                }
-                else{
-                    QString tableName;
-                    while(query.next()){
-                        tableName = query.value(0).toString();
-                        qDebug()<<tableName;
-                        if(tableName.compare("dish")){  //string比对相同返回0
-                            tableFlag=false;
-                            qDebug()<<"table dish does not exist";
-                        }
-                        else{
-                            tableFlag=true;
-                            qDebug()<<"table exists";
-                        }
-                    }
-                }
-        if(tableFlag==false)        //初次打开时table不存在
-             {
-                 query.prepare(create_dish);
-                 //query.exec("insert into dish values(1, 1, 'beef', 20, 'shit')");
-                 //query.exec("insert into dish values(2, 1, 'goat', 20, 'shit')");
-
-                 if(!query.exec()){
-                     qDebug()<<query.lastError();
-                 }
-                 else{
-                     qDebug()<<"table dish created!";
-                 }
-             }*/
     }
     return true;
 }
