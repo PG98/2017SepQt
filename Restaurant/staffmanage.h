@@ -18,19 +18,12 @@ public:
 
 private slots:
     void on_showBtn_clicked();
-
     void on_submitBtn_clicked();
-
     void on_undoBtn_clicked();
-
     void on_addBtn_clicked();
-
     void on_delBtn_clicked();
-
     void on_addBtn2_clicked();
-
     void on_delBtn2_clicked();
-
     void on_backBtn_clicked();
 
 private:

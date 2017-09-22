@@ -18,8 +18,8 @@ public:
 private slots:
     void on_waiterBtn_clicked();
     void on_waiterBtn_2_clicked();
-
     void on_managerBtn_clicked();
+    void setButtonStyle();
 
 private:
     Ui::staffLogin *ui;

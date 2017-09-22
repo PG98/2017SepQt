@@ -19,7 +19,7 @@ FinishDialog::FinishDialog(QWidget *parent, int currentTable) :
     layout->addWidget(ui->pushButton);
     //ui->pushButton->setFixedWidth(120);
     this->setLayout(layout);
-
+    connect(ui->tableWidget, SIGNAL(cellChanged(int,int)), this, SLOT(dishRating(int, int)));
     //外观设置
     QImage im;
     im.load(":/images/backgnd1.jpg");
@@ -75,7 +75,6 @@ void FinishDialog::setBox2(){
 void FinishDialog::on_pushButton_clicked()
 {
     conclude();
-    DB_update();
     this->close();
 }
 
@@ -84,7 +83,10 @@ void FinishDialog::conclude(){//初始化内存中各项数据的状态
     //服务员历史，评分更新
     int waiterIndex = Data::table[tableid].waiterIndex;
     Data::table[tableid].waiterIndex = -1;  //
-    if(Data::waiter[waiterIndex].table1 == tableid){
+    if(waiterIndex == -1){
+        qDebug()<<"exiting without being served.";
+    }
+    else if(Data::waiter[waiterIndex].table1 == tableid){
         qDebug()<<"waiterID"<<Data::waiter[waiterIndex].id<<"table1:"<<Data::waiter[waiterIndex].table1<<"index:"<<tableid<<"tableidID:"<<Data::table[tableid].id;
         Data::waiter[waiterIndex].table1 = -1;  //重置服务员状态
         if(ui->lineEdit->text()!=""){
@@ -103,18 +105,45 @@ void FinishDialog::conclude(){//初始化内存中各项数据的状态
         }
         Data::waiter[waiterIndex].history++;
     }
-    //菜品评分更新
-    for(int i=0;i<ui->tableWidget->rowCount();i++){
-        int dishid = ui->tableWidget->item(i, 0)->text().toInt();
-        if(ui->tableWidget->item(i, 2)->text()!=""){
-            int rating = ui->tableWidget->item(i, 2)->text().toInt();
-            double currentRating = Data::hash1[dishid]->rating;
-            Data::hash1[dishid]->rating = (currentRating*Data::hash1[dishid]->history + rating)/(Data::hash1[dishid]->history+1);
-        }
+    saveJournal();
+}
+
+//菜品评分更新
+void FinishDialog::dishRating(int row, int col){
+    if(col == 2){
+        int dishid = ui->tableWidget->item(row, 0)->text().toInt();
+        qDebug()<<"recording the change of rating of dishid: "<<dishid;
+        int rating = ui->tableWidget->item(row, 2)->text().toInt();
+        double currentRating = Data::hash1[dishid]->rating;
+        Data::hash1[dishid]->rating = (currentRating*Data::hash1[dishid]->history + rating)/(Data::hash1[dishid]->history+1);
+        query.exec(QString("update dish set rating = %1 where id = %2").arg(Data::hash1[dishid]->rating).arg(dishid));
     }
 }
 
-void FinishDialog::DB_update(){
-    //
-
+//存储点菜列表中的信息作为账目表
+void FinishDialog::saveJournal(){
+    QString tempstring;
+    QDate date = QDate::currentDate();
+    QString dateStr = date.toString("yyyy-MM-dd");
+    for(orderInfo* info : Data::list){
+        if(info->tableid == tableid && info->chefid!=-1){   //根据桌号判断要存储的订单
+            tempstring = "insert into journal values(?, ?, ?, ?, ?)";
+            query.prepare(tempstring);
+            query.addBindValue(tableid+1);
+            query.addBindValue(Data::hash1[info->dishid]->name);
+            query.addBindValue(Data::hash1[info->dishid]->price);
+            query.addBindValue(info->count);
+            query.addBindValue(dateStr);
+            info->chefid = -1;      //防止一天之中桌子重复使用，订单重复添加
+            if(!query.exec()){
+                qDebug()<<query.lastError();
+            }
+            else{
+                qDebug()<<"inserted: "<<Data::hash1[info->dishid]->name;
+            }
+            query.next();
+        }
+    }
+    qDebug()<<"insert complete";
 }
+

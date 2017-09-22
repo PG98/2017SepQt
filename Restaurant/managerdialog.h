@@ -2,6 +2,7 @@
 #define MANAGERDIALOG_H
 
 #include <QDialog>
+#include <QSqlTableModel>
 
 namespace Ui {
 class managerDialog;
@@ -22,9 +23,11 @@ private slots:
 
 private:
     Ui::managerDialog *ui;
+    QSqlTableModel* model;
     void setBox1();
     void setBox2();
     void setBox3();
+    void setBox4();
     QStringList chefHeader = QStringList()<<"厨师工号"<<"累计做菜";
     QStringList waiterHeader = QStringList()<<"服务员工号"<<"累计桌数"<<"平均评价";
     QStringList dishHeader = QStringList()<<"菜品编号"<<"品名"<<"推荐程度"<<"累计人气"<<"累计评价";

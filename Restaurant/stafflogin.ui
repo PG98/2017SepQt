@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
-    <height>395</height>
+    <width>482</width>
+    <height>335</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>150</y>
+     <x>130</x>
+     <y>130</y>
      <width>221</width>
      <height>41</height>
     </rect>
@@ -26,11 +26,19 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>100</y>
-     <width>131</width>
+     <x>100</x>
+     <y>80</y>
+     <width>161</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Weibei SC</family>
+     <pointsize>18</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>请输入您的员工号：</string>
@@ -39,9 +47,9 @@
   <widget class="QPushButton" name="waiterBtn">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>230</y>
-     <width>111</width>
+     <x>310</x>
+     <y>200</y>
+     <width>90</width>
      <height>41</height>
     </rect>
    </property>
@@ -52,9 +60,9 @@
   <widget class="QPushButton" name="waiterBtn_2">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>230</y>
-     <width>111</width>
+     <x>90</x>
+     <y>200</y>
+     <width>90</width>
      <height>41</height>
     </rect>
    </property>
@@ -65,9 +73,9 @@
   <widget class="QPushButton" name="managerBtn">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>230</y>
-     <width>80</width>
+     <x>200</x>
+     <y>200</y>
+     <width>90</width>
      <height>41</height>
     </rect>
    </property>

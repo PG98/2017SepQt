@@ -21,11 +21,36 @@ staffLogin::staffLogin(QWidget *parent) :
     QPalette palette;
     palette.setBrush(this->backgroundRole(),QBrush(img.scaled(this->width(),this->height())));
     this->setPalette(palette);
+    setButtonStyle();
 }
 
 staffLogin::~staffLogin()
 {
     delete ui;
+}
+
+void staffLogin::setButtonStyle(){
+    ui->managerBtn->setStyleSheet("QPushButton{background-color:white;\
+                                      color: black;   border-radius: 12px;  border: 3px groove gray;\
+                                      border-style: outset;}"
+                                     "QPushButton:hover{background-color:silver; color: black;}"
+                                    "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                                     border-style: inset; }"
+                                     );
+    ui->waiterBtn->setStyleSheet("QPushButton{background-color:white;\
+                                      color: black;   border-radius: 12px;  border: 3px groove gray;\
+                                      border-style: outset;}"
+                                     "QPushButton:hover{background-color:silver; color: black;}"
+                                    "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                                     border-style: inset; }"
+                                     );
+    ui->waiterBtn_2->setStyleSheet("QPushButton{background-color:white;\
+                                      color: black;   border-radius: 12px;  border: 3px groove gray;\
+                                      border-style: outset;}"
+                                     "QPushButton:hover{background-color:silver; color: black;}"
+                                    "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                                     border-style: inset; }"
+                                     );
 }
 
 void staffLogin::on_waiterBtn_clicked()

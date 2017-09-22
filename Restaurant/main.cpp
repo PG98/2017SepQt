@@ -17,11 +17,10 @@ int main(int argc, char *argv[])
     LoginDialog login;
     login.show();
 
-    saveJournal();
-
     return a.exec();
 }
-//存储点菜列表中的信息作为账目
+
+//存储点菜列表中的信息作为账目表
 void saveJournal(){
     QSqlQuery query;
     QString tempstring;

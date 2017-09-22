@@ -19,6 +19,7 @@ managerDialog::managerDialog(QWidget *parent) :
     setBox1();
     setBox2();
     setBox3();
+    setBox4();
     connect(ui->dishTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(sortDishes(int)));
     ui->stackedWidget->addWidget(ui->page1);
     ui->stackedWidget->addWidget(ui->page2);
@@ -30,8 +31,9 @@ managerDialog::~managerDialog()
     delete ui;
 }
 
+
 void managerDialog::setBox1(){
-    //chefTable
+    //厨师业绩
     ui->chefTable->verticalHeader()->setVisible(false);
     ui->chefTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->chefTable->setColumnCount(2);
@@ -43,7 +45,7 @@ void managerDialog::setBox1(){
     ui->chefTable->setHorizontalHeaderLabels(chefHeader);
     ui->chefTable->horizontalHeader()->setStyleSheet("QHeaderView::section{background:bisque;}");
     ui->chefTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    //waiterTable
+    //服务员业绩
     ui->waiterTable->verticalHeader()->setVisible(false);
     ui->waiterTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->waiterTable->setColumnCount(3);
@@ -63,6 +65,7 @@ void managerDialog::setBox1(){
     ui->box1->setLayout(layout);
 }
 
+//菜品反馈
 void managerDialog::setBox2(){
     ui->dishTable->verticalHeader()->setVisible(false);
     ui->dishTable->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -78,7 +81,7 @@ void managerDialog::setBox2(){
                 ui->dishTable->setItem(k, 2, new QTableWidgetItem(QIcon(":/buttons/star.png"), "推荐"));
             else
                 ui->dishTable->setItem(k, 2, new QTableWidgetItem(QIcon(":/buttons/graystar.png"), "普通"));
-            ui->dishTable->setItem(k, 3, new QTableWidgetItem(i.value()->history));
+            ui->dishTable->setItem(k, 3, new QTableWidgetItem(QString("%1").arg(i.value()->history)));
             ui->dishTable->setItem(k, 4, new QTableWidgetItem(QString("%1").arg(i.value()->rating)));
        k++;
     }
@@ -90,7 +93,7 @@ void managerDialog::setBox2(){
 }
 
 void managerDialog::setBox3(){
-   //表格
+   //流水账
     ui->tableWidget->verticalHeader()->setVisible(false);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->setColumnCount(6);
@@ -132,6 +135,28 @@ void managerDialog::setBox3(){
                                );
 }
 
+void managerDialog::setBox4(){
+     model = new QSqlTableModel(this);
+     model->setTable("journal");
+
+
+     QHBoxLayout* layout = new QHBoxLayout;
+     layout->addWidget(ui->tableView_2);
+     ui->box4->setLayout(layout);
+
+     model->select();
+
+     ui->tableView_2->setSortingEnabled(true);
+     ui->tableView_2->setSelectionBehavior(QAbstractItemView::SelectRows);   //每次选一行
+     ui->tableView_2->setSelectionMode(QAbstractItemView::SingleSelection);//鼠标单击的反应
+     ui->tableView_2->setShowGrid(false);
+     ui->tableView_2->verticalHeader()->hide();
+     ui->tableView_2->setAlternatingRowColors(true);
+     ui->tableView_2->setModel(model);//
+     ui->tableView_2->setEditTriggers(false);
+     ui->tableView_2->show();
+}
+
 void managerDialog::sortDishes(int column){
     static bool f = true;
     ui->dishTable->sortByColumn(column, f ? Qt::AscendingOrder : Qt::DescendingOrder);
@@ -140,11 +165,13 @@ void managerDialog::sortDishes(int column){
 
 void managerDialog::switchPage(){
     int index = ui->stackedWidget->currentIndex();
-    if(index == 1)
+    if(index == 2)
         index = 0;
     else if(index == 0)
         index = 1;
-    ui->stackedWidget->setCurrentIndex(index);
+    else if(index == 1)
+        index = 2;
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void managerDialog::on_refreshBtn_clicked()
