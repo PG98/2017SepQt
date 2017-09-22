@@ -8,8 +8,13 @@ waiterWindow::waiterWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedSize(this->width(), this->height());
-    init();
-    on_refreshBtn_clicked();
+    QImage img;
+    img.load(":/images/backgnd.png");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(img.scaled(this->width(),this->height())));
+    this->setPalette(palette);
+    ui->refreshBtn->setIcon(QIcon(":\buttons\refresh.png"));
+    init();     //初始化
 }
 
 waiterWindow::~waiterWindow()
@@ -63,6 +68,7 @@ void waiterWindow::claimTable(int i){
     }
     else if(Data::waiter[index].table2 == 0){
         Data::waiter[index].table2 = i;
+        Data::table[i].waiterIndex = index;
         table2 = i;
         ui->box2->setTitle(QString("table %1").arg(i));
         button[i]->setText(tr("服务中"));
@@ -103,7 +109,7 @@ void waiterWindow::on_refreshBtn_clicked()
     if(table1!=-1){
         ui->box1->setTitle(QString("桌号:%1 服务中").arg(table1+1));//starts from 1
         ui->waterBtn1->setIcon(Data::table[table1].water ? QIcon(path2) : QIcon(path1));
-        ui->remindBtn1->setIcon(Data::table[table1].remind ? QIcon(path2) : QIcon(path1));
+        ui->remindBtn1->setIcon((Data::table[table1].remind!=-1) ? QIcon(path2) : QIcon(path1));
         ui->payBtn1->setIcon(Data::table[table1].pay ? QIcon(path2) : QIcon(path1));
     }
     else{
@@ -115,7 +121,7 @@ void waiterWindow::on_refreshBtn_clicked()
     if(table2!=-1){
         ui->box2->setTitle(QString("桌号:%1 服务中").arg(table2));
         ui->waterBtn2->setIcon(Data::table[table2].water ? QIcon(path2) : QIcon(path1));
-        ui->remindBtn2->setIcon(Data::table[table2].remind ? QIcon(path2) : QIcon(path1));
+        ui->remindBtn2->setIcon((Data::table[table2].remind!=-1) ? QIcon(path2) : QIcon(path1));
         ui->payBtn2->setIcon(Data::table[table2].pay ? QIcon(path2) : QIcon(path1));
     }
     else{
@@ -143,13 +149,15 @@ void waiterWindow::on_remindBtn1_clicked()
             //找出订单号对应菜品名字
             int dishid = Data::list[Data::table[table1].remind]->dishid;
             QString dish = Data::hash1[dishid]->name;
-            QMessageBox::information(this, QString("congratulations"), QString("请向厨师要求对订单号 %1, %2 加快进度。").arg(Data::table[table1].remind).arg(dish));
+            QMessageBox::information(this, QString("remind"), QString("请向厨师要求对订单号 %1, %2 加快进度。").arg(Data::table[table1].remind).arg(dish));
             int i;
-            for(i=0;Data::urgent[i] && i<19;i++);  //遍历，添加订单到末尾
-            Data::urgent[i] = Data::table[table2].remind;
+            for(i=0;Data::urgent[i]!=-1 && i<19;i++);  //遍历，添加订单到末尾
+            Data::urgent[i] = Data::table[table1].remind;
+            Data::table[table1].remind = -1;
             ui->payBtn1->setIcon(QIcon(path1));
         }
     }
+    on_refreshBtn_clicked();
 }
 
 void waiterWindow::on_payBtn1_clicked()
@@ -178,13 +186,15 @@ void waiterWindow::on_remindBtn2_clicked()
         if(Data::table[table2].remind!=-1){
             int dishid = Data::list[Data::table[table2].remind]->dishid;
             QString dish = Data::hash1[dishid]->name;
-            QMessageBox::information(this, QString("congratulations"), QString("请向厨师要求对订单号 %1, %2 加快进度。").arg(Data::table[table2].remind).arg(dish));
+            QMessageBox::information(this, QString("remind"), QString("请向厨师要求对订单号 %1, %2 加快进度。").arg(Data::table[table2].remind).arg(dish));
             int i;
-            for(i=0;Data::urgent[i] && i<19;i++);  //遍历，添加订单到末尾
+            for(i=0;Data::urgent[i]!=-1 && i<19;i++);  //遍历，添加订单到末尾
             Data::urgent[i] = Data::table[table2].remind;
+            Data::table[table2].remind = -1;
             ui->payBtn2->setIcon(QIcon(path1));
         }
     }
+    on_refreshBtn_clicked();
 }
 
 void waiterWindow::on_payBtn2_clicked()

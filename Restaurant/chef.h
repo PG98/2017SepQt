@@ -5,7 +5,7 @@
 class Chef
 {
 public:
-    Chef();
+    Chef(){}
     int id = -1;
     int history = 0;
 };

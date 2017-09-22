@@ -18,7 +18,6 @@ public:
 private slots:
     void sortDishes(int column);
     void switchPage();
-
     void on_refreshBtn_clicked();
 
 private:

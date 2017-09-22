@@ -80,7 +80,7 @@ void Data::dataInit(){
         i++;
     }
     for(int i=0;i<20;i++){
-        urgent[i]=0;
+        urgent[i]=-1;
     }
 }
 

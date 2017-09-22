@@ -25,7 +25,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="title">
@@ -53,7 +53,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="title">
@@ -81,7 +81,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="title">
@@ -109,7 +109,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="title">
@@ -194,7 +194,7 @@ QPushButton:pressed
       <x>470</x>
       <y>600</y>
       <width>81</width>
-      <height>41</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -224,9 +224,23 @@ QPushButton:pressed
      <height>25</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>操作</string>
+    </property>
+    <addaction name="actionDelete_D"/>
+    <addaction name="actionChoose"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+     <horstretch>80</horstretch>
+     <verstretch>50</verstretch>
+    </sizepolicy>
+   </property>
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
@@ -236,8 +250,30 @@ QPushButton:pressed
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionDelete_D"/>
+   <addaction name="actionChoose"/>
   </widget>
+  <action name="actionDelete_D">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/buttons/delete.png</normaloff>:/buttons/delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete(&amp;D)</string>
+   </property>
+  </action>
+  <action name="actionChoose">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/buttons/download.png</normaloff>:/buttons/download.png</iconset>
+   </property>
+   <property name="text">
+    <string>Choose</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

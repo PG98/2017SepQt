@@ -15,6 +15,12 @@ staffLogin::staffLogin(QWidget *parent) :
     ui->lineEdit->setPlaceholderText(tr("服务员'2'开头，厨师'3'开头"));
     ui->waiterBtn->setFocusPolicy(Qt::NoFocus);
     ui->waiterBtn_2->setFocusPolicy(Qt::NoFocus);
+    ui->managerBtn->setFocusPolicy(Qt::NoFocus);
+    QImage img;
+    img.load(":/images/backgnd.png");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(img.scaled(this->width(),this->height())));
+    this->setPalette(palette);
 }
 
 staffLogin::~staffLogin()
@@ -57,6 +63,7 @@ void staffLogin::on_waiterBtn_clicked()
                 w->index = i;
             }
         }
+        w->on_refreshBtn_clicked();
         w->show();
         this->close();
     }
@@ -99,8 +106,8 @@ void staffLogin::on_waiterBtn_2_clicked()
             if(Data::chef[i].id == id)
                 w->index = i;
         }
-        w->show();
         w->on_action_R_triggered();
+        w->show();
         this->close();
     }
     else{

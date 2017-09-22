@@ -27,7 +27,6 @@ SOURCES += main.cpp\
     adduser.cpp \
     selecttable.cpp \
     stafflogin.cpp \
-    chef.cpp \
     waiterwindow.cpp \
     chefwindow.cpp \
     staffmanage.cpp \

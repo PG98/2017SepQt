@@ -12,6 +12,12 @@ chefWindow::chefWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle(tr("厨师"));
     //this->setFixedWidth(this->width());
+    QImage img;
+    img.load(":/images/backgnd.png");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(img.scaled(this->width(),this->height())));
+    this->setPalette(palette);
+
     setbox1();
     setbox2();
     setTableAppearance();
@@ -190,15 +196,14 @@ void chefWindow::on_action_U_triggered()
 void chefWindow::on_action_F_triggered()
 {
     //得出催单总个数以便输出
-    int i;
-    for(i=0;Data::urgent[i];i++);
-    int total = i - 1;
+    qDebug()<<"urgent: ";
     QString urge = "需要加快进度的订单号: ";
-    for(int i=0;i<total;i++){
+    for(int i=0;Data::urgent[i]!=-1;i++){
         int length = urge.length();
         urge.insert(length, QString("%1, ").arg(Data::urgent[i]));
-        qDebug()<<"urgent: "<<Data::urgent[i];
+        qDebug()<<Data::urgent[i]<<" ";
         //urge += QString("%1, ").arg(Data::urgent[i]);
     }
+
     QMessageBox::information(this, tr("加急订单"), urge);
 }

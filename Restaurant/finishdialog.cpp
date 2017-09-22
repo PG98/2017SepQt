@@ -17,9 +17,9 @@ FinishDialog::FinishDialog(QWidget *parent, int currentTable) :
     layout->addWidget(ui->box1);
     layout->addWidget(ui->box2);
     layout->addWidget(ui->pushButton);
-    ui->pushButton->setFixedWidth(120);
-
+    //ui->pushButton->setFixedWidth(120);
     this->setLayout(layout);
+
     //外观设置
     QImage im;
     im.load(":/images/backgnd1.jpg");
@@ -79,7 +79,7 @@ void FinishDialog::on_pushButton_clicked()
     this->close();
 }
 
-void FinishDialog::conclude(){
+void FinishDialog::conclude(){//初始化内存中各项数据的状态
     Data::table[tableid].state = 0;
     //服务员历史，评分更新
     int waiterIndex = Data::table[tableid].waiterIndex;

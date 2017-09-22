@@ -139,7 +139,7 @@ QHBoxLayout* Order::setButtons(){
         button[i] = new KeyButton;
         button[i]->setIndex(i);
         button[i]->setEnabled(false);
-        button[i]->setStyleSheet("QPushButton{background-color:lightskyblue;\
+        button[i]->setStyleSheet("QPushButton{background-color:lightsteelblue;\
                                     color: black;   border-radius: 10px;  border: 2px groove gray;\
                                     border-style: outset;}"
                                    "QPushButton:hover{background-color:lightsteelblue; color:black;}"
@@ -154,6 +154,21 @@ QHBoxLayout* Order::setButtons(){
     button[0]->setText(tr("加水"));
     button[1]->setText(tr("催单"));
     button[2]->setText(tr("买单"));
+    ui->queryBtn->setStyleSheet("QPushButton{background-color:lemonchiffon;\
+                                color: black;   border-radius: 8px;  border: 2px groove gray;\
+                                border-style: outset;}"
+                               "QPushButton:hover{background-color:lightsteelblue; color:black;}"
+                              "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                               border-style: inset; }"
+                               );
+    ui->submitBtn->setStyleSheet("QPushButton{background-color:lemonchiffon;\
+                                color: black;   border-radius: 8px;  border: 2px groove gray;\
+                                border-style: outset;}"
+                               "QPushButton:hover{background-color:lightsteelblue; color:black;}"
+                              "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                               border-style: inset; }"
+                               );
+
     return layout;
 }
 
@@ -351,6 +366,13 @@ void Order::on_submitBtn_clicked()
         firstCommit = true;
         for(int i=0;i<3;i++){
             button[i]->setEnabled(true);
+            button[i]->setStyleSheet("QPushButton{background-color:cornflowerblue;\
+                                        color: black;   border-radius: 10px;  border: 2px groove gray;\
+                                        border-style: outset;}"
+                                       "QPushButton:hover{background-color:lightsteelblue; color:black;}"
+                                      "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                                       border-style: inset; }"
+                                       );
         }
     }
     //设置stage，表示上次提交最后一项的下标。不能在左边的表格中删除已经提交过的菜名。
@@ -427,5 +449,14 @@ void Order::on_iconBtn_clicked()
 {
     QString helpString = "双击添加当前项到左边托盘（可反复点击）\n 双击托盘中菜品可以取消订单\n点击下方按钮向工作人员提出需求";
     QMessageBox::information(this, tr("帮助"), helpString);
-    //QMessageBox
+}
+
+void Order::on_actionChoose_triggered()
+{
+    addOrder(ui->table1->currentRow());
+}
+
+void Order::on_actionDelete_D_triggered()
+{
+    delRow(ui->table1->currentRow(), 0);
 }

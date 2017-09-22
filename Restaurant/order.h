@@ -36,6 +36,10 @@ private slots:
 
     void on_iconBtn_clicked();
 
+    void on_actionChoose_triggered();
+
+    void on_actionDelete_D_triggered();
+
 private:
     Ui::Order *ui;
     KeyButton* button[3];

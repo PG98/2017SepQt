@@ -120,6 +120,21 @@ QHBoxLayout* MenuManage::setButtons(){
     layout->addWidget(ui->backBtn);
     layout->addStretch(1);
     layout->addWidget(ui->OkBtn);
+    /*
+    ui->OkBtn->setStyleSheet("QPushButton{background-color:peachpuff;\
+                                color: black;   border-radius: 12px;  border: 3px groove gray;\
+                                border-style: outset;}"
+                               "QPushButton:hover{background-color:lightsteelblue; color:black;}"
+                              "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                               border-style: inset; }"
+                               );
+    ui->backBtn->setStyleSheet("QPushButton{background-color:peachpuff;\
+                                color: black;   border-radius: 12px;  border: 3px groove gray;\
+                                border-style: outset;}"
+                               "QPushButton:hover{background-color:lightsteelblue; color:black;}"
+                              "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                               border-style: inset; }"
+                               );*/
     return layout;
 }
 //以上各GroupBox初始化

@@ -10,6 +10,12 @@ managerDialog::managerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("经理");
+    QImage img;
+    img.load(":/images/backgnd.png");
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(),QBrush(img.scaled(this->width(),this->height())));
+    this->setPalette(palette);
+
     setBox1();
     setBox2();
     setBox3();

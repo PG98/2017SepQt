@@ -16,24 +16,16 @@ public:
         connect(this, SIGNAL(clicked(bool)), this, SLOT(on_clicked()));
     }
 
-    void setIndex(int n){
-        index = n;
-    }
-
+    void setIndex(int n) {index = n;}
 private:
     int index;
 
 signals:
     void keyClicked(int index);
-    //void keyPressed(const QString &msg);
-    //void keyReleased(const QString &msg);
-    //void keyClicked(const QString &msg);
-
 public slots:
     void on_clicked(){
         //qDebug()<<"index of this button is "<<index;
         emit this->keyClicked(this->index);
-
     }
 };
 

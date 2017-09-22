@@ -18,6 +18,9 @@ public:
     int id;
     int index;
 
+public slots:
+    void on_refreshBtn_clicked();
+
 private slots:
     void claimTable(int);
     void on_waterBtn1_clicked();
@@ -26,7 +29,6 @@ private slots:
     void on_waterBtn2_clicked();
     void on_remindBtn2_clicked();
     void on_payBtn2_clicked();
-    void on_refreshBtn_clicked();
 
 private:
     int table1 = -1; //当前服务的桌号下标
