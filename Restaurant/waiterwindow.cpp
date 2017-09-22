@@ -7,13 +7,21 @@ waiterWindow::waiterWindow(QWidget *parent) :
     ui(new Ui::waiterWindow)
 {
     ui->setupUi(this);
+    this->setWindowTitle(tr("服务员"));
     this->setFixedSize(this->width(), this->height());
     QImage img;
     img.load(":/images/backgnd.png");
     QPalette palette;
     palette.setBrush(this->backgroundRole(),QBrush(img.scaled(this->width(),this->height())));
     this->setPalette(palette);
-    ui->refreshBtn->setIcon(QIcon(":\buttons\refresh.png"));
+    ui->refreshBtn->setIcon(QIcon(":/buttons/refresh.png"));
+    ui->refreshBtn->setStyleSheet("QPushButton{background-color:white;\
+                                      color: white;   border-radius: 12px;  border: 3px groove gray;\
+                                      border-style: outset;}"
+                                     "QPushButton:hover{background-color:silver; color: black;}"
+                                    "QPushButton:pressed{background-color:rgb(85, 170, 255);\
+                                                     border-style: inset; }"
+                                     );
     init();     //初始化
 }
 
@@ -55,7 +63,7 @@ void waiterWindow::claimTable(int i){
         return;
     }
     //优先填入1
-    if(Data::waiter[index].table1 == 0){
+    if(Data::waiter[index].table1 == -1){
         Data::waiter[index].table1 = i;
         Data::table[i].waiterIndex = index;
         table1 = i;
@@ -66,7 +74,7 @@ void waiterWindow::claimTable(int i){
         ui->remindBtn1->setEnabled(true);
         ui->payBtn1->setEnabled(true);
     }
-    else if(Data::waiter[index].table2 == 0){
+    else if(Data::waiter[index].table2 == -1){
         Data::waiter[index].table2 = i;
         Data::table[i].waiterIndex = index;
         table2 = i;

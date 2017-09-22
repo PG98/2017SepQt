@@ -45,8 +45,8 @@ Order::Order(QWidget *parent) :
     layout->addLayout(buttons, 2, 0, 1, 2);
     layout->setColumnStretch(0, 1);
     layout->setColumnStretch(1, 1);
-    layout->setRowStretch(0, 1);
-    layout->setRowStretch(1, 5);
+    layout->setRowStretch(0, 6);
+    layout->setRowStretch(1, 25);
 
     QWidget* widget = new QWidget;
     widget->setLayout(layout);
@@ -139,7 +139,7 @@ QHBoxLayout* Order::setButtons(){
         button[i] = new KeyButton;
         button[i]->setIndex(i);
         button[i]->setEnabled(false);
-        button[i]->setStyleSheet("QPushButton{background-color:lightsteelblue;\
+        button[i]->setStyleSheet("QPushButton{background-color:lightslategray;\
                                     color: black;   border-radius: 10px;  border: 2px groove gray;\
                                     border-style: outset;}"
                                    "QPushButton:hover{background-color:lightsteelblue; color:black;}"
@@ -149,7 +149,8 @@ QHBoxLayout* Order::setButtons(){
         button[i]->setFixedHeight(40);
         layout->addWidget(button[i]);
     }
-    ui->submitBtn->setFixedHeight(40);
+    ui->submitBtn->setFixedHeight(30);
+    ui->queryBtn->setFixedHeight(30);
     layout->addWidget(ui->submitBtn);
     button[0]->setText(tr("加水"));
     button[1]->setText(tr("催单"));
@@ -366,7 +367,7 @@ void Order::on_submitBtn_clicked()
         firstCommit = true;
         for(int i=0;i<3;i++){
             button[i]->setEnabled(true);
-            button[i]->setStyleSheet("QPushButton{background-color:cornflowerblue;\
+            button[i]->setStyleSheet("QPushButton{background-color:skyblue;\
                                         color: black;   border-radius: 10px;  border: 2px groove gray;\
                                         border-style: outset;}"
                                        "QPushButton:hover{background-color:lightsteelblue; color:black;}"

@@ -131,11 +131,11 @@ static bool createConnection(){
                 query.exec("insert into diningtable values(10, 15, 0, 0, 0, -1, 0, -1)");
                 //===================================================
                 query.exec("create table waiter (id int primary key, table1 int, table2 int, comment real, history int)");
-                query.exec("insert into waiter values(201, 0, 0, 5.0, 5)");
-                query.exec("insert into waiter values(202, 0, 0, 5.0, 5)");
-                query.exec("insert into waiter values(203, 0, 0, 5.0, 5)");
-                query.exec("insert into waiter values(204, 0, 0, 5.0, 5)");
-                query.exec("insert into waiter values(205, 0, 0, 5.0, 5)");
+                query.exec("insert into waiter values(201, -1, -1, 5.0, 5)");
+                query.exec("insert into waiter values(202, -1, -1, 5.0, 5)");
+                query.exec("insert into waiter values(203, -1, -1, 5.0, 5)");
+                query.exec("insert into waiter values(204, -1, -1, 5.0, 5)");
+                query.exec("insert into waiter values(205, -1, -1, 5.0, 5)");
                 //===================================================
                 query.exec("create table chef (id int primary key, history int)");
                 query.exec("insert into chef values(301, 5)");

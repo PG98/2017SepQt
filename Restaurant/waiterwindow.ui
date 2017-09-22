@@ -121,14 +121,22 @@
    <widget class="QPushButton" name="refreshBtn">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>40</x>
       <y>250</y>
-      <width>101</width>
-      <height>101</height>
+      <width>81</width>
+      <height>81</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Songti SC</family>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>refresh</string>
+     <string>刷新</string>
     </property>
    </widget>
    <widget class="QGroupBox" name="box">

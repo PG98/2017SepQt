@@ -7,8 +7,8 @@ class Waiter
 public:
     Waiter() {}
     int id = -1;
-    int table1 = 0;
-    int table2 = 0;
+    int table1 = -1;
+    int table2 = -1;
     double rating = 0;
     int history = 0;
 };

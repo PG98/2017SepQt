@@ -61,6 +61,8 @@ void staffLogin::on_waiterBtn_clicked()
             if(Data::waiter[i].id == id){
                 qDebug()<<"waiter index:"<<i<<", waiterID: "<<id;
                 w->index = i;
+                w->table1 = Data::waiter[i].table1;
+                w->table2 = Data::waiter[i].table2;
             }
         }
         w->on_refreshBtn_clicked();

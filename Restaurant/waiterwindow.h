@@ -17,6 +17,8 @@ public:
     ~waiterWindow();
     int id;
     int index;
+    int table1 = -1; //当前服务的桌号下标
+    int table2 = -1;
 
 public slots:
     void on_refreshBtn_clicked();
@@ -31,8 +33,6 @@ private slots:
     void on_payBtn2_clicked();
 
 private:
-    int table1 = -1; //当前服务的桌号下标
-    int table2 = -1;
     Ui::waiterWindow *ui;
     void init();    //按钮、布局初始化
     KeyButton* button[10];
