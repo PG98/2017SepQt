@@ -174,7 +174,7 @@
       </rect>
      </property>
      <property name="title">
-      <string>GroupBox</string>
+      <string>流水账</string>
      </property>
      <widget class="QTableView" name="tableView_2">
       <property name="geometry">

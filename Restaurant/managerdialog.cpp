@@ -20,6 +20,7 @@ managerDialog::managerDialog(QWidget *parent) :
     setBox2();
     setBox3();
     setBox4();
+    ui->stackedWidget->setCurrentIndex(0);
     connect(ui->dishTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(sortDishes(int)));
     ui->stackedWidget->addWidget(ui->page1);
     ui->stackedWidget->addWidget(ui->page2);
@@ -171,7 +172,7 @@ void managerDialog::switchPage(){
         index = 1;
     else if(index == 1)
         index = 2;
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(index);
 }
 
 void managerDialog::on_refreshBtn_clicked()
