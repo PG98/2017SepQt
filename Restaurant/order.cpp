@@ -459,5 +459,5 @@ void Order::on_actionChoose_triggered()
 
 void Order::on_actionDelete_D_triggered()
 {
-    delRow(ui->table1->currentRow(), 0);
+    delRow(ui->table2->currentRow(), 0);
 }

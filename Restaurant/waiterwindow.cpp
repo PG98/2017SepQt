@@ -145,7 +145,7 @@ void waiterWindow::on_waterBtn1_clicked()
     if(table1!=-1){
         if(Data::table[table1].water == true){
             Data::table[table1].water = false;
-            ui->payBtn2->setIcon(QIcon(path1));
+            ui->waterBtn1->setIcon(QIcon(path1));
         }
     }
 }

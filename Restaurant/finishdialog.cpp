@@ -104,6 +104,7 @@ void FinishDialog::conclude(){//初始化内存中各项数据的状态
             Data::waiter[waiterIndex].rating = (currentRating * Data::waiter[waiterIndex].history + rating)/(Data::waiter[waiterIndex].history+1);
         }
         Data::waiter[waiterIndex].history++;
+        query.exec(QString("update waiter set history = %1 where id = %2").arg(Data::waiter[waiterIndex].id).arg(Data::waiter[waiterIndex].history));
     }
     saveJournal();
 }

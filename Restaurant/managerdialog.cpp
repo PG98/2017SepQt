@@ -54,7 +54,7 @@ void managerDialog::setBox1(){
         ui->waiterTable->setRowCount(ui->waiterTable->rowCount()+1);
         ui->waiterTable->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(Data::waiter[i].id)));
         ui->waiterTable->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(Data::waiter[i].history)));
-        ui->waiterTable->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(Data::waiter[i].rating)));
+        ui->waiterTable->setItem(i, 2, new QTableWidgetItem(QString("%1").arg(Data::waiter[i].rating)));
     }
     ui->waiterTable->setHorizontalHeaderLabels(waiterHeader);
     ui->waiterTable->horizontalHeader()->setStyleSheet("QHeaderView::section{background:bisque;}");

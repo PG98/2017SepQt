@@ -32,12 +32,14 @@ void RegisterDialog::OKBtn_clicked(){
         ui->pwdLineEdit1->clear();
         ui->pwdLineEdit2->clear();
         ui->pwdLineEdit1->setFocus();
+        return;
     }
     else if(ui->pwdLineEdit1->text() != ui->pwdLineEdit2->text()){
         QMessageBox::warning(this, tr("警告"), tr("两次输入密码不同"));
         ui->pwdLineEdit1->clear();
         ui->pwdLineEdit2->clear();
         ui->pwdLineEdit1->setFocus();
+        return;
     }
     //以下为数据库操作
     QSqlQuery query;

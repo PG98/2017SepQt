@@ -10,7 +10,7 @@ public:
     int table1 = -1;
     int table2 = -1;
     double rating = 0;
-    int history = 0;
+    int history = 10;
 };
 
 #endif // WAITER_H

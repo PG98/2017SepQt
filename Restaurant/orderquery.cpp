@@ -8,6 +8,7 @@ orderQuery::orderQuery(QWidget *parent) :
     ui(new Ui::orderQuery)
 {
     ui->setupUi(this);
+    this->setWindowTitle("菜品进度查询");
     ui->pushButton->setFocusPolicy(Qt::NoFocus);
     ui->pushButton->setDefault(false);
 }
